@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { Button } from "@mantine/core";
 
 export default function Home() {
     async function handleRegister(e: any) {
@@ -31,9 +32,9 @@ export default function Home() {
                 <input type="email" name="email" id="email" />
                 <input type="password" name="password" id="password" />
             </form>
-            <button type="submit" form="login-form">
+            <Button type="submit" form="login-form">
                 Login
-            </button>
+            </Button>
         </main>
     );
 }

@@ -8,7 +8,7 @@ const nextConfig = {
         serverComponentsExternalPackages: ["mongoose"],
     },
     env: {
-        DB_URI: "mongodb://localhost:27017/next13-auth",
+        DB_URI: "mongodb://127.0.0.1:27017",
     },
 };
 

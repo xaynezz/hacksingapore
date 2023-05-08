@@ -1,8 +1,8 @@
 "use client";
 
-import "./globals.css";
 import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
+import { MantineProvider } from "@mantine/core";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,11 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <SessionProvider>
-                <body className={inter.className}>{children}</body>
-            </SessionProvider>
+            <MantineProvider withGlobalStyles withNormalizeCSS>
+                <SessionProvider>
+                    <body className={inter.className}>{children}</body>
+                </SessionProvider>
+            </MantineProvider>
         </html>
     );
 }
