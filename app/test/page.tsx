@@ -26,11 +26,11 @@ export default function test({ }: Props) {
       const base64File = await toBase64(file);
       console.log('Base64 File:', base64File);
   
-      const response = await axios.post('/api/plantIdentify', {
+      const response = await axios.post('/api/plant', {
         base64String: base64File,
       });
 
-      const PlantIdentifyApiResponse: PlantIdentifyApiResponse = response.data;
+      const PlantIdentifyApiResponse: any = response.data;
 
       console.log('Image uploaded successfully:', PlantIdentifyApiResponse.suggestions[0].plant_name);
     } catch (error: any) {
