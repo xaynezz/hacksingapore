@@ -1,8 +1,6 @@
-"use client"
-
-import React from 'react'
-import { Flex } from '@mantine/core';
-
+import React from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function UserLayout({
     children,
@@ -10,13 +8,12 @@ export default function UserLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en">
-            <Flex direction="row" justify="between" align="center">
-                <div>
-                    {children}
-                </div>
-            </Flex>
-        </html>
+        <main className="flex min-h-screen flex-col items-center justify-between">
+            <Header />
+            <div className="h-[calc(100vh-6.5rem)] w-full overflow-auto">
+                {children}
+            </div>
+            <Footer />
+        </main>
     );
 }
-

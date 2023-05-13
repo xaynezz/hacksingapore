@@ -1,15 +1,9 @@
-"use client"
-
-import { Container } from "@mantine/core"
-
-interface Props { }
+interface Props {}
 
 function Page(props: Props) {
-    const { } = props
+    const {} = props;
 
-    return (
-        <Container>test</Container>
-    )
+    return <div className="h-[1000px] bg-red-300">test</div>;
 }
 
-export default Page
+export default Page;
