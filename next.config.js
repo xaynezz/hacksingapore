@@ -10,6 +10,7 @@ const nextConfig = {
     env: {
         DB_URI: "mongodb://127.0.0.1:27017",
     },
+    reactStrictMode: false
 };
 
 module.exports = nextConfig;
