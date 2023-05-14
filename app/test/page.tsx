@@ -67,9 +67,7 @@ export default function test({ }: Props) {
       console.log('Plant (is_healthy) = ' + healthAssessment.is_healthy)
       console.log('List of diseases')
       console.log(healthAssessment.diseases);
-      // console.log('Plant name is ', PlantIdentifyData.suggestions[0].plant_name);
       /******************************************************************************************* */
-
 
 
     } catch (error: any) {
