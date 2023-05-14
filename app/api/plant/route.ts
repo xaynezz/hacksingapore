@@ -13,9 +13,7 @@ export async function POST(request: Request) {
     );
     const PerenualDataResponse: PerenualDataResponse = response.data;
     const PlantID = PerenualDataResponse.data[0].id;
-    console.log("Finished getting ID from Perenual. For " + nameOfPlant + " The ID is " + PlantID)
     return NextResponse.json(PlantID)
-    
   } catch (error) {
     console.error('Error fetching species:', error);
   }
