@@ -1,0 +1,70 @@
+import { BsTreeFill } from 'react-icons/bs';
+
+const LeaderboardPage = () => {
+  return (
+    <>
+        
+        <div className="flex flex-col items-center justify-center p-8">
+            
+            <div className="flex flex-row items-center justify-center">
+                <div className="py-4 relative flex flex-col items-center">
+                    <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-2xl"></div>
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center text-xs">Andrew</div>
+                    <div className="text-gray-500 px-2 text-xs">32 plants</div>
+                    <BsTreeFill size={50} style={{ color: 'green' }} />
+                    <div className="absolute top-12 left-0 w-full h-full flex items-center justify-center text-white font-bold text-2xl z-10 pointer-events-none">
+                    3
+                    </div>
+                </div>
+                <div className="relative flex flex-col items-center">
+                    <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-4xl"></div>
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center text-xs">Andrew</div>
+                    <div className="text-gray-500 px-2 text-xs">28 plants</div>
+                    <BsTreeFill size={75} style={{ color: 'green' }} />
+                    <div className="absolute top-12 left-0 w-full h-full flex items-center justify-center text-white font-bold text-2xl z-10 pointer-events-none">
+                    2
+                    </div>
+                </div>
+                <div className="relative flex flex-col items-center">
+                    <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-6xl"></div>
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center text-xs">Andrew</div>
+                    <div className="text-gray-500 px-2 text-xs">32 plants</div>
+                    <BsTreeFill size={100} style={{ color: 'green' }} />
+                    <div className="absolute top-12 left-0 w-full h-full flex items-center justify-center text-white font-bold text-2xl z-10 pointer-events-none">
+                    1
+                    </div>
+                </div>
+            </div>
+
+
+            <div className="flex flex-col mt-8 p-2">
+                <div className="row flex flex-row items-center justify-between">
+                    <div className="mr-5 px-2">
+                        <h1 className="text-3xl font-bold">4</h1>
+                    </div>
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">Bo Hua</div>
+                    <div className="text-gray-500 px-2">15 plants</div>
+                </div>
+                <div className="row flex flex-row items-center justify-between">
+                    <div className="mr-5 px-2">
+                        <h1 className="text-3xl font-bold">5</h1>
+                    </div>
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">Andrew</div>
+                    <div className="text-gray-500 px-2">6 plants</div>
+                </div>
+                <div className="row flex flex-row items-center justify-between">
+                    <div className="mr-5 px-2">
+                        <h1 className="text-3xl font-bold">6</h1>
+                    </div>
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">John Doe</div>
+                    <div className="text-gray-500 px-2">4 plants</div>
+                </div>
+            </div>
+
+        </div>
+    </>
+    
+  )
+}
+
+export default LeaderboardPage
