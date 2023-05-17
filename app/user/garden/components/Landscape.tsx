@@ -4,7 +4,7 @@ import React from 'react';
 import Tile from "./Tile";
 
 interface LandscapeProps {
-    itemPositions: TreePosition[]
+    itemPositions: TreePosition[][]
 }
 
 type TileType = string;

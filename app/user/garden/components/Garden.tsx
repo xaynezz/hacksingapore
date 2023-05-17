@@ -4,7 +4,7 @@ import Landscape from './Landscape';
 import './game.css'
 
 interface GardenProps {
-    itemPositions: TreePosition[]
+    itemPositions: TreePosition[][]
 }
 
 const Garden = ({ itemPositions }: GardenProps) => {

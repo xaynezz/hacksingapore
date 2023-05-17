@@ -2,7 +2,7 @@ import { useGardenContext } from '@/app/context/gardenContext';
 import axios from 'axios';
 import React, { useState } from 'react'
 interface Props {
-    setTreePositions: React.Dispatch<React.SetStateAction<TreePosition[]>>
+    setTreePositions: React.Dispatch<React.SetStateAction<TreePosition[][]>>
 }
 import { RiPlantFill } from "react-icons/ri";
 
@@ -16,7 +16,7 @@ const toBase64 = (file: File | null) =>
 
 
 const setCoordinatesOnMap = (setTreePositions: React.Dispatch<React.SetStateAction<TreePosition[]>>, setAddPlantModal: any) => {
-    /* Calculate a random 10*10 coordinates */
+    /* Calculate a random 10*10 coordinates & image string */
     const x = Math.floor(Math.random() * 10);
     const y = Math.floor(Math.random() * 10);
     const options = ["tree_one", "tree_two", "tree_three", "tree_four"];
