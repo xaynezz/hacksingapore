@@ -1,7 +1,9 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import Garden from './components/Garden';
+import AddPlant from './components/model/AddPlant';
+import { useGardenContext } from '@/app/context/gardenContext';
 
 
 
@@ -11,9 +13,11 @@ const treePositions: TreePosition[] = [
 ]
 
 export default function page({ }) {
+    const { showAddPlantModal }: any = useGardenContext();
+    const [treePositions, setTreePositions] = useState<TreePosition[][]>([]);
     return (
         <>
-            <Garden itemPositions={treePositions} />
+            {showAddPlantModal ? <AddPlant setTreePositions={setTreePositions} /> : <Garden itemPositions={treePositions} />}
         </>
     )
 }
