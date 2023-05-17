@@ -19,14 +19,13 @@ const setCoordinatesOnMap = (setTreePositions: React.Dispatch<React.SetStateActi
     /* Calculate a random 10*10 coordinates */
     const x = Math.floor(Math.random() * 10);
     const y = Math.floor(Math.random() * 10);
-    console.log(x, y)
+    const options = ["tree_one", "tree_two", "tree_three", "tree_four"];
+    const randomIndex = Math.floor(Math.random() * options.length);
 
     /* Add the coordinate to the useState */
     setTreePositions((prevArray) => {
-        console.log("inside setTreefunction")
         const newArray = [...prevArray]
-        newArray.push(['tree_four', x, y])
-        console.log(newArray)
+        newArray.push([options[randomIndex], x, y])
         return newArray
     })
 
@@ -66,6 +65,7 @@ export default function AddPlant({ setTreePositions }: Props) {
 
             console.log('Image uploaded successfully');
             console.log('Plant name is ', PlantIdentifyData.suggestions[0].plant_name);
+
 
             setCoordinatesOnMap(setTreePositions, setAddPlantModal);
         } catch (error) {
