@@ -1,7 +1,7 @@
 /* Test Page for API */
 "use client"
 
-import { FileInput } from '@mantine/core';
+// import { FileInput } from '@mantine/core';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 

@@ -17,7 +17,7 @@ const LeaderboardPage = () => {
             <div className="flex flex-col items-center justify-center p-8">
                 
                 <div className="flex flex-row items-center justify-center">
-                    <div className="py-4 relative flex flex-col items-center">
+                    <div className="py-4 relative flex flex-col items-center h-72 justify-between">
                         <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">image</div>
                         <div className="text-gray-800 font-bold mx-10 flex-1 text-center text-xs">Jeff</div>
                         <div className="text-gray-500 px-2 text-xs">19 plants</div>
@@ -26,7 +26,7 @@ const LeaderboardPage = () => {
                         3
                         </div>
                     </div>
-                    <div className="relative flex flex-col items-center">
+                    <div className="relative flex flex-col items-center h-72 justify-between">
                         <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">image</div>
                         <div className="text-gray-800 font-bold mx-10 flex-1 text-center text-xs">Han</div>
                         <div className="text-gray-500 px-2 text-xs">28 plants</div>
@@ -35,7 +35,7 @@ const LeaderboardPage = () => {
                         2
                         </div>
                     </div>
-                    <div className="relative flex flex-col items-center">
+                    <div className="relative flex flex-col items-center h-72 justify-between">
                         <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">image</div>
                         <div className="text-gray-800 font-bold mx-10 flex-1 text-center text-xs">Andrew</div>
                         <div className="text-gray-500 px-2 text-xs">32 plants</div>
