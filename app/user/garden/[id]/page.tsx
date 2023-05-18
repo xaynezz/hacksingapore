@@ -18,7 +18,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
     const [cuisine_list, setCuisineList] = useState('');
 
     const [plantDetails, setPlantDetails] = useState<PlantDetails>();
-
+    const [recipeDetails, setRecipeDetails] = useState<RecipeDetails>();
 
 
     useEffect(() => {
@@ -50,8 +50,26 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
     
         fetchPlantDetails();
       }, [plantID]);
+
+      useEffect(() => {
+        const fetchRecipe = async () => {
+          try {
+            const response2 = await axios.post('/api/recipe', {
+              plantName: commonName
+            });
+            const recipeDetails: RecipeDetails = response2.data;
+            setRecipeDetails(recipeDetails);
+            console.log(response2.data);
+
+          } catch (error) {
+            console.error('Error fetching recipe:', error);
+          }
+        };
     
-      console.log(img)
+        fetchRecipe();
+      }, [commonName]);
+    
+      console.log({plantDetails})
     // console.log('Plant Details from Perenual is ' + plantDetails.description);
 
     return (
@@ -63,15 +81,15 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
             <div className="flex flex-col mt-8 p-2">
                 <div className="flex flex-row items-center justify-between">
                     <div className="mr-5 px-2 text-xl font-bold">Plant Name:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{commonName}</div>                    
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.common_name}</p> : <p>Loading...</p>}</div>                    
                 </div>
                 <div className="flex flex-row items-center justify-between text-xl font-bold">
                     <div className="mr-5 px-2 text-xl font-bold">Growth Rate:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{gr}</div>                    
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.growth_rate}</p> : <p>Loading...</p>}</div>                    
                 </div>
                 <div className="flex flex-row items-center justify-between text-xl font-bold">
                     <div className="mr-5 px-2 text-xl font-bold">Watering:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{watering}</div>                    
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.watering}</p> : <p>Loading...</p>}</div>                    
                 </div>
                 <div className="flex flex-row items-center justify-between text-xl font-bold">
                     <div className="mr-5 px-2 text-xl font-bold">Fruits:</div>
@@ -83,23 +101,21 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                 </div>
                 <div className="flex flex-row items-center justify-between text-xl font-bold">
                     <div className="mr-5 px-2 text-xl font-bold">Edible Fruit Taste:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{taste}</div>                    
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.edible_fruit_taste_profile}</p> : <p>Loading...</p>}</div>                    
                 </div>
-                <div className="flex flex-row items-center justify-between text-xl font-bold">
-                    <div className="mr-5 px-2 text-xl font-bold">Cuisine:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{cuisine?'True':'False'}</div>                    
-                </div>
-                <div className="flex flex-row items-center justify-between text-xl font-bold">
-                    <div className="mr-5 px-2 text-xl font-bold">Cuisine List:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{cuisine_list}</div>                    
-                </div>
+
                 <div className="flex flex-row items-center justify-between text-xl font-bold">
                     <div className="mr-5 px-2 text-xl font-bold">Cycle:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{cycle}</div>                    
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.cycle}</p> : <p>Loading...</p>}</div>                    
                 </div>
                 <div className="flex flex-row items-center justify-between">
                     <div className="mr-5 px-2 text-xl font-bold">Details:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{desc}</div>
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.description}</p> : <p>Loading...</p>}</div>
+                </div>
+
+                <div className="flex flex-row items-center justify-between">
+                    <div className="mr-5 px-2 text-xl font-bold">Recipes:</div>
+                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{recipeDetails ? <p>{recipeDetails.hits[1].recipe.label}</p> : <p>Loading...</p>}</div>
                 </div>
             </div>
         </>
