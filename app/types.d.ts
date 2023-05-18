@@ -236,3 +236,8 @@ type plantObjectForSupaBase = {
   image_url: string,
   common_name: string
 }
+
+type UserPlants = {
+  plant_name: string,
+  image_url: string
+}
