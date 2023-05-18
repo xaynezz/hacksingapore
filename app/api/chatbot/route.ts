@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-const OPENAI = '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';
+const OPENAI = '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';
 import { NextResponse } from "next/server";
 
 // Define a variable to store the conversation history
@@ -10,6 +10,13 @@ let conversationHistory = [{ role: 'user', content: 'You will be acting as  gard
 export async function POST(request: Request) {
   const body = await request.json();
   console.log(body);
+
+// add an empty one to stop the API to answer the last 2 queries (debug the issue with the weird response.)
+
+conversationHistory.push({
+  role: 'user',
+  content: ''
+});
 
   // Add the user's message to the conversation history
   conversationHistory.push({
