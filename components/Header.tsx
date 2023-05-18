@@ -8,6 +8,8 @@ interface HeaderProps {
 }
 
 function Header({ title, icon }: HeaderProps) {
+
+
     const { setAddPlantModal }: any = useGardenContext();
     return (
         <div className="flex h-12 w-full items-center justify-center bg-primary-400">

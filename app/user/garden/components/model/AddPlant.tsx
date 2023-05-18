@@ -1,10 +1,12 @@
 import { useGardenContext } from '@/app/context/gardenContext';
 import axios from 'axios';
 import React, { useState } from 'react'
+import { supabase } from "../../../../../config/dbConnect"
+import { RiPlantFill } from "react-icons/ri";
+
 interface Props {
     setTreePositions: React.Dispatch<React.SetStateAction<TreePosition[][]>>
 }
-import { RiPlantFill } from "react-icons/ri";
 
 const toBase64 = (file: File | null) =>
     new Promise<string>((resolve, reject) => {
@@ -15,28 +17,6 @@ const toBase64 = (file: File | null) =>
     });
 
 
-const setCoordinatesOnMap = (setTreePositions: React.Dispatch<React.SetStateAction<TreePosition[]>>, setAddPlantModal: any) => {
-    /* Calculate a random 10*10 coordinates & image string */
-    const x = Math.floor(Math.random() * 10);
-    const y = Math.floor(Math.random() * 10);
-    const options = ["tree_one", "tree_two", "tree_three", "tree_four"];
-    const randomIndex = Math.floor(Math.random() * options.length);
-
-    /* Add the coordinate to the useState */
-    setTreePositions((prevArray) => {
-        const newArray = [...prevArray]
-        newArray.push([options[randomIndex], x, y])
-        return newArray
-    })
-
-
-    /* Update database based on user */
-
-    /* Close the modal */
-    setAddPlantModal(false);
-}
-
-
 
 export default function AddPlant({ setTreePositions }: Props) {
     const { setAddPlantModal }: any = useGardenContext();
@@ -44,8 +24,6 @@ export default function AddPlant({ setTreePositions }: Props) {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
-
-
         } else {
             setImage(null);
         }
@@ -63,11 +41,41 @@ export default function AddPlant({ setTreePositions }: Props) {
 
             const PlantIdentifyData: PlantIdentifyApiResponse = response.data;
 
-            console.log('Image uploaded successfully');
-            console.log('Plant name is ', PlantIdentifyData.suggestions[0].plant_name);
+            /* Send POST request to backend to identify image => returns an ID */
+            const response1 = await axios.post('/api/plant', {
+                nameOfPlant: PlantIdentifyData.suggestions[0].plant_name,
+            });
 
+            const {PlantID,PlantImage} = response1.data;
 
-            setCoordinatesOnMap(setTreePositions, setAddPlantModal);
+            /* Calculate a random 10*10 coordinates & image string */
+            const x = Math.floor(Math.random() * 10);
+            const y = Math.floor(Math.random() * 10);
+            const options = ["tree_one", "tree_two", "tree_three", "tree_four"];
+            const randomIndex = Math.floor(Math.random() * options.length);
+
+            /* Add the coordinate to the useState */
+            setTreePositions((prevArray) => {
+                const newArray = [...prevArray]
+                newArray.push([options[randomIndex] + '/' + PlantID, x, y])
+                return newArray
+            })
+            console.log("Here is done!")
+            /* Send to database */
+            let plantObjectAddToDatabase: plantObjectForSupaBase = { userid: 1, x_coor: x, y_coor: y, plant_name: PlantIdentifyData.suggestions[0].plant_name, plant_id: PlantID, tree_number: options[randomIndex], image_url: PlantImage};
+
+            console.log(PlantImage);
+            const { error } = await supabase
+                .from('plants')
+                .insert(plantObjectAddToDatabase)
+            if (!error) {
+                console.log("Added successfully!");
+            } else {
+                console.log(error)
+            }
+
+            /* Close the modal */
+            setAddPlantModal(false);
         } catch (error) {
 
         }
