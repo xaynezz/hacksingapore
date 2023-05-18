@@ -57,7 +57,7 @@ export default function AddPlant({ setTreePositions }: Props) {
             /* Add the coordinate to the useState */
             setTreePositions((prevArray) => {
                 const newArray = [...prevArray]
-                newArray.push([options[randomIndex], x, y])
+                newArray.push([options[randomIndex] + '/' + plantID, x, y])
                 return newArray
             })
 
