@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     );
 
     const plantIdentifyResponseData: PlantIdentifyApiResponse = response.data;
-    console.log("Finished identifying image. The plant identified in the image is " + plantIdentifyResponseData.suggestions[0].plant_name)
     return NextResponse.json(plantIdentifyResponseData)
   } catch (error: any) {
     console.error(`Error: ${error.message}`);
