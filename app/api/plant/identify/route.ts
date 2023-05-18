@@ -6,26 +6,27 @@ import { NextResponse } from "next/server";
 /* Sends a POST request to PLANTAI to identify Plant */
 /* Returns a response data which contains name, description, probability */
 export async function POST(request: Request) {
-    const { base64String } = await request.json()
-    try {
-      const response = await axios.post(
-        'https://api.plant.id/v2/identify',
-        {
-          images: [base64String],
+
+  const { base64String } = await request.json()
+  console.log(base64String)
+  try {
+    const response = await axios.post(
+      'https://api.plant.id/v2/identify',
+      {
+        images: [base64String],
+      },
+      {
+        headers: {
+          'Api-Key': process.env.PLANTAI,
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            'Api-Key': process.env.PLANTAI,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-    
-      const plantIdentifyResponseData: PlantIdentifyApiResponse = response.data;
-      console.log("Finished identifying image. The plant identified in the image is " + plantIdentifyResponseData.suggestions[0].plant_name)
-      return NextResponse.json(plantIdentifyResponseData)
-    } catch (error: any) {
-      console.error(`Error: ${error.message}`);
-    }
+      }
+    );
+
+    const plantIdentifyResponseData: PlantIdentifyApiResponse = response.data;
+    console.log("Finished identifying image. The plant identified in the image is " + plantIdentifyResponseData.suggestions[0].plant_name)
+    return NextResponse.json(plantIdentifyResponseData)
+  } catch (error: any) {
+    console.error(`Error: ${error.message}`);
   }
-  
+}
