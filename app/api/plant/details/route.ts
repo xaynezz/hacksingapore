@@ -10,10 +10,10 @@ export async function POST(request: Request) {
     console.log(idOfPlant)
     try {
         const response = await axios.get(
-            " https://perenual.com/api/species/details/" + idOfPlant + "?key=" + process.env.PERENUAL
+            "https://perenual.com/api/species/details/" + idOfPlant + "?key=" + process.env.PERENUAL
         );
         const PlantDetails: PlantDetails= response.data;
-        console.log("Finished getting details from plantID. The details is as followed: " + PlantDetails.description)
+        //console.log("Finished getting details from plantID. The details is as followed: " + PlantDetails.description)
         return NextResponse.json(PlantDetails)
 
     } catch (error) {

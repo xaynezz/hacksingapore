@@ -10,7 +10,15 @@ const nextConfig = {
     env: {
         DB_URI: "mongodb://127.0.0.1:27017",
     },
-    reactStrictMode: false
+    reactStrictMode: false,
+    images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'perenual.com',
+          },
+        ],
+      },
 };
 
 module.exports = nextConfig;
