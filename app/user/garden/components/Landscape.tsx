@@ -41,20 +41,29 @@ const Landscape = ({ itemPositions }: LandscapeProps) => {
                         let src;
                         if (tile === 'land_both') {
                             src = "image/garden/land_both.png";
-                        } else if (tile === 'tree_four') {
+                        } else if (tile.includes('tree_four')) {
                             yAbs = yAbs - 30;
                             src = "image/garden/tree_four.png";
-                        } else if (tile === 'tree_one') {
+                        } else if (tile.includes('tree_one')) {
                             yAbs = yAbs - 19;
                             src = "image/garden/tree_one.png";
-                        } else if (tile === 'tree_two') {
+                        } else if (tile.includes('tree_two')) {
                             yAbs = yAbs - 22;
                             src = "image/garden/tree_two.png";
-                        } else if (tile === 'tree_three') {
+                        } else if (tile.includes('tree_three')) {
                             yAbs = yAbs - 20;
                             src = "image/garden/tree_three.png";
                         }
-                        return <Tile key={`${x}${y}`} src={src} x={xAbs} y={yAbs} z={z} ybase={yBaseCopy} />
+
+                        let plantID;
+                        if (tile !== 'land_both') {
+
+                            let parts = tile.split('/');
+                            plantID = parts[1];
+
+                            console.log(plantID);
+                        }
+                        return <Tile plantID={plantID} key={`${x}${y}`} src={src} x={xAbs} y={yAbs} z={z} ybase={yBaseCopy} />
                     })
                 })
             }

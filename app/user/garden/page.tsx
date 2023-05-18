@@ -1,26 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
-import Garden from "./components/Garden";
-import AddPlant from "./components/model/AddPlant";
-import { useGardenContext } from "@/app/context/gardenContext";
+import React, { useEffect, useState } from 'react'
+import Garden from './components/Garden';
+import AddPlant from './components/model/AddPlant';
+import { useGardenContext } from '@/app/context/gardenContext';
+import { supabase } from '@/config/dbConnect';
+import ListPlants from './components/listOfPlants/ListPlants';
 
-const treePositions: TreePosition[] = [
-    ["tree_four", 1, 2], // A tile of type 'tree_four' at position 1,2
-    ["tree_one", 4, 5], // A tile of type 'tree_one' at position 2,2
-];
+export default function page({ }) {
 
-export default function Page({}) {
+    useEffect(() => {
+        const fetchPlantsFromUser = async () => {
+            const { data, error } = await supabase
+                .from('plants')
+                .select('plant_id, y_coor, x_coor, tree_number')
+            const treePositions = data.map(({ tree_number, y_coor, x_coor, plant_id }) => [tree_number + '/' + plant_id, x_coor, y_coor]);
+            console.log(treePositions)
+            setTreePositions(treePositions)
+        }
+        fetchPlantsFromUser();
+    }, [])
+
     const { showAddPlantModal }: any = useGardenContext();
 
     const [treePositions, setTreePositions] = useState<TreePosition[][]>([]);
     return (
         <>
-            {showAddPlantModal ? (
-                <AddPlant setTreePositions={setTreePositions} />
-            ) : (
-                <Garden itemPositions={treePositions} />
-            )}
+
+            {showAddPlantModal ? <AddPlant setTreePositions={setTreePositions} /> : <Garden itemPositions={treePositions} />}
+            {/* <ListPlants/> */}
         </>
-    );
+    )
 }
+

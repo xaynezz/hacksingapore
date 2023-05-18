@@ -2,8 +2,10 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 import './game.css'
+import { useRouter } from 'next/navigation';
 
-const Tile = ({ src, x, y, z, ybase }: any) => {
+const Tile = ({ src, x, y, z, ybase, plantID }: any) => {
+    const router = useRouter();
 
     return (
         <>
@@ -22,7 +24,7 @@ const Tile = ({ src, x, y, z, ybase }: any) => {
                     < motion.img
 
                         whileHover={{ opacity: 0.5 }}
-                        onClick={() => console.log("hello")}
+                        onClick={() => router.push('/user/garden/' + plantID)}
                         alt="garden_tile"
                         src={src}
                         className="tile"
