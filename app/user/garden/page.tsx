@@ -5,6 +5,7 @@ import Garden from './components/Garden';
 import AddPlant from './components/model/AddPlant';
 import { useGardenContext } from '@/app/context/gardenContext';
 import { supabase } from '@/config/dbConnect';
+import ListPlants from './components/listOfPlants/ListPlants';
 
 export default function page({ }) {
 
@@ -18,7 +19,6 @@ export default function page({ }) {
             setTreePositions(treePositions)
         }
         fetchPlantsFromUser();
-
     }, [])
 
     const { showAddPlantModal }: any = useGardenContext();
@@ -26,6 +26,7 @@ export default function page({ }) {
     return (
         <>
             {showAddPlantModal ? <AddPlant setTreePositions={setTreePositions} /> : <Garden itemPositions={treePositions} />}
+            {/* <ListPlants/> */}
         </>
     )
 }

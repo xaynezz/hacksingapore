@@ -24,7 +24,7 @@ const Tile = ({ src, x, y, z, ybase, plantID }: any) => {
                     < motion.img
 
                         whileHover={{ opacity: 0.5 }}
-                        onClick={() => router.push('/' + plantID)}
+                        onClick={() => router.push('/user/garden/' + plantID)}
                         alt="garden_tile"
                         src={src}
                         className="tile"

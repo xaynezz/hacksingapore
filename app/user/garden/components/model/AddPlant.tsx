@@ -46,7 +46,7 @@ export default function AddPlant({ setTreePositions }: Props) {
                 nameOfPlant: PlantIdentifyData.suggestions[0].plant_name,
             });
 
-            const plantID: number = response1.data;
+            const {PlantID,PlantImage} = response1.data;
 
             /* Calculate a random 10*10 coordinates & image string */
             const x = Math.floor(Math.random() * 10);
@@ -57,13 +57,14 @@ export default function AddPlant({ setTreePositions }: Props) {
             /* Add the coordinate to the useState */
             setTreePositions((prevArray) => {
                 const newArray = [...prevArray]
-                newArray.push([options[randomIndex] + '/' + plantID, x, y])
+                newArray.push([options[randomIndex] + '/' + PlantID, x, y])
                 return newArray
             })
-
+            console.log("Here is done!")
             /* Send to database */
-            let plantObjectAddToDatabase: plantObjectForSupaBase = { userid: 1, x_coor: x, y_coor: y, plant_name: PlantIdentifyData.suggestions[0].plant_name, plant_id: plantID, tree_number: options[randomIndex] };
+            let plantObjectAddToDatabase: plantObjectForSupaBase = { userid: 1, x_coor: x, y_coor: y, plant_name: PlantIdentifyData.suggestions[0].plant_name, plant_id: PlantID, tree_number: options[randomIndex], image_url: PlantImage};
 
+            console.log(PlantImage);
             const { error } = await supabase
                 .from('plants')
                 .insert(plantObjectAddToDatabase)
