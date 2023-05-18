@@ -6,16 +6,9 @@ import Image from 'next/image';
 const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
     const plantID = params.id;
     const [commonName, setCommonName] = useState<string | null>(null);
-    const [desc, setDesc] = useState<string | null>(null);
     const [img, setImg] = useState('');
-    const [gr, setGr] = useState('');
-    const [cycle, setCycle] = useState('');
     const [fruits, setFruits] = useState(false);
     const [el, setEL] = useState(false);
-    const [taste, setTaste] = useState('');
-    const [watering, setWatering] = useState('');
-    const [cuisine, setCuisine] = useState(false);
-    const [cuisine_list, setCuisineList] = useState('');
 
     const [plantDetails, setPlantDetails] = useState<PlantDetails>();
     const [recipeDetails, setRecipeDetails] = useState<RecipeDetails>();
@@ -32,16 +25,9 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
             setPlantDetails(plantDetails);
 
             setCommonName(plantDetails.common_name);
-            setDesc(plantDetails.description)
             setImg(plantDetails.default_image.regular_url)
-            setGr(plantDetails.growth_rate)
-            setCycle(plantDetails.cycle)
             setFruits(plantDetails.fruits)
             setEL(plantDetails.edible_leaf)
-            setTaste(plantDetails.edible_fruit_taste_profile)
-            setWatering(plantDetails.watering)
-            setCuisine(plantDetails.cuisine)
-            setCuisineList(plantDetails.cuisine_list)
 
           } catch (error) {
             console.error('Error fetching plant details:', error);
