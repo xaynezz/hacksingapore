@@ -233,5 +233,6 @@ type plantObjectForSupaBase = {
   plant_name: string,
   plant_id: number,
   tree_number: string,
-  image_url: string
+  image_url: string,
+  common_name: string
 }
