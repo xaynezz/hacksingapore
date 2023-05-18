@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TypingAnimation from '@/components/TypingAnimation';
 import BackButton from '@/components/BackButton';
-const OPENAI = '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'
+
 interface Message {
   type: string;
   message: string;
@@ -17,6 +17,17 @@ const Chatbot: React.FC = () => {
   const [chatLog, setChatLog] = useState<Message[]>([]);
   // Loading waiting for API response
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  //prompt for OPENAI
+  var prompt = "You will be acting as  gardey , the AI chatbot for a mobile application focused on gardening and plants. Your purpose is to assist users in their gardening journey, providing helpful information, tips, and answering questions. You should engage in a helpful and informative dialogue, offering suggestions, troubleshooting techniques, and relevant plant care instructions to ensure a successful gardening experience.";
+
+  //default message by chatbot
+    useEffect(() => {
+      const initialMessage = {
+        type: 'bot',
+        message: 'Hello, how can I assist you today?',
+      };
+      setChatLog((prevChatLog) => [...prevChatLog, initialMessage]);
+    }, []);
 
   // Handle the event when the user sends a message to prevent reload
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,24 +36,24 @@ const Chatbot: React.FC = () => {
       ...prevChatLog,
       { type: 'user', message: inputValue },
     ]);
+
     // When user sends a message, it calls the API
     sendMessage(inputValue);
     setInputValue('');
   };
 
-  //default message by chatbot
-  useEffect(() => {
-    const initialMessage = {
-      type: 'bot',
-      message: 'Hello, how can I assist you today?',
-    };
-    setChatLog((prevChatLog) => [...prevChatLog, initialMessage]);
-  }, []);
+
+
+    /*To pre-prompt OPENAI
+    const train = async (message: string) => {
+    axios.post('/api/chatbot', {data: message}).then((response) => {
+    console.log(response);})} */
+
 
   // To get response from OPENAI
   const sendMessage = async (message: string) => {
+      //train(prompt);
       //const url = '/api/chatbot';
-
       setIsLoading(true);
       /*testing
       const res = await axios.post('/api/chatbot', {data:message});
@@ -50,12 +61,13 @@ const Chatbot: React.FC = () => {
       
     
       axios.post('/api/chatbot', {data: message}).then((response) => {
-      console.log(response);
        
       const botmessage = response.data.choices[0].message.content;
+      console.log(botmessage);
+
       const formattedResponse = botmessage.split('\n\n');
       
-      //console.log(formattedResponse);
+      console.log(formattedResponse);
       setChatLog((prevChatLog) => [
           ...prevChatLog,
           {
@@ -111,7 +123,7 @@ const Chatbot: React.FC = () => {
       </div>
  
       <form onSubmit={handleSubmit} className="flex-none p-6">
-  <div className="flex rounded-lg border border-white-700 bg-white-800">
+    <div className="flex rounded-lg border border-white-700 bg-white-800">
     <input
       type="text"
       className="flex-grow px-4 py-2 bg-transparent text-black focus:outline-none"
@@ -122,8 +134,8 @@ const Chatbot: React.FC = () => {
     <button type="submit" className="bg-primary-400 rounded-lg px-4 py-2 text-white font-semibold focus:outline-none hover:bg-primary-500 transition-colors duration-300">
       Send
     </button>
-  </div>
-</form>
+    </div>
+    </form>
 
     </div>
 
