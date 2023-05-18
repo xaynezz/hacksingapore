@@ -22,13 +22,14 @@ export default function page({ }) {
     }, [])
 
     const { showAddPlantModal }: any = useGardenContext();
+
     const [treePositions, setTreePositions] = useState<TreePosition[][]>([]);
     return (
         <>
+
             {showAddPlantModal ? <AddPlant setTreePositions={setTreePositions} /> : <Garden itemPositions={treePositions} />}
             {/* <ListPlants/> */}
         </>
     )
 }
-
 
