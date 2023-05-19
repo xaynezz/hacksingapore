@@ -25,15 +25,17 @@ function Page() {
     const { user }: any = useGardenContext();
 
     useEffect(() => {
-        // async function getBool() {
-        //     const { data, error } = await supabase
-        //         .from("countries")
-        //         .select("name")
-        //         .limit(1)
-        //         .single();
-        //     console.log(data, error);
-        // }
-    }, []);
+        async function getBool() {
+            console.log(user.id);
+            const { data, error } = await supabase
+                .from("user")
+                .select("uuid, returning_user")
+                .eq("uuid", user.id);
+            console.log(data[0].returning_user);
+            if (data[0].returning_user) router.push("/user/garden");
+        }
+        if (user) getBool();
+    }, [user, router]);
 
     async function handleSubmit(e: any) {
         e.preventDefault();
@@ -42,7 +44,19 @@ function Page() {
         const experience = e.target.experience.value;
         const type = e.target.type.value;
 
-        console.log(climate, space, experience, type);
+        const { data, error } = await supabase
+            .from("user")
+            .update([
+                {
+                    returning_user: true,
+                    climate: climate,
+                    space: space,
+                    experience: experience,
+                    type: type,
+                },
+            ])
+            .eq("uuid", user.id);
+        console.log(data, error);
     }
 
     return (
@@ -132,7 +146,7 @@ function Page() {
                 </div>
 
                 <button
-                    className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white"
+                    className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400"
                     type="submit"
                     form="details-form"
                 >
