@@ -8,7 +8,7 @@ import { supabase } from '@/config/dbConnect';
 import ListPlants from './components/listOfPlants/ListPlants';
 
 export default function page({ }) {
-
+    const { showAddPlantModal }: any = useGardenContext();
     useEffect(() => {
         const fetchPlantsFromUser = async () => {
             const { data, error } = await supabase
@@ -26,9 +26,9 @@ export default function page({ }) {
             setArrayOfUserPLants(plantsList);
         }
         fetchPlantsFromUser();
-    }, [])
+    }, [showAddPlantModal])
 
-    const { showAddPlantModal }: any = useGardenContext();
+
     const [treePositions, setTreePositions] = useState<TreePosition[][]>([]);
     const [arrayOfUserPLants, setArrayOfUserPLants] = useState<UserPlants[]>([]);
     console.log(arrayOfUserPLants);
@@ -36,7 +36,7 @@ export default function page({ }) {
         <>
             {showAddPlantModal ? <AddPlant setTreePositions={setTreePositions} /> :
                 <>
-                    <Garden itemPositions={treePositions} />                
+                    <Garden itemPositions={treePositions} />
                     <ListPlants arrayOfUserPLants={arrayOfUserPLants} />
                 </>}
 

@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react';
 
 type Props = {
     arrayOfUserPLants: UserPlants[];
@@ -8,16 +8,18 @@ type Props = {
 export default function ListPlants({ arrayOfUserPLants }: Props) {
 
     return (
-        <div className="absolute right-0 bottom-20 w-48"> {/* Decreased width of the container */}
-            <h1 className="text-lg font-bold text-center">Available Plants</h1>
-            <div>
+        <div className="p-4">
+
+            <h1 className="text-xl text-center text-green-500 font-semibold mb-4 pt-40">A Peek into My Plant Collection</h1>
+            <div className="grid grid-cols-2 gap-4">
                 {arrayOfUserPLants.map((plant, index) => (
-                    <div key={index} className="bg-white rounded shadow-lg p-3">
-                        <img className="w-full h-16 object-cover mb-3 rounded" src={plant.image_url} alt={plant.plant_name} /> {/* Decreased height of the image */}
-                        <p className="text-gray-800 font-semibold text-xs">{plant.plant_name}</p> {/* Decreased font size */}
+                    <div key={index} className="p-4 border border-gray-200 rounded-lg">
+                        <img className="object-cover h-48 w-full mb-2 rounded-lg" src={plant.image_url} alt={plant.plant_name} />
+                        <h2 className="text-center text-lg mt-2">{plant.plant_name}</h2>
                     </div>
                 ))}
             </div>
         </div>
+
     )
 }
