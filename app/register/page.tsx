@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { supabase } from "@/config/supaClient";
+import { supabase } from "@/config/dbConnect";
 import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {

@@ -3,7 +3,7 @@
 import React, { use, useEffect } from "react";
 import { useGardenContext } from "@/app/context/gardenContext";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/config/supaClient";
+import { supabase } from "@/config/dbConnect";
 
 const climateOptions = [
     "Tropical",
