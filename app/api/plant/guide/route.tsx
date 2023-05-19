@@ -11,13 +11,14 @@ export async function POST(request: Request) {
         `https://perenual.com/api/species-care-guide-list?key=${process.env.PERENUAL}&species_id=${plant_id}`
     )
     const res = response.data;
+    //console.log('guide route reponse:',res)
     const section = res.data[0].section;
-    console.log('guide route reponse:',section)
+    //console.log('guide route reponse:',section)
 
-    //return section
-    if (section)  
-        return NextResponse.json(section)
-    else 
-        return undefined
+    return NextResponse.json(section)
+    // if (section)  
+    //     return NextResponse.json(section)
+    // else 
+    //     return undefined
 
 }
