@@ -1,3 +1,4 @@
+"use client"
 import { useGardenContext } from '@/app/context/gardenContext';
 import axios from 'axios';
 import React, { useState } from 'react'
@@ -15,10 +16,10 @@ const toBase64 = (file: File | null) =>
 
 
 export default function AddPlant() {
-    const { setAddPlantModal }: any = useGardenContext();
+    const { setAddPlantModal, userUUID }: any = useGardenContext();
     const [image, setImage] = useState<File | null>(null);
     const [isLoading, setLoading] = useState<boolean>(false);
-
+    console.log("userID" + userUUID)
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -54,7 +55,7 @@ export default function AddPlant() {
 
             /* Send to database */
             let plantObjectAddToDatabase: plantObjectForSupaBase = {
-                userid: 1,
+                uuid: userUUID,
                 x_coor: x,
                 y_coor: y,
                 plant_name: PlantIdentifyData.suggestions[0].plant_name,

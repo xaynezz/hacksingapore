@@ -227,7 +227,7 @@ type PlantHealthAssessment = {
 type TreePosition = [string, number, number];
 
 type plantObjectForSupaBase = {
-  userid: number,
+  uuid: string,
   x_coor: number,
   y_coor: number,
   plant_name: string,
