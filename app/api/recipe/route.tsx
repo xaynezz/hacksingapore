@@ -9,7 +9,6 @@ export async function POST(request: Request) {
   const { plantName } = await request.json();
   console.log('reached recipe api')
     console.log('recipe route plantName:',plantName)
-    const test = 'chicken'
   try {
     const response = await axios.get(`https://api.edamam.com/api/recipes/v2?app_id=${APP_ID}&app_key=${APP_KEY}&q=${plantName}&type=any`);
     const recipes = response.data;
