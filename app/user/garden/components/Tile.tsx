@@ -1,47 +1,49 @@
-// "use client";
-// import { motion } from 'framer-motion';
-// import React from 'react';
-// import './game.css'
+"use client";
+import { motion } from 'framer-motion';
+import React from 'react';
+import './game.css'
+import { useRouter } from 'next/navigation';
 
-// const Tile = ({ src, x, y, z, ybase }: any) => {
+const Tile = ({ src, x, y, z, ybase, plantID }: any) => {
+    const router = useRouter();
 
-//     return (
-//         <>
-//             {
-//                 src && src.includes('tree') ? <>
+    return (
+        <>
+            {
+                src && src.includes('tree') ? <>
 
-//                     <motion.img
-//                         whileHover={{ opacity: 0.2 }
+                    <motion.img
+                        whileHover={{ opacity: 0.2 }
 
-//                         }
-//                         alt="garden_tile"
-//                         src="/user/image/garden/land_both.png"
-//                         className="tile"
-//                         style={{ left: `${x}%`, top: `${ybase}%`, zIndex: z }}
-//                     />
-//                     < motion.img
+                        }
+                        alt="garden_tile"
+                        src="/user/image/garden/land_both.png"
+                        className="tile"
+                        style={{ left: `${x}%`, top: `${ybase}%`, zIndex: z }}
+                    />
+                    < motion.img
 
-//                         whileHover={{ opacity: 0.5 }}
-//                         onClick={() => console.log("hello")}
-//                         alt="garden_tile"
-//                         src={src}
-//                         className="tile"
-//                         style={{ left: `${x}%`, top: `${y}%`, zIndex: z }}
-//                     />
-//                 </>
-//                     :
-//                     < motion.img
+                        whileHover={{ opacity: 0.5 }}
+                        onClick={() => router.push('/user/garden/' + plantID)}
+                        alt="garden_tile"
+                        src={src}
+                        className="tile"
+                        style={{ left: `${x}%`, top: `${y}%`, zIndex: z }}
+                    />
+                </>
+                    :
+                    < motion.img
 
-//                         whileHover={{ opacity: 0.5 }}
-//                         alt="garden_tile"
-//                         src={src}
-//                         className="tile"
-//                         style={{ left: `${x}%`, top: `${y}%`, zIndex: z }}
-//                     />
-//             }
+                        whileHover={{ opacity: 0.5 }}
+                        alt="garden_tile"
+                        src={src}
+                        className="tile"
+                        style={{ left: `${x}%`, top: `${y}%`, zIndex: z }}
+                    />
+            }
 
-//         </>
-//     );
-// }
+        </>
+    );
+}
 
-// export default Tile;
+export default Tile;
