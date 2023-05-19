@@ -1,12 +1,33 @@
 "use client";
+
 import Link from "next/link";
+import { supabase } from "@/config/dbConnect";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
+    const router = useRouter();
+    async function handleLogin(e: any) {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+
+        if (!error) {
+            router.push("/firsttime");
+        } else {
+            alert(error);
+        }
+    }
     return (
         <main className="flex h-full w-full flex-col items-center justify-center bg-green-500">
             <h1 className="mb-10 text-3xl font-bold text-white">GardenApp</h1>
             <form
                 id="login-form"
+                onSubmit={handleLogin}
                 className="flex flex-col items-center justify-center gap-5"
             >
                 <div className="flex flex-col">
