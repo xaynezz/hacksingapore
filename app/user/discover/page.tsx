@@ -60,7 +60,7 @@ const Discover = (props: Props) => {
 
       const generatePlantDetail = (order:number, size = 150) => {
         return(allObj[order] && 
-            <>
+            <div className="relative flex flex-col items-center">
                 <div className="text-gray-800 font-bold mx-auto flex-1 text-center ">
                     {allObj[order] ? allObj[order].common_name : "loading"}
                 </div>
@@ -75,7 +75,7 @@ const Discover = (props: Props) => {
             <div>
                 edible leaf: {edibleLeaf[order] ? 'yes' : 'no'}
             </div>
-            </>
+            </div>
 
         )
       }
@@ -93,22 +93,18 @@ const Discover = (props: Props) => {
         
         
         <div className="py-4 px-7 flex justify-between ">
-            <div className="relative flex flex-col items-center">
-                {generatePlantDetail(0)}
-            </div>
-
-            <div className="relative flex flex-col items-center">
-                {generatePlantDetail(1)}
-            </div>
+        {[0, 1].map((index) => (
+            <React.Fragment key={index}>
+                {generatePlantDetail(index)}
+            </React.Fragment>
+        ))}
         </div>
         <div className="py-4 px-7 flex justify-between ">
-            <div className="relative flex flex-col items-center">
-                {generatePlantDetail(2)}
-            </div>
-
-            <div className="relative flex flex-col items-center">
-                {generatePlantDetail(3)}
-            </div>
+            {[2, 3].map((index) => (
+                <React.Fragment key={index}>
+                    {generatePlantDetail(index)}
+                </React.Fragment>
+            ))}
         </div>
         
 
