@@ -24,6 +24,8 @@ export default function RegisterPage() {
             password: password,
         });
 
+        console.log(data);
+
         if (!error) {
             const { error } = await supabase.from("user").insert([
                 {
@@ -96,7 +98,7 @@ export default function RegisterPage() {
                     />
                 </div>
                 <button
-                    className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white"
+                    className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400"
                     type="submit"
                     form="register-form"
                 >
@@ -105,8 +107,8 @@ export default function RegisterPage() {
                 <div className="flex items-center justify-center gap-1 ">
                     <p className="text-white">Already have an account?</p>
                     <Link
-                        href="/"
-                        className="font-semibold text-secondarydark-400"
+                        href="/login"
+                        className="font-semibold text-secondarydark-400 "
                     >
                         Sign in
                     </Link>
