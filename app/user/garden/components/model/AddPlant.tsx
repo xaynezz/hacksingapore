@@ -4,10 +4,6 @@ import React, { useState } from 'react'
 import { supabase } from "../../../../../config/dbConnect"
 import { RiPlantFill } from "react-icons/ri";
 
-interface Props {
-    setTreePositions: React.Dispatch<React.SetStateAction<TreePosition[][]>>
-}
-
 const toBase64 = (file: File | null) =>
     new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
@@ -18,9 +14,11 @@ const toBase64 = (file: File | null) =>
 
 
 
-export default function AddPlant({ setTreePositions }: Props) {
+export default function AddPlant() {
     const { setAddPlantModal }: any = useGardenContext();
     const [image, setImage] = useState<File | null>(null);
+    const [isLoading, setLoading] = useState<boolean>(false);
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -30,7 +28,7 @@ export default function AddPlant({ setTreePositions }: Props) {
     }
 
     const handleSubmit = async () => {
-        console.log("Clicked submit button!")
+        setLoading(true);
         try {
             const base64File = await toBase64(image);
 
@@ -76,6 +74,7 @@ export default function AddPlant({ setTreePositions }: Props) {
             }
 
             /* Close the modal */
+            setLoading(false)
             setAddPlantModal(false);
         } catch (error) {
 
@@ -107,7 +106,12 @@ export default function AddPlant({ setTreePositions }: Props) {
                                 </div>
                             </div>
                             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button type="submit" onClick={handleSubmit} className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Add Plant</button>
+                                <button
+                                    type="submit"
+                                    onClick={handleSubmit}
+                                    className={`inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm sm:ml-3 sm:w-auto ${isLoading ? 'bg-gray-500 text-white cursor-not-allowed' : 'bg-green-600 text-white hover:bg-green-500'}`}                                >
+                                    {isLoading ? 'Loading...' : 'Add Plant'}
+                                </button>
                                 <button type="button" onClick={() => setAddPlantModal(false)} className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                             </div>
                         </div>
