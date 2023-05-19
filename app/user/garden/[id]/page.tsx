@@ -103,11 +103,11 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
             </div> */}
 
             <div className="flex flex-col mt-8 p-2">
-                <div className="px-6 lg:px-8 border rounded-xl">
-                  <div className="text-center p-32">
+                <div className="border rounded-xl">
+                  <div className="text-center py-32">
                     <h2 className="text-4xl font-bold tracking-tight text-black sm:text-6xl">{plantDetails?.common_name}</h2>
-                    <p className="mt-6 text-lg pr-4 leading-8 text-gray-800">{plantDetails?.scientific_name}</p>
-                    <RecipeButton href='/garden/recipes'/>
+                    <p className=" italic mt-6 text-lg leading-8 text-gray-800">{plantDetails?.scientific_name}</p>
+                    {/* <RecipeButton href='/garden/recipes'/> */}
                   </div>
                 </div>
 
@@ -130,7 +130,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                     <div className="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                       <div className="lg:pr-4">
                         <div className="lg:max-w-lg">
-                          <p className="text-base font-semibold leading-7 text-indigo-600">Deploy faster</p>
+                          <p className="text-base font-semibold leading-7 text-indigo-600">{plantDetails?.common_name}</p>
                           <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Plant Details</h1>
                           <p className="mt-6 text-xl leading-8 text-gray-700">{plantDetails?.description}</p>
                         </div>
@@ -182,9 +182,9 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                                 <path d="M4.632 3.533A2 2 0 016.577 2h6.846a2 2 0 011.945 1.533l1.976 8.234A3.489 3.489 0 0016 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234z" />
                                 <path fill-rule="evenodd" d="M4 13a2 2 0 100 4h12a2 2 0 100-4H4zm11.24 2a.75.75 0 01.75-.75H16a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75h-.01a.75.75 0 01-.75-.75V15zm-2.25-.75a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-.01z" clip-rule="evenodd" />
                               </svg>
-                              <span><strong className="font-semibold text-gray-900">Recipes</strong>
+                              <span className="inline"><strong className=" inline font-semibold text-gray-900">Recipes</strong>
                                 {recipeDetails && recipeDetails.hits.length > 0 
-                                ? <p>{recipeDetails.hits[1].recipe.label}</p> : <p>There are no recipes for this plant.</p>}
+                                ? <p className='inline'> {recipeDetails.hits[1].recipe.label}</p> : <p className='inline'> There are no recipes for this plant.</p>}
                               </span>
                             </li>
                           </ul>
@@ -237,7 +237,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                 </div> */}
 
                 <div className="px-6 lg:px-8 border rounded-xl">
-                  <div className="text-center p-32">
+                  <div className="text-center py-32">
                     <h2 className="text-4xl font-bold tracking-tight text-black sm:text-6xl">Plant Care Guide</h2>
                     <p className="mt-6 text-lg leading-8 text-gray-800">Tips on caring for your new plant.</p>
                   </div>
@@ -251,7 +251,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                         <div className="lg:max-w-lg">
                           <p className="text-base font-semibold leading-7 text-indigo-600">Plant Care</p>
                           <h1 className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{item.type}</h1>
-                          <p className="mt-6 text-xl leading-8 text-gray-700">{item.description}</p>
+                          <p className="mt-6 text-xl leading-8 text-gray-700">{item? item.description: <p>Coming Soon!</p>}</p>
                         </div>
                       </div>
                     </div>

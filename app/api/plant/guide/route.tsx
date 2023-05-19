@@ -15,6 +15,9 @@ export async function POST(request: Request) {
     console.log('guide route reponse:',section)
 
     //return section
-    return NextResponse.json(section)
+    if (section)  
+        return NextResponse.json(section)
+    else 
+        return undefined
 
 }
