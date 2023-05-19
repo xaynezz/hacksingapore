@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import BackButton from '@/components/BackButton';
 import Image from 'next/image';
 import axios from 'axios';
-
+import { FaCheck } from 'react-icons/fa';
 
 const Discover = (props: Props) => {
     const {} = props;
@@ -16,6 +16,8 @@ const Discover = (props: Props) => {
 
     const [img, setImg] = useState<string[]>([]);
     const [commonName, setCommonName] = useState<string[]>([]);
+    const [fruit, setFruit] = useState<boolean[]>([]);
+    const [edibleLeaf, setEdibleLeaf] = useState<boolean[]>([]);
 
 
     useEffect(() => {
@@ -29,6 +31,8 @@ const Discover = (props: Props) => {
             // Create a new array with the current image added
             setImg((prevImages) => [...prevImages, plantDetails.default_image.regular_url]);
             setCommonName((prevcommonName) => [...prevcommonName, plantDetails.common_name]);
+            setFruit((prevFruit) => [...prevFruit, plantDetails.fruits]);
+            setEdibleLeaf((prevEdibleLeaf) => [...prevEdibleLeaf, plantDetails.edible_leaf]);
           } catch (error) {
             console.error('Error fetching plant details:', error);
           }
@@ -45,11 +49,20 @@ const Discover = (props: Props) => {
 
       const generatePlantImg = (order:number, size = 150) => {
         return(
+            <>
             <div className="w-36 h-36 squared-full flex items-center justify-center">
                 <a href={`/user/discover/${examplePlantId[order]}`}>
                     <Image src={img[order]} width={size} height={size} alt={`Image ${order}`} />
                 </a>
             </div>
+            <div>
+                fruit: {fruit[order] ? 'yes' : 'no'}
+            </div>
+            <div>
+                edible leaf: {edibleLeaf[order] ? 'yes' : 'no'}
+            </div>
+            </>
+
         )
       }
     
