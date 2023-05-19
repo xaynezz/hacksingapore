@@ -13,7 +13,13 @@ export async function POST(request: Request) {
     );
     const PerenualDataResponse: PerenualDataResponse = response.data;
     const PlantID = PerenualDataResponse.data[0].id;
-    return NextResponse.json(PlantID)
+    const PlantImage = PerenualDataResponse.data[0].default_image.thumbnail;
+    const PlantCommonName = PerenualDataResponse.data[0].common_name;
+    return NextResponse.json({
+      PlantID: PlantID,
+      PlantImage: PlantImage,
+      PlantCommonName: PlantCommonName
+    })
   } catch (error) {
     console.error('Error fetching species:', error);
   }

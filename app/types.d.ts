@@ -1,21 +1,21 @@
 type PlantIdentifyApiResponse = {
-    images: [
-      {
-        file_name: string,
-        url: string
-      }
-    ],
-    suggestions: [
-      {
-        id: number,
-        plant_name: string,
-        plant_details: object,
-        probability: number,
-        confirmed: boolean
-      }
-    ],
-    is_plant_probability: number,
-    is_plant: boolean
+  images: [
+    {
+      file_name: string,
+      url: string
+    }
+  ],
+  suggestions: [
+    {
+      id: number,
+      plant_name: string,
+      plant_details: object,
+      probability: number,
+      confirmed: boolean
+    }
+  ],
+  is_plant_probability: number,
+  is_plant: boolean
 }
 
 type PerenualDataResponse = {
@@ -37,6 +37,100 @@ type PerenualDataResponse = {
     }
   }>
 }
+
+type RecipeDetails = {
+  from: number;
+  to: number;
+  count: number;
+  _links: {
+    self: {
+      href: string;
+      title: string;
+    };
+    next: {
+      href: string;
+      title: string;
+    };
+  };
+  hits: {
+    recipe: {
+      uri: string;
+      label: string;
+      image: string;
+      images: {
+        THUMBNAIL: {
+          url: string;
+          width: number;
+          height: number;
+        };
+        SMALL: {
+          url: string;
+          width: number;
+          height: number;
+        };
+        REGULAR: {
+          url: string;
+          width: number;
+          height: number;
+        };
+        LARGE: {
+          url: string;
+          width: number;
+          height: number;
+        };
+      };
+      source: string;
+      url: string;
+      shareAs: string;
+      yield: number;
+      dietLabels: string[];
+      healthLabels: string[];
+      cautions: string[];
+      ingredientLines: string[];
+      ingredients: {
+        text: string;
+        quantity: number;
+        measure: string;
+        food: string;
+        weight: number;
+        foodId: string;
+      }[];
+      calories: number;
+      glycemicIndex: number;
+      totalCO2Emissions: number;
+      co2EmissionsClass: string;
+      totalWeight: number;
+      cuisineType: string[];
+      mealType: string[];
+      dishType: string[];
+      instructions: string[];
+      tags: string[];
+      externalId: string;
+      totalNutrients: Record<string, unknown>; // Make sure to replace this with your actual nutrients structure
+      totalDaily: Record<string, unknown>; // Replace this with actual daily structure
+      digest: {
+        label: string;
+        tag: string;
+        schemaOrgTag: string;
+        total: number;
+        hasRDI: boolean;
+        daily: number;
+        unit: string;
+        sub: Record<string, unknown>; // Replace this with actual sub structure
+      }[];
+    };
+    _links: {
+      self: {
+        href: string;
+        title: string;
+      };
+      next: {
+        href: string;
+        title: string;
+      };
+    };
+  }[];
+};
 
 type PlantDetails = {
   id: number,
@@ -129,3 +223,16 @@ type PlantHealthAssessment = {
   is_healthy: boolean;
   diseases: PlantDisease[];
 };
+
+type TreePosition = [string, number, number];
+
+type plantObjectForSupaBase = {
+  userid: number,
+  x_coor: number,
+  y_coor: number,
+  plant_name: string,
+  plant_id: number,
+  tree_number: string,
+  image_url: string,
+  common_name: string
+}

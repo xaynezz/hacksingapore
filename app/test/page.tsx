@@ -1,7 +1,7 @@
 /* Test Page for API */
 "use client"
 
-import { FileInput } from '@mantine/core';
+// import { FileInput } from '@mantine/core';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
@@ -76,12 +76,8 @@ export default function test({ }: Props) {
   };
 
   return (
-    <FileInput
-      placeholder="Pick file"
-      label="Your resume"
-      withAsterisk
-      accept="image/png,image/jpeg"
-      onChange={handleFileChange}
-    />
+    <>
+    <h1>hello</h1>
+    </>
   )
 }

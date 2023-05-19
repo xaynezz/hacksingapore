@@ -1,39 +1,70 @@
 "use client";
-import axios from "axios";
 
-export default function Home() {
-    async function handleRegister(e: any) {
+import Link from "next/link";
+import { supabase } from "@/config/supaClient";
+import { useRouter } from "next/navigation";
+
+export default function HomePage() {
+    const router = useRouter();
+    async function handleLogin(e: any) {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        try {
-            const { data } = await axios.post("/api/register", {
-                email,
-                password,
-            });
-            console.log(data);
-        } catch (error) {
-            console.log(error);
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+
+        if (!error) {
+            router.push("/firsttime");
+        } else {
+            alert(error);
         }
     }
-
     return (
-        <main>
-            <form id="register-form" onSubmit={handleRegister}>
-                <input type="email" name="email" id="email" />
-                <input type="password" name="password" id="password" />
-                <input type="password" name="cfmpassword" id="cfmpassword" />
+        <main className="flex h-full w-full flex-col items-center justify-center bg-green-500">
+            <h1 className="mb-10 text-3xl font-bold text-white">GardenApp</h1>
+            <form
+                id="login-form"
+                onSubmit={handleLogin}
+                className="flex flex-col items-center justify-center gap-5"
+            >
+                <div className="flex flex-col">
+                    <h1 className="font-semibold text-white">Email</h1>
+                    <input
+                        className="h-8 w-64 px-1"
+                        type="email"
+                        name="email"
+                        id="email"
+                    />
+                </div>
+                <div className="flex flex-col">
+                    <h1 className="font-semibold text-white">Password</h1>
+                    <input
+                        className="h-8 w-64 px-1"
+                        type="password"
+                        name="password"
+                        id="password"
+                    />
+                </div>
+                <button
+                    className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white"
+                    type="submit"
+                    form="login-form"
+                >
+                    Login
+                </button>
+                <div className="flex items-center justify-center gap-1">
+                    <p className="text-white">New user?</p>
+                    <Link
+                        href="/register"
+                        className="font-semibold text-secondarydark-400"
+                    >
+                        Register here
+                    </Link>
+                </div>
             </form>
-            <button type="submit" form="register-form">
-                Register
-            </button>
-            <form id="login-form">
-                <input type="email" name="email" id="email" />
-                <input type="password" name="password" id="password" />
-            </form>
-            <button className="flex" type="submit" form="login-form">
-                Login
-            </button>
         </main>
     );
 }
