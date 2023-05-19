@@ -9,18 +9,9 @@ import { FaCheck } from 'react-icons/fa';
 
 const Discover = (props: Props) => {
     const {} = props;
-    console.log("props below")
-    console.log(props)
 
     const examplePlantId = [791, 5022, 2251, 1595]
-
-    const [img, setImg] = useState<string[]>([]);
-    const [commonName, setCommonName] = useState<string[]>([]);
-    const [fruit, setFruit] = useState<boolean[]>([]);
-    const [edibleLeaf, setEdibleLeaf] = useState<boolean[]>([]);
     const [allObj, setAllObj] = useState<any>([])
-
-
 
     useEffect(() => {
         const fetchPlantDetails = async (plantId: number) => {
@@ -37,11 +28,6 @@ const Discover = (props: Props) => {
                 edibleLeaf : plantDetails.edible_leaf
             }
             setAllObj((prevAllObj:any) => [...prevAllObj, requiredData])
-
-            setImg((prevImages) => [...prevImages, plantDetails.default_image.regular_url]);
-            setCommonName((prevcommonName) => [...prevcommonName, plantDetails.common_name]);
-            setFruit((prevFruit) => [...prevFruit, plantDetails.fruits]);
-            setEdibleLeaf((prevEdibleLeaf) => [...prevEdibleLeaf, plantDetails.edible_leaf]);
           } catch (error) {
             console.error('Error fetching plant details:', error);
           }
@@ -70,17 +56,15 @@ const Discover = (props: Props) => {
                 </a>
             </div>
             <div>
-                fruit: {fruit[order] ? 'yes' : 'no'}
+                fruit: {allObj[order].fruits ? 'yes' : 'no'}
             </div>
             <div>
-                edible leaf: {edibleLeaf[order] ? 'yes' : 'no'}
+                edible leaf: {allObj[order].edibleLeaf ? 'yes' : 'no'}
             </div>
             </div>
 
         )
       }
-    
-
     return(
     <div className="h-[1000px] bg-FFFBEF-300">
 
@@ -106,10 +90,6 @@ const Discover = (props: Props) => {
                 </React.Fragment>
             ))}
         </div>
-        
-
-
-    
     </div>
     )
 }
