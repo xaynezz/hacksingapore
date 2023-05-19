@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { supabase } from "@/config/supaClient";
+import { supabase } from "@/config/dbConnect";
 
 const GardenContext = createContext({});
 
