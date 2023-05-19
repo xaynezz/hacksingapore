@@ -18,6 +18,8 @@ const Discover = (props: Props) => {
     const [commonName, setCommonName] = useState<string[]>([]);
     const [fruit, setFruit] = useState<boolean[]>([]);
     const [edibleLeaf, setEdibleLeaf] = useState<boolean[]>([]);
+    const [allObj, setAllObj] = useState<any>([])
+
 
 
     useEffect(() => {
@@ -27,8 +29,15 @@ const Discover = (props: Props) => {
               idOfPlant: plantId
             });
             const plantDetails = response.data;
-      
-            // Create a new array with the current image added
+            const requiredData = {
+                id: plantDetails.id,
+                regular_url: plantDetails.default_image.regular_url,
+                common_name: plantDetails.common_name,
+                fruits: plantDetails.fruits,
+                edibleLeaf : plantDetails.edible_leaf
+            }
+            setAllObj((prevAllObj:any) => [...prevAllObj, requiredData])
+
             setImg((prevImages) => [...prevImages, plantDetails.default_image.regular_url]);
             setCommonName((prevcommonName) => [...prevcommonName, plantDetails.common_name]);
             setFruit((prevFruit) => [...prevFruit, plantDetails.fruits]);
@@ -47,12 +56,17 @@ const Discover = (props: Props) => {
         fetchAllPlantDetails();
       }, []);
 
-      const generatePlantImg = (order:number, size = 150) => {
-        return(
+      console.log(allObj)
+
+      const generatePlantDetail = (order:number, size = 150) => {
+        return(allObj[order] && 
             <>
+                <div className="text-gray-800 font-bold mx-auto flex-1 text-center ">
+                    {allObj[order] ? allObj[order].common_name : "loading"}
+                </div>
             <div className="w-36 h-36 squared-full flex items-center justify-center">
                 <a href={`/user/discover/${examplePlantId[order]}`}>
-                    <Image src={img[order]} width={size} height={size} alt={`Image ${order}`} />
+                    <Image src={allObj[order].regular_url} width={size} height={size} alt={`Image ${order}`} />
                 </a>
             </div>
             <div>
@@ -69,7 +83,7 @@ const Discover = (props: Props) => {
 
     return(
     <div className="h-[1000px] bg-FFFBEF-300">
-        <BackButton route="hi"/>
+
         <div className = "pt-10 flex justify-center">
             <h2>Hi Oak Soe Khant, </h2>
         </div>
@@ -78,40 +92,27 @@ const Discover = (props: Props) => {
         </div>
         
         
-
-                
         <div className="py-4 px-7 flex justify-between ">
             <div className="relative flex flex-col items-center">
-                <div className="text-gray-800 font-bold mx-auto flex-1 text-center ">
-                    {commonName[0]}
-                </div>
-                {generatePlantImg(0)}
-                {/* <div className="text-gray-400  mx-auto flex-1 text-center text-xs">
-                    Difficulty: *****
-                </div> */}
+                {generatePlantDetail(0)}
             </div>
 
             <div className="relative flex flex-col items-center">
-                <div className="text-gray-800 font-bold mx-auto flex-1 text-center ">{commonName[1]}</div>
-                {generatePlantImg(1)}
+                {generatePlantDetail(1)}
             </div>
         </div>
         <div className="py-4 px-7 flex justify-between ">
             <div className="relative flex flex-col items-center">
-                <div className="text-gray-800 font-bold mx-auto flex-1 text-center ">{commonName[2]}</div>
-                {generatePlantImg(2)}
+                {generatePlantDetail(2)}
             </div>
 
             <div className="relative flex flex-col items-center">
-                <div className="text-gray-800 font-bold mx-auto flex-1 text-center ">{commonName[3]}</div>
-                {generatePlantImg(3)}
+                {generatePlantDetail(3)}
             </div>
         </div>
         
 
-    
-    
-    
+
     
     </div>
     )
