@@ -1,0 +1,14 @@
+/* 1st plant */
+.FirstPlant{
+    position: absolute;
+    width: 98px;
+    height: 143px;
+    colour: grey;
+}
+
+.SecondPlant{
+    position: absolute;
+    width: 179px;
+    height: 144px;
+
+}
