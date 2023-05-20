@@ -2,12 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
-const map = {
-    "/user/garden/recipes": "/user/garden",
-    "/user/chatbot": "/user/garden",
-    "/user/discover/": "/user/discover",
-};
-
 function BackButton(props: { route: string }) {
     const { route } = props;
     return (
@@ -19,7 +13,6 @@ function BackButton(props: { route: string }) {
                 <IoMdArrowRoundBack className="h-9 w-9 text-white" />
             </Link>
         </div>
-        
     );
 }
 

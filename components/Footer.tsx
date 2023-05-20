@@ -1,7 +1,20 @@
 import React from "react";
 import Link from "next/link";
+import { supabase } from "@/config/dbConnect";
+import { useRouter } from "next/navigation";
 
 function Footer() {
+    const router = useRouter();
+    const logoutHandle = async () => {
+        console.log("Logout clciked!");
+        const { error } = await supabase.auth.signOut();
+        if (!error) {
+            console.log("Logout successfully!");
+            router.push("/");
+        } else {
+            console.log(error);
+        }
+    };
     return (
         <ul className="flex h-14 w-full items-center justify-evenly bg-primary-400 text-white">
             <Link
@@ -32,13 +45,13 @@ function Footer() {
                 <div className="h-10 w-10 bg-white"></div>
                 <h1 className="text-xs">Chatbot</h1>
             </Link>
-            <Link
-                href="/"
+            <button
+                onClick={logoutHandle}
                 className="flex h-full w-1/5 flex-col items-center justify-between p-1"
             >
                 <div className="h-10 w-10 bg-white"></div>
-                <h1 className="text-xs">Placeholder</h1>
-            </Link>
+                <h1 className="text-xs">Logout</h1>
+            </button>
         </ul>
     );
 }
