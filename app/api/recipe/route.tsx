@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     // can pass in multiple plantnames e.g chilli spinach OR chilli,spinach -> returns recipes with those veggies
     const response = await axios.get(`https://api.edamam.com/api/recipes/v2?app_id=${APP_ID}&app_key=${APP_KEY}&q=${plantName}&type=any`);
     const recipes = response.data;
-    //console.log(recipes)
+    console.log(recipes)
     return NextResponse.json(recipes);
   } catch (error: any) {
     console.error('Error searching recipes:', error.message);

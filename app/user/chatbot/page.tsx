@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TypingAnimation from "@/components/TypingAnimation";
-import BackButton from "@/components/BackButton";
 
 interface Message {
     type: string;
@@ -22,6 +21,7 @@ const Chatbot: React.FC = () => {
 
     //default message by chatbot
     useEffect(() => {
+        setChatLog([]);
         const initialMessage = {
             type: "bot",
             message: "Hello, how can I assist you today?",
@@ -104,68 +104,67 @@ const Chatbot: React.FC = () => {
     };
 
     return (
-        <div className="flex h-screen flex-col bg-gray-50">
-            <BackButton route="/user/garden" />
-
-            <h1 className="bg-gradient-to-r from-green-500 to-green-800 bg-clip-text py-3 text-center text-6xl font-bold text-transparent">
-                GardenGPT
-            </h1>
-            <div className="flex-grow p-6">
-                <div className="flex flex-col space-y-4">
-                    {chatLog.map((message, index) => (
-                        <div
-                            key={index}
-                            className={`flex ${
-                                message.type === "user"
-                                    ? "justify-end"
-                                    : "justify-start"
-                            }`}
-                        >
-                            <ul
-                                className={`${
-                                    message.type === "user"
-                                        ? "bg-gray-400"
-                                        : "bg-secondarydark-500"
-                                } max-w-sm rounded-lg p-4 text-white
-         `}
-                            >
-                                {message.message}
-                            </ul>
-                        </div>
-                    ))}
-
-                    {isLoading && (
-                        <div
-                            key={chatLog.length}
-                            className="flex justify-start"
-                        >
-                            <div className="max-w-sm rounded-lg bg-secondarydark-500 p-4 text-black">
-                                <TypingAnimation />
-                            </div>
-                        </div>
-                    )}
+        <div>
+        <div className="flex flex-col h-screen bg-gray-50">
+          <div className="flex-grow p-6">
+            <div className="flex flex-col space-y-4">
+              {chatLog.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex ${
+                    message.type === "user" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  <ul
+                    className={`${
+                      message.type === "user"
+                        ? "bg-gray-400"
+                        : "bg-secondarydark-500"
+                    } max-w-sm rounded-lg p-4 text-white`}
+                  >
+                    {message.message}
+                  </ul>
                 </div>
+              ))}
+              {isLoading && (
+                <div key={chatLog.length} className="flex justify-start">
+                  <div className="max-w-sm rounded-lg bg-secondarydark-500 p-4 text-black">
+                    <TypingAnimation />
+                  </div>
+                </div>
+              )}
             </div>
+          </div>
+        </div>
+        <div className="fixed bottom-0 left-0 right-0 bg-gray-50">
 
             <form onSubmit={handleSubmit} className="flex-none p-6">
-                <div className="border-white-700 bg-white-800 flex rounded-lg border">
-                    <input
-                        type="text"
-                        className="flex-grow bg-transparent px-4 py-2 text-black focus:outline-none"
-                        placeholder="Type your message..."
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                    />
-                    <button
-                        type="submit"
-                        className="rounded-lg bg-primary-400 px-4 py-2 font-semibold text-white transition-colors duration-300 hover:bg-primary-500 focus:outline-none"
-                    >
-                        Send
-                    </button>
-                </div>
+            <div className="border-white-700 bg-white-800 flex rounded-lg border">
+            <input
+                type="text"
+                className="flex-grow bg-transparent px-4 py-2 text-black focus:outline-none"
+                placeholder="Type your message..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+            />
+            <button
+                type="submit"
+                className="rounded-lg bg-primary-400 px-4 py-2 font-semibold text-white transition-colors duration-300 hover:bg-primary-500 focus:outline-none"
+            >
+                Send
+            </button>
+            </div>
             </form>
         </div>
-    );
+
+</div>
+
+      );
+      
 };
 
 export default Chatbot;
+
+<div className="flex flex-col h-screen bg-gray-50">
+
+</div>

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-const OPENAI = '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';
+const OPENAI = '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';
 import { NextResponse } from "next/server";
 
 // Define a variable to store the conversation history

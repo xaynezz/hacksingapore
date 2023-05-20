@@ -240,4 +240,5 @@ type plantObjectForSupaBase = {
 type UserPlants = {
   plant_name: string,
   image_url: string
+  plant_id: number,
 }
