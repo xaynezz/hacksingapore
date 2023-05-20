@@ -1,3 +1,4 @@
+"use client"
 import { BsTreeFill } from 'react-icons/bs';
 import axios from 'axios';
 
