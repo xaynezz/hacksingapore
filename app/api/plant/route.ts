@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     const PlantID = PerenualDataResponse.data[0].id;
     const PlantImage = PerenualDataResponse.data[0].default_image.thumbnail;
     const PlantCommonName = PerenualDataResponse.data[0].common_name;
+    console.log("PlantCommonName" + PlantCommonName);
     return NextResponse.json({
       PlantID: PlantID,
       PlantImage: PlantImage,
