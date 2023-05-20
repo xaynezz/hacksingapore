@@ -2,14 +2,13 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import BackButton from '@/components/BackButton';
 // import RecipeButton from '@/components/RecipeButton';
 // import BsFillSunFill from 'react-icons/Bs'
 // import {GiTreeGrowth, GiWaterDrop, GiBananaPeeled, GiFruitBowl} from 'react-icons/gi'
 // import GrPowerCycle from 'react-icons/gr'
 // import FaLeaf from 'react-icons/fa'
 // import TbChefHat from 'react-icons/tb'
-
-
 
 const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
     const plantID = params.id;
@@ -84,7 +83,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
         const fetchRecipe = async () => {
           try {
             const response2 = await axios.post('/api/recipe', {
-              plantName: commonName
+              plantName: plantDetails?.common_name
             });
             const recipeDetails: RecipeDetails = response2.data;
             setRecipeDetails(recipeDetails);
@@ -96,7 +95,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
         };
     
         fetchRecipe();
-      }, [commonName]);
+      }, [plantDetails?.common_name]);
 
     return (
         <>
@@ -105,7 +104,9 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                 <RecipeButton href='/garden/recipes'/>
             </div> */}
 
-            <div className="flex flex-col mt-8 p-2">
+            <BackButton route="/user/garden"/>
+
+            <div className="flex flex-col mt-1 p-2">
                 <div className="border rounded-xl">
                   <div className="text-center py-4">
                     <h2 className="text-4xl font-bold tracking-tight text-black sm:text-6xl">{plantDetails?.common_name}</h2>
@@ -192,7 +193,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                               <svg stroke="#5C6AC4" fill="#5C6AC4" width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M13 24.1246C9.01253 23.3584 6 19.851 6 15.64C6 10.8683 9.86826 7 14.64 7C15.4066 7 16.1498 7.09983 16.8574 7.2872C18.4398 5.28493 20.8898 4 23.64 4C26.4704 4 28.9829 5.36098 30.5588 7.46422C31.4372 7.16331 32.3795 7 33.36 7C38.1317 7 42 10.8683 42 15.64C42 19.851 38.9875 23.3584 35 24.1246V40C35 41.1046 34.1046 42 33 42H15C13.8954 42 13 41.1046 13 40V24.1246Z" fill="none" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 31L35 31" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 25V31" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 28V34" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 28V34" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
                               <span className="inline"><strong className=" inline font-semibold text-gray-900">Recipes</strong>
                                 {recipeDetails && recipeDetails.hits.length > 0 
-                                ? <p className='inline'> {recipeDetails.hits[1].recipe.label}</p> : <p className='inline'> There are no recipes for this plant.</p>}
+                                ? <p className='inline'> {recipeDetails.hits[0].recipe.label}</p> : <p className='inline'> There are no recipes for this plant.</p>}
                               </span>
                             </li>
                             {/* <li className="flex gap-x-3">

@@ -11,12 +11,15 @@ const map = {
 function BackButton(props: { route: string }) {
     const { route } = props;
     return (
-        <Link
-            className="fixed left-0 top-0 flex h-12 w-12 items-center justify-center"
-            href={route}
-        >
-            <IoMdArrowRoundBack className="h-9 w-9 text-white" />
-        </Link>
+        <div>
+            <Link
+                className="fixed left-0 top-0 flex h-12 w-12 items-center justify-center"
+                href={route}
+            >
+                <IoMdArrowRoundBack className="h-9 w-9 text-white" />
+            </Link>
+        </div>
+        
     );
 }
 
