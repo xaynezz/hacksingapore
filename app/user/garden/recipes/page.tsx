@@ -1,4 +1,5 @@
 "use client"
+
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import BackButton from '@/components/BackButton';
@@ -31,9 +32,11 @@ const Recipe: React.FC = () => {
 
       uniqueCommonNamesArray.forEach((name: string) => {
         fetchRecipe(name);
+
       });
     }
   };
+
 
   const fetchRecipe = async (plantName: string) => {
     try {
@@ -41,6 +44,7 @@ const Recipe: React.FC = () => {
       const recipeDetails: RecipeDetails = response.data;
       const limitedHits = recipeDetails.hits.slice(0, 4); // Limit hits to 4 elements
       setRecipelist((prevList) => [...prevList, { recipeDetails: { hits: limitedHits } }]);
+
     } catch (error) {
       console.error('Error fetching recipe:', error);
     }
@@ -157,3 +161,4 @@ const Recipe: React.FC = () => {
 };
 
 export default Recipe;
+

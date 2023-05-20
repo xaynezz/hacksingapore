@@ -1,8 +1,7 @@
-"use client";
-
+"use client"
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
+import { GardenContextProvider } from "./context/gardenContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,9 +12,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <SessionProvider>
-                <body className={inter.className}>{children}</body>
-            </SessionProvider>
+            <body className={inter.className}>
+                <GardenContextProvider>{children}</GardenContextProvider>
+            </body>
         </html>
     );
 }

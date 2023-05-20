@@ -1,12 +1,9 @@
+"use client"
 import { useGardenContext } from '@/app/context/gardenContext';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { supabase } from "../../../../../config/dbConnect"
 import { RiPlantFill } from "react-icons/ri";
-
-interface Props {
-    setTreePositions: React.Dispatch<React.SetStateAction<TreePosition[][]>>
-}
 
 const toBase64 = (file: File | null) =>
     new Promise<string>((resolve, reject) => {
@@ -18,9 +15,11 @@ const toBase64 = (file: File | null) =>
 
 
 
-export default function AddPlant({ setTreePositions }: Props) {
-    const { setAddPlantModal }: any = useGardenContext();
+export default function AddPlant() {
+    const { setAddPlantModal, userUUID }: any = useGardenContext();
     const [image, setImage] = useState<File | null>(null);
+    const [isLoading, setLoading] = useState<boolean>(false);
+    console.log("userID" + userUUID)
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -30,7 +29,7 @@ export default function AddPlant({ setTreePositions }: Props) {
     }
 
     const handleSubmit = async () => {
-        console.log("Clicked submit button!")
+        setLoading(true);
         try {
             const base64File = await toBase64(image);
 
@@ -46,7 +45,7 @@ export default function AddPlant({ setTreePositions }: Props) {
                 nameOfPlant: PlantIdentifyData.suggestions[0].plant_name,
             });
 
-            const {PlantID,PlantImage, PlantCommonName} = response1.data;
+            const { PlantID, PlantImage, PlantCommonName } = response1.data;
 
             /* Calculate a random 10*10 coordinates & image string */
             const x = Math.floor(Math.random() * 10);
@@ -54,21 +53,16 @@ export default function AddPlant({ setTreePositions }: Props) {
             const options = ["tree_one", "tree_two", "tree_three", "tree_four"];
             const randomIndex = Math.floor(Math.random() * options.length);
 
-            /* Add the coordinate to the useState */
-            setTreePositions((prevArray) => {
-                const newArray = [...prevArray]
-                newArray.push([options[randomIndex] + '/' + PlantID, x, y])
-                return newArray
-            })
-
             /* Send to database */
-            let plantObjectAddToDatabase: plantObjectForSupaBase = { userid: 1, 
-                                                                    x_coor: x, 
-                                                                    y_coor: y, 
-                                                                    plant_name: PlantIdentifyData.suggestions[0].plant_name, 
-                                                                    plant_id: PlantID, tree_number: options[randomIndex], 
-                                                                    image_url: PlantImage,
-                                                                    common_name: PlantCommonName};
+            let plantObjectAddToDatabase: plantObjectForSupaBase = {
+                uuid: userUUID,
+                x_coor: x,
+                y_coor: y,
+                plant_name: PlantIdentifyData.suggestions[0].plant_name,
+                plant_id: PlantID, tree_number: options[randomIndex],
+                image_url: PlantImage,
+                common_name: PlantCommonName
+            };
 
             console.log(PlantImage);
             const { error } = await supabase
@@ -81,6 +75,7 @@ export default function AddPlant({ setTreePositions }: Props) {
             }
 
             /* Close the modal */
+            setLoading(false)
             setAddPlantModal(false);
         } catch (error) {
 
@@ -112,7 +107,12 @@ export default function AddPlant({ setTreePositions }: Props) {
                                 </div>
                             </div>
                             <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                <button type="submit" onClick={handleSubmit} className="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Add Plant</button>
+                                <button
+                                    type="submit"
+                                    onClick={handleSubmit}
+                                    className={`inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold shadow-sm sm:ml-3 sm:w-auto ${isLoading ? 'bg-gray-500 text-white cursor-not-allowed' : 'bg-green-600 text-white hover:bg-green-500'}`}                                >
+                                    {isLoading ? 'Loading...' : 'Add Plant'}
+                                </button>
                                 <button type="button" onClick={() => setAddPlantModal(false)} className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                             </div>
                         </div>
