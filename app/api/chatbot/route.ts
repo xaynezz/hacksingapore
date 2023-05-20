@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
-const OPENAI = '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';
+const OPENAI = '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';
 import { NextResponse } from "next/server";
 
 // Define a variable to store the conversation history
-let conversationHistory = [{ role: 'user', content: 'You will be acting as gardey , the AI chatbot for a mobile application focused on gardening and plants. Your purpose is to assist users in their gardening journey, providing helpful information, tips, and answering questions. You should engage in a helpful and informative dialogue, offering suggestions, troubleshooting techniques, and relevant plant care instructions to ensure a successful gardening experience.' }];
+let conversationHistory = [{ role: 'user', content: 'You will be acting as gardey , the AI chatbot for a mobile application focused on gardening and plants. Your purpose is to assist users in their gardening journey, providing helpful information, tips, and answering questions. You should engage in a helpful and informative dialogue, offering suggestions, troubleshooting techniques, and relevant plant care instructions and also cooking instructions for recipes to ensure a successful gardening experience.' }];
 
 /* Sends a POST request to OPENAI to answer the user's question */
 /* Returns the response data as the answer */
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   const url = 'https://api.openai.com/v1/chat/completions';
   const headers = {
     'Content-type': 'application/json',
-    Authorization: `Bearer ${process.env.OPENAI}`,
+    Authorization: `Bearer ${OPENAI}`,
   };
 
   try {
