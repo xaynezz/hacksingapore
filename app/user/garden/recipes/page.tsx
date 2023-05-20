@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import BackButton from '@/components/BackButton';
 import { supabase } from '@/config/dbConnect';
@@ -57,29 +57,43 @@ const Recipe: React.FC = () => {
     const prompt2 = ' without any other replies, I only want the steps in number.';
 
     try {
+      console.log('passing plant into chatbot: ', label)
       const response = await axios.post('/api/chatbot', {
         data: prompt1 + prompt2,
       });
       const botmessage = response.data.choices[0].message.content;
+      //console.log('botmsg',botmessage)
       setRecipeInstructions((prevInstructions) => ({ ...prevInstructions, [label]: botmessage }));
     } catch (error) {
       console.error(error);
     }
   };
-
+  const fetchedLabels = useRef(new Set());
+   // Track fetched labels
   useEffect(() => {
     const fetchInstructions = async () => {
-      const fetchedLabels = new Set(); // Track fetched labels
+
   
+      console.log('recipelist: ',recipelist)
       for (const item of recipelist) {
+        //console.log('recipedetails.hits: ',item.recipeDetails.hits)
         for (const hit of item.recipeDetails.hits) {
           const label = hit.recipe.label;
           if (!recipeInstructions[label] || recipeInstructions[label] === '') {
-            if (!fetchedLabels.has(label)) {
-              fetchedLabels.add(label); // Mark label as fetched
-              await askrecipe(label);
+            console.log('found new label:',label)
+            console.log('fetchedlabels size:',fetchedLabels)
+            if (!fetchedLabels.current.has(label)) {
+              fetchedLabels.current.add(label); // Mark label as fetched
+              console.log('new label',label)
+              console.log('added new labels:',fetchedLabels)
+              try {
+                await askrecipe(label);
+              } catch (error) {
+                console.error(error);
+              }
             }
           }
+          else console.log('found existing label:', label)
         }
       }
     };
