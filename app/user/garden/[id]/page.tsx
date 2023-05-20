@@ -181,14 +181,28 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                               <svg fill="#5C6AC4" width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M336 128c-32 0-80.02 16.03-112 32.03c-32.01-16-79.1-32.02-111.1-32.03C32 128 .4134 210.5 .0033 288c-.5313 99.97 63.99 224 159.1 224c32 0 48-16 64-16c16 0 32 16 64 16c96 0 160.4-122.8 159.1-224C447.7 211.6 416 128 336 128zM320 32V0h-32C243.8 0 208 35.82 208 80v32h32C284.2 112 320 76.18 320 32z"/></svg>
                               <span><strong className="font-semibold text-gray-900">Fruits</strong> {plantDetails?.fruits?'Bears Fruits':"Fruitless"}</span>
                             </li>
-                            <li className="flex gap-x-3">
+                            {plantDetails?.edible_fruit && (
+                              <li className="flex gap-x-3">
+                                <svg fill="#5C6AC4" width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g> <path fill="none" d="M0 0H24V24H0z"/> <path d="M21 3v2c0 9.627-5.373 14-12 14H7.098c.212-3.012 1.15-4.835 3.598-7.001 1.204-1.065 1.102-1.68.509-1.327-4.084 2.43-6.112 5.714-6.202 10.958L5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0z"/> </g> </svg>
+                                <span>
+                                  <strong className="font-semibold text-gray-900">Edible Leaf</strong>
+                                </span>
+                              </li>
+                            )}
+                            {/* <li className="flex gap-x-3">
                               <svg fill="#5C6AC4" width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g> <path fill="none" d="M0 0H24V24H0z"/> <path d="M21 3v2c0 9.627-5.373 14-12 14H7.098c.212-3.012 1.15-4.835 3.598-7.001 1.204-1.065 1.102-1.68.509-1.327-4.084 2.43-6.112 5.714-6.202 10.958L5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0z"/> </g> </svg>
-                              <span><strong className="font-semibold text-gray-900">Edible Leaf</strong> {plantDetails?.edible_leaf?'Yes':"No"}</span>
-                            </li>
-                            <li className="flex gap-x-3">
-                              <svg fill="#5C6AC4" width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M336 128c-32 0-80.02 16.03-112 32.03c-32.01-16-79.1-32.02-111.1-32.03C32 128 .4134 210.5 .0033 288c-.5313 99.97 63.99 224 159.1 224c32 0 48-16 64-16c16 0 32 16 64 16c96 0 160.4-122.8 159.1-224C447.7 211.6 416 128 336 128zM320 32V0h-32C243.8 0 208 35.82 208 80v32h32C284.2 112 320 76.18 320 32z"/></svg>
-                              <span><strong className="font-semibold text-gray-900">Edible Fruit</strong> {plantDetails?.edible_fruit?'Yes':'No'}</span>
-                            </li>
+                              <span><strong className="font-semibold text-gray-900">{plantDetails?.edible_leaf?'Edible Leaf':""}</strong> </span>
+                            </li> */}
+                            {plantDetails?.edible_fruit && (
+                              <li className="flex gap-x-3">
+                                <svg fill="#5C6AC4" width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                  <path d="M336 128c-32 0-80.02 16.03-112 32.03c-32.01-16-79.1-32.02-111.1-32.03C32 128 .4134 210.5 .0033 288c-.5313 99.97 63.99 224 159.1 224c32 0 48-16 64-16c16 0 32 16 64 16c96 0 160.4-122.8 159.1-224C447.7 211.6 416 128 336 128zM320 32V0h-32C243.8 0 208 35.82 208 80v32h32C284.2 112 320 76.18 320 32z"/>
+                                </svg>
+                                <span>
+                                  <strong className="font-semibold text-gray-900">Edible Fruit</strong>
+                                </span>
+                              </li>
+                            )}
                             <li className="flex gap-x-3">
                               <svg stroke="#5C6AC4" fill="#5C6AC4" width="30" height="30" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M13 24.1246C9.01253 23.3584 6 19.851 6 15.64C6 10.8683 9.86826 7 14.64 7C15.4066 7 16.1498 7.09983 16.8574 7.2872C18.4398 5.28493 20.8898 4 23.64 4C26.4704 4 28.9829 5.36098 30.5588 7.46422C31.4372 7.16331 32.3795 7 33.36 7C38.1317 7 42 10.8683 42 15.64C42 19.851 38.9875 23.3584 35 24.1246V40C35 41.1046 34.1046 42 33 42H15C13.8954 42 13 41.1046 13 40V24.1246Z" fill="none" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 31L35 31" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 25V31" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 28V34" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 28V34" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
                               <span className="inline"><strong className=" inline font-semibold text-gray-900">Recipes</strong>
@@ -273,7 +287,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                 </div>
 
                 <div className="">
-                  <h1 className="text-center text-3xl font-bold">{sectionData[0]? '':<p> Coming Soon!</p>}</h1>
+                  <h1 className="text-center text-3xl font-bold py-2.5">{sectionData[0]? '':<p> Coming Soon!</p>}</h1>
                 </div>
 
                 <div className="relative isolate overflow-hidden bg-white px-6 py-4 lg:overflow-visible lg:px-0">
