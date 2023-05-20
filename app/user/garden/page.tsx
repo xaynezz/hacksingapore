@@ -16,7 +16,7 @@ export default function page({}) {
             const { data, error } = await supabase
                 .from("plants")
                 .select(
-                    "plant_id, y_coor, x_coor, tree_number, image_url,  common_name"
+                    "plant_id, y_coor, x_coor, tree_number, image_url, common_name"
                 )
                 .eq("uuid", userUUID);
             console.log(data);

@@ -46,7 +46,7 @@ export default function AddPlant() {
             });
 
             const { PlantID, PlantImage, PlantCommonName } = response1.data;
-
+            console.log(PlantCommonName)
             /* Calculate a random 10*10 coordinates & image string */
             const x = Math.floor(Math.random() * 10);
             const y = Math.floor(Math.random() * 10);
