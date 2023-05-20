@@ -138,7 +138,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                     </div>
                     
                     <div className="lg:max-w-lg">
-                      <p className="text-base font-semibold leading-7 text-indigo-600">{plantDetails?.common_name}</p>
+                      {/* <p className="text-base font-semibold leading-7 text-indigo-600">{plantDetails?.common_name}</p> */}
                       <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Plant Details</h1>
                       <p className="mt-1 text-base leading-8 text-gray-700">{plantDetails?.description}</p>
                     </div>
@@ -287,7 +287,7 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                 </div>
 
                 <div className="">
-                  <h1 className="text-center text-3xl font-bold py-2.5">{sectionData[0]? '':<p> Coming Soon!</p>}</h1>
+                  <h1 className="text-center text-xl font-bold py-5">{sectionData[0]? '':<p> Coming Soon!</p>}</h1>
                 </div>
 
                 <div className="relative isolate overflow-hidden bg-white px-6 py-4 lg:overflow-visible lg:px-0">
