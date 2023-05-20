@@ -8,8 +8,8 @@ const API_URL = 'https://api.edamam.com/api/recipes/v2';
 export async function POST(request: Request) {
   const { plantName } = await request.json();
   console.log('reached recipe api')
-  console.log('recipe route plantName:',plantName)
 
+    console.log('recipe route plantName:',plantName)
   try {
     // can pass in multiple plantnames e.g chilli spinach OR chilli,spinach -> returns recipes with those veggies
     const response = await axios.get(`https://api.edamam.com/api/recipes/v2?app_id=${APP_ID}&app_key=${APP_KEY}&q=${plantName}&type=any`);
