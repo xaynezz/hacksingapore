@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/config/dbConnect';
 type Props = {
-    arrayOfUserPLants: UserPlants[];
+    arrayOfUserPLants: UserPlants[],
+    isDeleteFlag: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ListPlants({ arrayOfUserPLants }: Props) {
+export default function ListPlants({ arrayOfUserPLants, isDeleteFlag }: Props) {
     const [confirmDelete, isConfirmDelete] = useState<boolean>(false);
     const [deletePlantID, setDeletePlantID] = useState<number>();
     const router = useRouter();
@@ -24,6 +25,7 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
     }
 
     const handleConfirmDelete = async () => {
+        console.log("isDeleteFlag" + isDeleteFlag)
         console.log(deletePlantID)
         const { error } = await supabase
             .from('plants')
@@ -32,6 +34,7 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
         console.log(error)
         if (!error) {
             isConfirmDelete(false);
+            isDeleteFlag(true)
         }
     }
     return (
@@ -40,7 +43,6 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
             <h1 className="text-xl text-center text-green-500 font-semibold mb-4">A Peek into My Plant Collection</h1>
             <div className="grid grid-cols-2 gap-4">
                 {arrayOfUserPLants.map((plant, index) => {
-                    console.log(plant)
                     return (
                     <div key={index} className="p-4 border border-gray-200 rounded-lg relative">
                         <button
@@ -52,7 +54,7 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
                         <img className="object-cover h-48 w-full mb-2 rounded-lg" src={plant.image_url} alt={plant.plant_name} />
                         <h2 className="text-center text-s mt-2">{plant.plant_name}</h2>
                         <div className="flex justify-center">
-                            <button onClick={() => handleImageClick(plant.plant_id, plant.supabase_id)} className="py-2 px-4 mt-2 bg-secondarydark-500 text-white font-semibold rounded-lg hover:bg-secondarydark-600 transition-colors duration-300">
+                            <button onClick={() => handleImageClick(plant.plant_id, plant.supabase_id)} className="py-1 px-2 mt-2 bg-secondarydark-500 text-white font-semibold rounded-lg hover:bg-secondarydark-600 transition-colors duration-300">
                                 View More
                             </button>
                         </div>
