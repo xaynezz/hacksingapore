@@ -13,7 +13,9 @@ import { AiFillCamera } from "react-icons/ai";
 export default function page({}) {
     const router = useRouter();
     const { showAddPlantModal, setAddPlantModal }: any = useGardenContext();
-
+    const [arrayOfUserPLants, setArrayOfUserPLants] = useState<UserPlants[]>(
+        []
+    );
     useEffect(() => {
         const fetchPlantsFromUser = async () => {
             const {
@@ -48,12 +50,10 @@ export default function page({}) {
         };
 
         fetchPlantsFromUser();
-    }, [showAddPlantModal]);
+    }, [showAddPlantModal, arrayOfUserPLants]);
 
     const [treePositions, setTreePositions] = useState<TreePosition[][]>([]);
-    const [arrayOfUserPLants, setArrayOfUserPLants] = useState<UserPlants[]>(
-        []
-    );
+
     console.log(arrayOfUserPLants);
     return (
         <>
