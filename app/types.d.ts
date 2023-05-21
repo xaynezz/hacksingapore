@@ -235,6 +235,7 @@ type plantObjectForSupaBase = {
   tree_number: string,
   image_url: string,
   common_name: string
+  health: PlantHealthAssessment
 }
 
 type UserPlants = {
