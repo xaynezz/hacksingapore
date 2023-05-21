@@ -175,14 +175,19 @@ const Recipe: React.FC = () => {
       <>
           <BackButton route="/user/garden" />
           <div className="flex flex-col bg-gray-50">
-              <div className="mx-4 mt-8 text-center text-2xl font-bold text-gray-800">
-                  Recipes
-              </div>
 
-              {!norecipe && 
-              <div className = "mx-4 mt-8 text-center text-2xl font-bold text-gray-800">Please start planting in your garden first!</div>
-              
-              }
+              {!norecipe && (
+                <div>
+<div className="mx-4 mt-8 text-center text-l font-bold text-grey-500 mb-2">There are no plants in your garden.</div>
+<div className="mx-4 mt-4 text-center text-l text-grey-500">Try adding some plants before checking out recipes!</div>
+                    <img
+                    src="https://png.pngtree.com/template/20191024/ourmid/pngtree-flower-pot-and-plant-logo-growth-vector-logo-image_322946.jpg"
+                    height={200}
+                    width={300}
+                    className="rounded-md mx-auto"
+                    />
+                </div>
+                )}
 
               <div className="p-4 sm:p-8">
                   <div className="mx-auto max-w-lg">

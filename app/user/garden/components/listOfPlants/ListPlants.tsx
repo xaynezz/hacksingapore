@@ -52,7 +52,7 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
                         <img className="object-cover h-48 w-full mb-2 rounded-lg" src={plant.image_url} alt={plant.plant_name} />
                         <h2 className="text-center text-s mt-2">{plant.plant_name}</h2>
                         <div className="flex justify-center">
-                            <button onClick={() => handleImageClick(plant.plant_id, plant.supabase_id)} className="py-2 px-4 mt-2 bg-secondarydark-500 text-white font-semibold rounded-lg hover:bg-secondarydark-600 transition-colors duration-300">
+                            <button onClick={() => handleImageClick(plant.plant_id, plant.supabase_id)} className="py-1 px-2 mt-2 bg-secondarydark-500 text-white font-semibold rounded-lg hover:bg-secondarydark-600 transition-colors duration-300">
                                 View More
                             </button>
                         </div>
