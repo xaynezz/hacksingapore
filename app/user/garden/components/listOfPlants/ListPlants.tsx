@@ -43,7 +43,6 @@ export default function ListPlants({ arrayOfUserPLants, isDeleteFlag }: Props) {
             <h1 className="text-xl text-center text-green-500 font-semibold mb-4">A Peek into My Plant Collection</h1>
             <div className="grid grid-cols-2 gap-4">
                 {arrayOfUserPLants.map((plant, index) => {
-                    console.log(plant)
                     return (
                     <div key={index} className="p-4 border border-gray-200 rounded-lg relative">
                         <button
