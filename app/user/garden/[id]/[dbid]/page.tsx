@@ -6,14 +6,6 @@ import BackButton from '@/components/BackButton';
 import { supabase } from '@/config/dbConnect';
 import { useGardenContext } from "@/app/context/gardenContext";
 
-
-// import RecipeButton from '@/components/RecipeButton';
-// import BsFillSunFill from 'react-icons/Bs'
-// import {GiTreeGrowth, GiWaterDrop, GiBananaPeeled, GiFruitBowl} from 'react-icons/gi'
-// import GrPowerCycle from 'react-icons/gr'
-// import FaLeaf from 'react-icons/fa'
-// import TbChefHat from 'react-icons/tb'
-
 const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) => {
     const plantID = params.id;
     const dbID = params.dbid
@@ -24,10 +16,9 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
     const [recipeDetails, setRecipeDetails] = useState<RecipeDetails>();
     const [sectionData, setSectionData] = useState<{ id:number, type: string, description: string }[]>([]);
 
-    const { userUUID }: any = useGardenContext();
     const [health, setHealth] = useState<PlantHealthAssessment>();
 
-    var userImg:any = '';
+    const [userImg, setUserImg] = useState('');
     const fetchImagefromUser = async () => {
         const { data, error } = await supabase
                 .from("plants")
@@ -35,10 +26,12 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                     "image_url"
                 )
                 .eq("id", dbID);
-                console.log(data)
-                userImg = data[0]?.image_url;
-                console.log("image link", userImg);
+                //console.log(data)
+                setUserImg(data[0]?.image_url)
+                // console.log("image link", userImg);
+                // console.log(typeof(userImg))
     }
+
     
     useEffect(() => {
       fetchImagefromUser();
@@ -65,31 +58,13 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
         fetchPlantDetails();
       }, [plantID]);
 
-      // const fetchFAQ = async () => {
-      //   console.log('faq page plant name', plantDetails?.scientific_name[0])
-      //   try {
-      //     const response = await axios.post('/api/plant/faq', {
-      //       plantName: plantDetails?.scientific_name[0]
-      //     });
-
-      //     const faq = response.data;
-      //     console.log('garden page',faq)
-
-      //   } catch (error) {
-      //     console.error('Error fetching plant faq:', error);
-      //   }
-      // };
-  
-      // fetchFAQ();
       useEffect(() => {
         const fetchGuide = async () => {
-          //console.log('plant page guide plantid', plantDetails?.id)
           try {
             const response = await axios.post('/api/plant/guide', {
               plant_id: plantDetails?.id
             });
 
-            //console.log(response)
             const guide = response.data;
             console.log('plant page',guide)
             setSectionData(guide);
@@ -109,7 +84,6 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
             });
             const recipeDetails: RecipeDetails = response2.data;
             setRecipeDetails(recipeDetails);
-            //console.log(response2.data);
 
           } catch (error) {
             console.error('Error fetching recipe:', error);
@@ -142,11 +116,6 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
 
     return (
         <>
-            {/* <div className="flex flex-col items-center justify-center p-8">
-                <Image src={img} alt="alt" height={500} width={500} />
-                <RecipeButton href='/garden/recipes'/>
-            </div> */}
-
             <BackButton route="/user/garden"/>
 
             <div className="flex flex-col mt-1 p-2">
@@ -154,34 +123,18 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                   <div className="text-center py-4">
                     <h2 className="text-4xl font-bold tracking-tight text-black sm:text-6xl">{plantDetails?.common_name}</h2>
                     <p className=" italic mt-6 text-lg leading-8 text-gray-800">{plantDetails?.scientific_name}</p>
-                    {/* <RecipeButton href='/garden/recipes'/> */}
                   </div>
                 </div>
 
 
                 <div className="relative isolate overflow-hidden bg-white px-6 sm:py-16 lg:overflow-visible lg:px-0">
-                  {/* <div className="absolute inset-0 -z-10 overflow-hidden">
-                    <svg className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]" aria-hidden="true">
-                      <defs>
-                        <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1" patternUnits="userSpaceOnUse">
-                          <path d="M100 200V.5M.5 .5H200" fill="none" />
-                        </pattern>
-                      </defs>
-                      <svg x="50%" y="-1" className="overflow-visible fill-gray-50">
-                        <path d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z" stroke-width="0" />
-                      </svg>
-                      <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)" />
-                    </svg>
-                  </div> */}
                   <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-3 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
                     
                     <div className="pt-2">
-                      {/* <SlidingComponent images={images} /> */}
                       <Image src={img} alt="alt" height={500} width={500} className='rounded-xl'/>
                     </div>
                     
                     <div className="lg:max-w-lg">
-                      {/* <p className="text-base font-semibold leading-7 text-indigo-600">{plantDetails?.common_name}</p> */}
                       <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Plant Details</h1>
                       <p className="mt-1 text-base leading-8 text-gray-700">{plantDetails?.description}</p>
                     </div>
@@ -285,15 +238,13 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                   </div>
                 </div>
 
-                <div className="pt-2">
-                    {/* <SlidingComponent images={images} /> */}
-                    <Image src={userImg} alt="alt" height={500} width={500} className='rounded-xl'/>
+                <div className="pt-2 flex justify-center">
+                    <Image priority={true} src={userImg} alt="alt" height={300} width={300} className='rounded-xl'/>
                 </div>
 
                 <div className="lg:max-w-lg text-center py-4">
-                  {/* <p className="text-base font-semibold leading-7 text-indigo-600">{plantDetails?.common_name}</p> */}
                   <span className="mt-1 text-xl font-medium tracking-tight text-gray-900 sm:text-4xl">Your plant is: </span>
-                  <span className="mt-1 text-xl font-medium tracking-tight text-primary-400">{health?.is_healthy? <span>{health?.is_healthy_probability*100}% Healthy</span> : <span>{health?.is_healthy_probability}Not healthy</span>}</span>
+                  <span className="mt-1 text-xl font-medium tracking-tight text-primary-400">{health?.is_healthy? <span>{(health?.is_healthy_probability*100).toFixed(2)}% Healthy</span> : <span>{(health?.is_healthy_probability*100).toFixed(2)}Not healthy</span>}</span>
                 </div>
 
                 <ul role="list" className="mt-2 space-y-5 text-gray-600 pl-6">
