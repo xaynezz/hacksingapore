@@ -11,6 +11,7 @@ export async function POST(request: Request) {
         'https://api.plant.id/v2/health_assessment',
         {
           images: [base64String],
+          disease_details: ["cause","common_names", "description", "treatment"]
         },
         {
           headers: {

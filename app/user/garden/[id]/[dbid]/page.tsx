@@ -254,6 +254,9 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                       <span className="inline">
                         <strong className="font-semibold text-gray-900">{item.name}</strong>
                       </span>
+                      <span className="inline">
+                        <strong className="font-normal text-gray-900">{item.disease_details.description}</strong>
+                      </span>
                     </li>
                   ))}
                 </ul>
