@@ -1,11 +1,9 @@
-'use client';
+"use client";
 
 interface Props {}
-import React, { useState, useEffect } from 'react'
-import BackButton from '@/components/BackButton';
-import Image from 'next/image';
-import axios from 'axios';
-import { FaCheck } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import axios from "axios";
 
 const Discover = (props: Props) => {
     const {} = props;
@@ -15,32 +13,36 @@ const Discover = (props: Props) => {
 
     useEffect(() => {
         const fetchPlantDetails = async (plantId: number) => {
-          try {
-            const response = await axios.post('/api/plant/details', {
-              idOfPlant: plantId
-            });
-            const plantDetails = response.data;
-            const requiredData = {
-                id: plantDetails.id,
-                regular_url: plantDetails.default_image.regular_url,
-                common_name: plantDetails.common_name,
-                fruits: plantDetails.fruits,
-                edibleLeaf : plantDetails.edible_leaf
+            try {
+                const response = await axios.post("/api/plant/details", {
+                    idOfPlant: plantId,
+                });
+                const plantDetails = response.data;
+                const requiredData = {
+                    id: plantDetails.id,
+                    regular_url: plantDetails.default_image.regular_url,
+                    common_name: plantDetails.common_name,
+                    fruits: plantDetails.fruits,
+                    edibleLeaf: plantDetails.edible_leaf,
+                };
+                setAllObj((prevAllObj: any) => [...prevAllObj, requiredData]);
+            } catch (error) {
+                console.error("Error fetching plant details:", error);
             }
             setAllObj((prevAllObj:any) => [...prevAllObj, requiredData])
           } catch (error) {
             console.error('Error fetching plant details:', error);
           }
         };
-      
+
         const fetchAllPlantDetails = async () => {
-          for (const plantId of examplePlantId) {
-            await fetchPlantDetails(plantId);
-          }
+            for (const plantId of examplePlantId) {
+                await fetchPlantDetails(plantId);
+            }
         };
-      
+
         fetchAllPlantDetails();
-      }, []);
+    }, []);
 
     return (
         <div className="bg-FFFBEF-300 h-[1000px]">
