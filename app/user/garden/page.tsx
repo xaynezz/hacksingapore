@@ -20,20 +20,20 @@ export default function page({}) {
     );
     const [userPlantCount, setUserPlantCount] = useState<Number>()
     const [name, setName] = useState('')
-    const [uuid, setUuid] = useState<string|undefined>()
-    const [userPlantImage, setUserPlantImage] = useState('');
-
+    const [userUUID, setUserUUID] = useState<string>();
     useEffect(() => {
         const fetchPlantsFromUser = async () => {
             const {
                 data: { user },
             } = await supabase.auth.getUser();
             const userUUID = user?.id;
+            console.log("user " + userUUID)
 
+            await fetchNameFromUser(userUUID);
             const { data, error } = await supabase
                 .from("plants")
                 .select(
-                    "id, plant_id, y_coor, x_coor, tree_number, image_url, plant_name, created_at"
+                    "id, plant_id, y_coor, x_coor, tree_number, image_url, plant_name, created_at, common_name"
                 )
                 .eq("uuid", userUUID);
 
@@ -46,10 +46,7 @@ export default function page({}) {
             );
             console.log(treePositions);
             setTreePositions(treePositions);
-
             setUserPlantCount(data?.length);
-
-            setUuid(userUUID);
 
             const plantsList = data.map((item) => ({
                 image_url: item.image_url,
@@ -61,7 +58,7 @@ export default function page({}) {
             setArrayOfUserPLants(plantsList);
         };
 
-        const fetchNameFromUser = async () => {
+        const fetchNameFromUser = async (userUUID: any) => {
             const { data, error } = await supabase
                 .from("user")
                 .select(
@@ -74,27 +71,9 @@ export default function page({}) {
             setName(firstname)
             console.log(firstname)
         };
+        fetchPlantsFromUser();
 
-    //           // fetching user uploaded img, calling plant.id api to identify disease
-
-    //   const toBase64 = (url: string): Promise<string|void> => {
-    //     return axios
-    //       .get(url, { responseType: 'arraybuffer' })
-    //       .then((response) => {
-    //         const base64Data = Buffer.from(response.data, 'binary').toString('base64');
-    //         const base64Image = `data:${response.headers['content-type']};base64,${base64Data}`;
-    //         return base64Image;
-    //       })
-    //       .catch((error) => {
-    //         console.log(`Failed to convert image: ${error.message}`);
-    //       });
-    //   };
-
-        if (uuid) {
-            fetchPlantsFromUser();
-            fetchNameFromUser();
-        }
-    }, [showAddPlantModal, uuid]);
+    }, [showAddPlantModal, arrayOfUserPLants]);
 
     const [treePositions, setTreePositions] = useState<TreePosition[][]>([]);
 
@@ -127,7 +106,6 @@ export default function page({}) {
                 <AddPlant setTreePositions={setTreePositions} />
             ) : (
                 <>
-
                     <div className="overflow-hidden bg-white pt-3 sm:py-32">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">

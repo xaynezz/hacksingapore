@@ -40,7 +40,9 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
 
             <h1 className="text-xl text-center text-green-500 font-semibold mb-4">A Peek into My Plant Collection</h1>
             <div className="grid grid-cols-2 gap-4">
-                {arrayOfUserPLants.map((plant, index) => (
+                {arrayOfUserPLants.map((plant, index) => {
+                    console.log(plant)
+                    return (
                     <div key={index} className="p-4 border border-gray-200 rounded-lg relative">
                         <button
                             className="absolute right-2 top-2 bg-red-500 hover:bg-red-600 text-white w-6 h-6 rounded-full flex items-center justify-center"
@@ -56,7 +58,7 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
                             </button>
                         </div>
                     </div>
-                ))}
+                )})}
 
             </div>
 
