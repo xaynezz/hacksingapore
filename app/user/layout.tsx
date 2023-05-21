@@ -11,7 +11,7 @@ export default function UserLayout({
     return (
         <main className="min-h-svh flex flex-col items-center justify-between">
             <Header />
-            <div className="max-h-[calc(100svh-6.5rem)] w-full overflow-auto">
+            <div className="h-[calc(100svh-6.5rem)] w-full overflow-auto">
                 {children}
             </div>
             <Footer />
