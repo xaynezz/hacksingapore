@@ -7,20 +7,20 @@ import { useGardenContext } from "@/app/context/gardenContext";
 import { supabase } from "@/config/dbConnect";
 import ListPlants from "./components/listOfPlants/ListPlants";
 import RecipeButton from "@/components/RecipeButton";
-import { useRouter } from "next/navigation";
 import { AiFillCamera } from "react-icons/ai";
 
-import axios from "axios";
 
 export default function page({}) {
-    const router = useRouter();
+
     const { showAddPlantModal, setAddPlantModal }: any = useGardenContext();
     const [arrayOfUserPLants, setArrayOfUserPLants] = useState<UserPlants[]>(
         []
     );
     const [userPlantCount, setUserPlantCount] = useState<Number>()
     const [name, setName] = useState('')
-    const [userUUID, setUserUUID] = useState<string>();
+
+    const [deleteFlag, setisDeleteFlag] = useState<boolean>(false);
+
     useEffect(() => {
         const fetchPlantsFromUser = async () => {
             const {
@@ -29,7 +29,8 @@ export default function page({}) {
             const userUUID = user?.id;
             console.log("user " + userUUID)
 
-            await fetchNameFromUser(userUUID);
+            fetchNameFromUser(userUUID);
+            
             const { data, error } = await supabase
                 .from("plants")
                 .select(
@@ -71,20 +72,18 @@ export default function page({}) {
             setName(firstname)
             console.log(firstname)
         };
+        
         fetchPlantsFromUser();
-
-    }, [showAddPlantModal, arrayOfUserPLants]);
-
+    }, [showAddPlantModal, deleteFlag]);
+    
     const [treePositions, setTreePositions] = useState<TreePosition[][]>([]);
 
     console.log(arrayOfUserPLants);
 
     const dateString = arrayOfUserPLants[0]?.date_added;
     const date = new Date(dateString);
-
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
     const formattedDate = date.toLocaleDateString('en-US', options);
-
     console.log(formattedDate); // Output: "20 May 2023"
 
     const currentDate = new Date();
@@ -130,12 +129,12 @@ export default function page({}) {
 
                                 
                                 <div className="pt-32 mt-1 text-xs tracking-tight text-gray-900 sm:text-4xl flex justify-center">
-                                    <p className="text-black font-bold">{daysDifference}&nbsp;</p>
+                                    <p className="text-black font-bold">{Number.isNaN(daysDifference) ? 0 : daysDifference}&nbsp;</p>
                                     <p>day(s) since you started your&nbsp;</p>
                                     <p className="text-primary-400 font-bold">sustainable food journey.</p>
                                 </div>
 
-                                <ListPlants arrayOfUserPLants={arrayOfUserPLants} />
+                                <ListPlants isDeleteFlag={setisDeleteFlag} arrayOfUserPLants={arrayOfUserPLants} />
                             </div>
                         </div>
                         </div>
