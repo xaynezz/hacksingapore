@@ -29,10 +29,6 @@ const Discover = (props: Props) => {
             } catch (error) {
                 console.error("Error fetching plant details:", error);
             }
-            setAllObj((prevAllObj:any) => [...prevAllObj, requiredData])
-          } catch (error) {
-            console.error('Error fetching plant details:', error);
-          }
         };
 
         const fetchAllPlantDetails = async () => {
@@ -49,8 +45,12 @@ const Discover = (props: Props) => {
             {/* <div className="flex justify-center pt-10">
                 <h2>Hi Oak Soe Khant, </h2>
             </div> */}
-            <div className="flex justify-center pt-7">
-                <h3>We recommend you those plants!</h3>
+            <div className="flex justify-center font-bold text-lg pt-5">
+                <h3>We recommend you these plants</h3>
+                
+            </div>
+            <div className="flex justify-center  text-xs italic text-gray-500">
+                Click on the rescpective images to find out more!
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-5 px-7 py-4">
