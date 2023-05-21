@@ -1,24 +1,30 @@
 import AddPlant from "@/app/user/garden/components/model/AddPlant";
 import React, { useState } from "react";
 import { useGardenContext } from "@/app/context/gardenContext";
+import { usePathname } from "next/navigation";
 
-interface HeaderProps {
-    title: String;
-    icon?: React.JSX.Element;
-}
+const map = [
+    ["/user/garden", "Garden"],
+    ["/user/discover", "Discover"],
+    ["/user/leaderboard", "Leaderboard"],
+    ["/user/chatbot", "Chatbot"],
+];
+function Header() {
+    let titletoDisplay = null;
+    const pathname = usePathname();
 
-function Header({ title, icon }: HeaderProps) {
-    const { setAddPlantModal }: any = useGardenContext();
+    map.forEach((item) => {
+        if (pathname.includes(item[0])) {
+            titletoDisplay = item[1];
+        }
+    });
+
     return (
         <>
             <div className="flex h-12 w-full items-center justify-center bg-primary-400">
-                <h1 className="text-2xl font-semibold text-white">{title}</h1>
-                <button
-                    onClick={() => setAddPlantModal(true)}
-                    className="pl-2 text-2xl font-semibold text-black"
-                >
-                    {icon}
-                </button>
+                <h1 className="text-2xl font-semibold text-white">
+                    {titletoDisplay}
+                </h1>
             </div>
         </>
     );

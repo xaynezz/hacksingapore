@@ -17,7 +17,7 @@ export default function HomePage() {
         });
 
         if (!error) {
-            router.push("/firsttime");
+            router.push("/user/garden");
         } else {
             alert(error);
         }
