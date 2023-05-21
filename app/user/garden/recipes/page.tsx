@@ -179,10 +179,20 @@ const Recipe: React.FC = () => {
                   Recipes
               </div>
 
-              {!norecipe && 
-              <div className = "mx-4 mt-8 text-center text-2xl font-bold text-gray-800">Please start planting in your garden first!</div>
-              
-              }
+              {!norecipe && (
+                <div>
+<div className="mx-4 mt-8 text-center text-l font-bold text-grey-500 mb-2">
+  There are no <span className="text-green-500">plants</span> in your <span className="text-green-500">garden</span>.
+</div>
+<div className="mx-4 mt-4 text-center text-l text-grey-500 mb-8">Try adding some plants before checking out recipes!</div>
+                    <img
+                    src="image/farming.png"
+                    height={200}
+                    width={300}
+                    className="rounded-md mx-auto"
+                    />
+                </div>
+                )}
 
               <div className="p-4 sm:p-8">
                   <div className="mx-auto max-w-lg">
