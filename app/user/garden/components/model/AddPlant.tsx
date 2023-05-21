@@ -14,15 +14,24 @@ const toBase64 = (file: File | null) =>
     });
 
 
-
 export default function AddPlant() {
-    const { setAddPlantModal, userUUID }: any = useGardenContext();
+    const { setAddPlantModal }: any = useGardenContext();
+
+    const [userUUID, setUserUUID] = useState<string>();
+
+    useEffect(() => {
+        async function fetchUser() {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+            setUserUUID(user?.id);
+        }
+        fetchUser();
+    }, []);
+    console.log("AddPlant UUID " + userUUID)
     const [image, setImage] = useState<File | null>(null);
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [health, setHealth] = useState<PlantHealthAssessment>()
 
-
-    console.log("userID" + userUUID)
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);

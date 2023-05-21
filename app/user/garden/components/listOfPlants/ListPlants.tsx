@@ -25,16 +25,16 @@ export default function ListPlants({ arrayOfUserPLants, isDeleteFlag }: Props) {
     }
 
     const handleConfirmDelete = async () => {
-        console.log("isDeleteFlag" + isDeleteFlag)
         console.log(deletePlantID)
         const { error } = await supabase
             .from('plants')
             .delete()
             .eq('id', deletePlantID)
-        console.log(error)
+        console.log("error in ListPlants is " + null)
         if (!error) {
+            console.log("Sucessfully deleted a plant!")
             isConfirmDelete(false);
-            isDeleteFlag(true)
+            isDeleteFlag((prevValue)=>{return !prevValue})
         }
     }
     return (

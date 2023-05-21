@@ -18,7 +18,6 @@ export default function page({}) {
     );
     const [userPlantCount, setUserPlantCount] = useState<Number>()
     const [name, setName] = useState('')
-
     const [deleteFlag, setisDeleteFlag] = useState<boolean>(false);
 
     useEffect(() => {
@@ -28,7 +27,7 @@ export default function page({}) {
             } = await supabase.auth.getUser();
             const userUUID = user?.id;
             console.log("user " + userUUID)
-
+            
             fetchNameFromUser(userUUID);
             
             const { data, error } = await supabase
