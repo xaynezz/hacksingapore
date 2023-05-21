@@ -16,7 +16,7 @@ export default function page({}) {
             const { data, error } = await supabase
                 .from("plants")
                 .select(
-                    "plant_id, y_coor, x_coor, tree_number, image_url, common_name"
+                    "plant_id, y_coor, x_coor, tree_number, image_url, common_name , id"
                 )
                 .eq("uuid", userUUID);
             console.log(data);
@@ -33,7 +33,8 @@ export default function page({}) {
             const plantsList = data.map((item) => ({
                 image_url: item.image_url,
                 plant_name: item.common_name,
-                plant_id: item.plant_id
+                plant_id: item.plant_id,
+                supabase_id: item.id
             }));
             setArrayOfUserPLants(plantsList);
         };
