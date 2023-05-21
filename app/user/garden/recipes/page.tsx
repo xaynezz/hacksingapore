@@ -179,7 +179,10 @@ const Recipe: React.FC = () => {
                   Recipes
               </div>
 
-              {!norecipe && <div className = "mx-4 mt-8 text-center text-2xl font-bold text-gray-800">Please start planting in your garden first!</div>}
+              {!norecipe && 
+              <div className = "mx-4 mt-8 text-center text-2xl font-bold text-gray-800">Please start planting in your garden first!</div>
+              
+              }
 
               <div className="p-4 sm:p-8">
                   <div className="mx-auto max-w-lg">
