@@ -14,7 +14,6 @@ import { useGardenContext } from "@/app/context/gardenContext";
 // import FaLeaf from 'react-icons/fa'
 // import TbChefHat from 'react-icons/tb'
 
-
 const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) => {
     const plantID = params.id;
     const dbID = params.dbid
@@ -27,6 +26,23 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
 
     const { userUUID }: any = useGardenContext();
     const [health, setHealth] = useState<PlantHealthAssessment>();
+
+    var userImg:any = '';
+    const fetchImagefromUser = async () => {
+        const { data, error } = await supabase
+                .from("plants")
+                .select(
+                    "image_url"
+                )
+                .eq("id", dbID);
+                console.log(data)
+                userImg = data[0]?.image_url;
+                console.log("image link", userImg);
+    }
+    
+    useEffect(() => {
+      fetchImagefromUser();
+    }, [])
 
     useEffect(() => {
         const fetchPlantDetails = async () => {
@@ -173,13 +189,8 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                     <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                       <div className="lg:pr-4">
                         <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
-                          {/* <p>Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id.</p> */}
                           <ul role="list" className="mt-2 space-y-5 text-gray-600">
                             <li className="flex gap-x-3">
-                              {/* <svg className="mt-1 h-5 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M4.632 3.533A2 2 0 016.577 2h6.846a2 2 0 011.945 1.533l1.976 8.234A3.489 3.489 0 0016 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234z" />
-                                <path fill-rule="evenodd" d="M4 13a2 2 0 100 4h12a2 2 0 100-4H4zm11.24 2a.75.75 0 01.75-.75H16a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75h-.01a.75.75 0 01-.75-.75V15zm-2.25-.75a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-.01z" clip-rule="evenodd" />
-                              </svg> */}
                               <svg fill="none" stroke="#5C6AC4" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" height={30} width={30}>
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"></path>
                               </svg>
@@ -216,10 +227,6 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                                 </span>
                               </li>
                             )}
-                            {/* <li className="flex gap-x-3">
-                              <svg fill="#5C6AC4" width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <g> <path fill="none" d="M0 0H24V24H0z"/> <path d="M21 3v2c0 9.627-5.373 14-12 14H7.098c.212-3.012 1.15-4.835 3.598-7.001 1.204-1.065 1.102-1.68.509-1.327-4.084 2.43-6.112 5.714-6.202 10.958L5 22H3c0-1.363.116-2.6.346-3.732C3.116 16.974 3 15.218 3 13 3 7.477 7.477 3 13 3c2 0 4 1 8 0z"/> </g> </svg>
-                              <span><strong className="font-semibold text-gray-900">{plantDetails?.edible_leaf?'Edible Leaf':""}</strong> </span>
-                            </li> */}
                             {plantDetails?.edible_fruit && (
                               <li className="flex gap-x-3">
                                 <svg fill="#5C6AC4" width="30" height="30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -237,74 +244,12 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                                 ? <p className='inline'> {recipeDetails.hits[0].recipe.label}</p> : <p className='inline'> There are no recipes for this plant.</p>}
                               </span>
                             </li>
-                            {/* <li className="flex gap-x-3">
-                              <svg className="mt-1 h-5 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M4.632 3.533A2 2 0 016.577 2h6.846a2 2 0 011.945 1.533l1.976 8.234A3.489 3.489 0 0016 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234z" />
-                                <path fill-rule="evenodd" d="M4 13a2 2 0 100 4h12a2 2 0 100-4H4zm11.24 2a.75.75 0 01.75-.75H16a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75h-.01a.75.75 0 01-.75-.75V15zm-2.25-.75a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-.01z" clip-rule="evenodd" />
-                              </svg>
-                              <span className="inline"><strong className=" inline font-semibold text-gray-900">Harvest Season</strong>
-                                {recipeDetails && recipeDetails.hits.length > 0 
-                                ? <p className='inline'> {recipeDetails.hits[1].recipe.label}</p> : <p className='inline'> {plantDetails?.harvest_season}</p>}
-                              </span>
-                            </li>
-                            <li className="flex gap-x-3">
-                              <svg className="mt-1 h-5 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path d="M4.632 3.533A2 2 0 016.577 2h6.846a2 2 0 011.945 1.533l1.976 8.234A3.489 3.489 0 0016 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234z" />
-                                <path fill-rule="evenodd" d="M4 13a2 2 0 100 4h12a2 2 0 100-4H4zm11.24 2a.75.75 0 01.75-.75H16a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75h-.01a.75.75 0 01-.75-.75V15zm-2.25-.75a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-.01z" clip-rule="evenodd" />
-                              </svg>
-                              <span className="inline"><strong className=" inline font-semibold text-gray-900">Harvest Method</strong>
-                                {recipeDetails && recipeDetails.hits.length > 0 
-                                ? <p className='inline'> {recipeDetails.hits[1].recipe.label}</p> : <p className='inline'> {plantDetails?.harvest_method}</p>}
-                              </span>
-                            </li> */}
                           </ul>
-                          {/* <p className="mt-8">Et vitae blandit facilisi magna lacus commodo. Vitae sapien duis odio id et. Id blandit molestie auctor fermentum dignissim. Lacus diam tincidunt ac cursus in vel. Mauris varius vulputate et ultrices hac adipiscing egestas. Iaculis convallis ac tempor et ut. Ac lorem vel integer orci.</p>
-                          <h2 className="mt-16 text-2xl font-bold tracking-tight text-gray-900">No server? No problem.</h2>
-                          <p className="mt-6">Id orci tellus laoreet id ac. Dolor, aenean leo, ac etiam consequat in. Convallis arcu ipsum urna nibh. Pharetra, euismod vitae interdum mauris enim, consequat vulputate nibh. Maecenas pellentesque id sed tellus mauris, ultrices mauris. Tincidunt enim cursus ridiculus mi. Pellentesque nam sed nullam sed diam turpis ipsum eu a sed convallis diam.</p> */}
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                
-
-                {/* <div className="flex flex-row items-center justify-between">
-                    <div className="mr-5 px-2 text-xl font-bold">Plant Name:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.common_name}</p> : <p>Loading...</p>}</div>                    
-                </div>
-                <div className="flex flex-row items-center justify-between text-xl font-bold">
-                    <div className="mr-5 px-2 text-xl font-bold">Growth Rate:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.growth_rate}</p> : <p>Loading...</p>}</div>                    
-                </div>
-                <div className="flex flex-row items-center justify-between text-xl font-bold">
-                    <div className="mr-5 px-2 text-xl font-bold">Watering:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.watering}</p> : <p>Loading...</p>}</div>                    
-                </div>
-                <div className="flex flex-row items-center justify-between text-xl font-bold">
-                    <div className="mr-5 px-2 text-xl font-bold">Fruits:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{fruits?'True':"False"}</div>                    
-                </div>
-                <div className="flex flex-row items-center justify-between text-xl font-bold">
-                    <div className="mr-5 px-2 text-xl font-bold">Edible Leaf:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{el?'True':"False"}</div>                    
-                </div>
-                <div className="flex flex-row items-center justify-between text-xl font-bold">
-                    <div className="mr-5 px-2 text-xl font-bold">Cycle:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.cycle}</p> : <p>Loading...</p>}</div>                    
-                </div>
-                <div className="flex flex-row items-center justify-between">
-                    <div className="mr-5 px-2 text-xl font-bold">Details:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">{plantDetails ? <p>{plantDetails.description}</p> : <p>Loading...</p>}</div>
-                </div>
-
-                <div className="flex flex-row items-center justify-between">
-                    <div className="mr-5 px-2 text-xl font-bold">Recipes:</div>
-                    <div className="text-gray-800 font-bold mx-10 flex-1 text-center">
-                      { recipeDetails && recipeDetails.hits.length > 0 
-                      ? <p>{recipeDetails.hits[1].recipe.label}</p> 
-                      : <p>There are no recipes for this plant.</p>}
-                    </div>
-                </div> */}
 
                 <div className="border rounded-xl mt-4">
                   <div className="text-center py-4">
@@ -340,29 +285,23 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                   </div>
                 </div>
 
-                <ul role="list" className="mt-2 space-y-5 text-gray-600">
+                <div className="pt-2">
+                    {/* <SlidingComponent images={images} /> */}
+                    <Image src={userImg} alt="alt" height={500} width={500} className='rounded-xl'/>
+                </div>
+
+                <div className="lg:max-w-lg text-center py-4">
+                  {/* <p className="text-base font-semibold leading-7 text-indigo-600">{plantDetails?.common_name}</p> */}
+                  <span className="mt-1 text-xl font-medium tracking-tight text-gray-900 sm:text-4xl">Your plant is: </span>
+                  <span className="mt-1 text-xl font-medium tracking-tight text-primary-400">{health?.is_healthy? <span>{health?.is_healthy_probability*100}% Healthy</span> : <span>{health?.is_healthy_probability}Not healthy</span>}</span>
+                </div>
+
+                <ul role="list" className="mt-2 space-y-5 text-gray-600 pl-6">
                   {health?.diseases.map((item) => (
                     <li className="flex gap-x-3" key={item.entity_id}>
-                      <svg
-                        fill="none"
-                        stroke="#5C6AC4"
-                        strokeWidth="1.5"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                        height={30}
-                        width={30}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-                        ></path>
-                      </svg>
-
+                      <svg height={20} width={20} fill="#5C6AC4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
                       <span className="inline">
-                        <strong className="font-semibold text-gray-900">{item.name}</strong>{" "}
-                        {plantDetails?.sunlight[0]}
+                        <strong className="font-semibold text-gray-900">{item.name}</strong>
                       </span>
                     </li>
                   ))}
