@@ -185,12 +185,7 @@ const Recipe: React.FC = () => {
   There are no <span className="text-green-500">plants</span> in your <span className="text-green-500">garden</span>.
 </div>
 <div className="mx-4 mt-4 text-center text-l text-grey-500 mb-8">Try adding some plants before checking out recipes!</div>
-                    <img
-                    src="image/farming.png"
-                    height={200}
-                    width={300}
-                    className="rounded-md mx-auto"
-                    />
+<img src="/images/plantlogo.jpg" alt="Plant Logo" height={200} width={300} className="rounded-md mx-auto" />
                 </div>
                 )}
 
