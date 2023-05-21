@@ -19,27 +19,26 @@ export default function RegisterPage() {
             return;
         }
 
-        const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-        });
-
-        console.log(data);
-
-        if (!error) {
-            const { error } = await supabase.from("user").insert([
-                {
-                    uuid: data.user?.id,
-                    first_name: firstName,
-                    last_name: lastName,
-                },
-            ]);
-            if (!error) {
-                router.push("/firsttime");
-            }
-        } else {
-            alert(error);
-        }
+        await supabase.auth
+            .signUp({
+                email: email,
+                password: password,
+            })
+            .then(async (res) => {
+                console.log(res);
+                const { error } = await supabase.from("user").insert([
+                    {
+                        uuid: res.data.user?.id,
+                        first_name: firstName,
+                        last_name: lastName,
+                    },
+                ]);
+                if (!error) {
+                    router.push("/firsttime");
+                } else {
+                    alert(error.message);
+                }
+            });
     }
 
     return (

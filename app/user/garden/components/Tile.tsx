@@ -4,7 +4,7 @@ import React from 'react';
 import './game.css'
 import { useRouter } from 'next/navigation';
 
-const Tile = ({ src, x, y, z, ybase, plantID }: any) => {
+const Tile = ({ src, x, y, z, ybase, plantID, dbPlantID }: any) => {
     const router = useRouter();
 
     return (
@@ -24,7 +24,7 @@ const Tile = ({ src, x, y, z, ybase, plantID }: any) => {
                     < motion.img
 
                         whileHover={{ opacity: 0.5 }}
-                        onClick={() => router.push('/user/garden/' + plantID)}
+                        onClick={() => router.push('/user/garden/' + plantID + '/' + dbPlantID)}
                         alt="garden_tile"
                         src={src}
                         className="tile"

@@ -1,7 +1,7 @@
 "use client"
 import { useGardenContext } from '@/app/context/gardenContext';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { supabase } from "../../../../../config/dbConnect"
 import { RiPlantFill } from "react-icons/ri";
 
@@ -19,6 +19,9 @@ export default function AddPlant() {
     const { setAddPlantModal, userUUID }: any = useGardenContext();
     const [image, setImage] = useState<File | null>(null);
     const [isLoading, setLoading] = useState<boolean>(false);
+    const [health, setHealth] = useState<PlantHealthAssessment>()
+
+
     console.log("userID" + userUUID)
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -46,7 +49,15 @@ export default function AddPlant() {
             });
 
             const { PlantID, PlantImage, PlantCommonName } = response1.data;
-            console.log(PlantCommonName)
+
+            const response2 = await axios.post('/api/plant/health', {
+                base64String: base64File,
+            });
+  
+            const PlantHealthAssessment: PlantHealthAssessment = response2.data;
+            console.log('plant health assessment:',PlantHealthAssessment);
+  
+
             /* Calculate a random 10*10 coordinates & image string */
             const x = Math.floor(Math.random() * 10);
             const y = Math.floor(Math.random() * 10);
@@ -61,7 +72,8 @@ export default function AddPlant() {
                 plant_name: PlantIdentifyData.suggestions[0].plant_name,
                 plant_id: PlantID, tree_number: options[randomIndex],
                 image_url: PlantImage,
-                common_name: PlantCommonName
+                common_name: PlantCommonName,
+                health: PlantHealthAssessment
             };
 
             console.log(PlantImage);
@@ -78,7 +90,7 @@ export default function AddPlant() {
             setLoading(false)
             setAddPlantModal(false);
         } catch (error) {
-
+            console.log('error finding disease:', error)
         }
 
     }

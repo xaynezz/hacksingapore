@@ -55,15 +55,17 @@ const Landscape = ({ itemPositions }: LandscapeProps) => {
                             src = "image/garden/tree_three.png";
                         }
 
-                        let plantID;
+                        let plantID, dbPlantID;
                         if (tile !== 'land_both') {
-
+                                
                             let parts = tile.split('/');
+                            //console.log(parts)
                             plantID = parts[1];
-
+                            dbPlantID = parts[2];
                             console.log(plantID);
+                            console.log(dbPlantID)
                         }
-                        return <Tile plantID={plantID} key={`${x}${y}`} src={src} x={xAbs} y={yAbs} z={z} ybase={yBaseCopy} />
+                        return <Tile dbPlantID={dbPlantID} plantID={plantID} key={`${x}${y}`} src={src} x={xAbs} y={yAbs} z={z} ybase={yBaseCopy} />
                     })
                 })
             }
