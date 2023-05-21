@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
+import { supabase } from '@/config/dbConnect';
 type Props = {
     arrayOfUserPLants: UserPlants[];
 }
@@ -11,6 +11,8 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
     const handleImageClick = (plantID: string | number , supaID : any) => {
         // Navigate to a new route using Next.js router
         router.push('/user/garden/' + plantID +'/'+ supaID )      };
+
+
     return (
         <div className="p-4">
 
@@ -20,14 +22,15 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
                    <div key={index} className="p-4 border border-gray-200 rounded-lg">
                    <img className="object-cover h-48 w-full mb-2 rounded-lg" src={plant.image_url} alt={plant.plant_name} />
                    <h2 className="text-center text-lg mt-2">{plant.plant_name}</h2>
-                   <div className="flex justify-center"> 
-                     <button onClick={() => handleImageClick(plant.plant_id, plant.supabase_id)} className="py-2 px-4 mt-2 bg-secondarydark-500 text-white font-semibold rounded-lg hover:bg-secondarydark-600 transition-colors duration-300">
-                       View More
-                     </button>
-                   </div>
-                 </div>
+                  
+                <button onClick={() => handleImageClick(plant.plant_id, plant.supabase_id)} className="py-1 px-2 mt-2 mr-3 text-xs bg-secondarydark-500 text-white font-semibold rounded-lg hover:bg-secondarydark-600 transition-colors duration-300">
+                    View More
+                </button>
+                <button className="py-1 px-1 mt-2 text-xs bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-colors duration-300">
+                                    Delete
+                </button>
                  
-        
+                 </div>
 
                 ))}
             </div>
