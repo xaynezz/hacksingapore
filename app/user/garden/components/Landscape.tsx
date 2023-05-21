@@ -12,7 +12,7 @@ type TilesArray = TileType[][];
 
 
 const WORLD_SIZE = 10;
-const TILE_ASPECT_RATIO = 1.1;
+const TILE_ASPECT_RATIO = 1.01;
 
 
 const Landscape = ({ itemPositions }: LandscapeProps) => {
