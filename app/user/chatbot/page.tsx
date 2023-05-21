@@ -104,7 +104,7 @@ const Chatbot: React.FC = () => {
     };
 
     return (
-        <div>
+      <div>
         <div className="flex flex-col h-screen bg-gray-50">
           <div className="flex-grow p-6">
             <div className="flex flex-col space-y-4">
@@ -136,7 +136,7 @@ const Chatbot: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="fixed bottom-0 left-0 right-0 bg-gray-50">
+        <div className="fixed bottom-20 left-0 right-0 bg-gray-50">
 
             <form onSubmit={handleSubmit} className="flex-none p-6">
             <div className="border-white-700 bg-white-800 flex rounded-lg border">
