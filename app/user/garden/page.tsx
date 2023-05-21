@@ -7,12 +7,20 @@ import { useGardenContext } from "@/app/context/gardenContext";
 import { supabase } from "@/config/dbConnect";
 import ListPlants from "./components/listOfPlants/ListPlants";
 import RecipeButton from "@/components/RecipeButton";
+import { useRouter } from "next/navigation";
+import { AiFillCamera } from "react-icons/ai";
 
 export default function page({}) {
-    const { showAddPlantModal, userUUID }: any = useGardenContext();
+    const router = useRouter();
+    const { showAddPlantModal, setAddPlantModal }: any = useGardenContext();
 
     useEffect(() => {
         const fetchPlantsFromUser = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+            const userUUID = user?.id;
+
             const { data, error } = await supabase
                 .from("plants")
                 .select(
@@ -36,10 +44,9 @@ export default function page({}) {
             }));
             setArrayOfUserPLants(plantsList);
         };
-        if (userUUID) {
-            fetchPlantsFromUser();
-        }
-    }, [showAddPlantModal, userUUID]);
+
+        fetchPlantsFromUser();
+    }, [showAddPlantModal]);
 
     const [treePositions, setTreePositions] = useState<TreePosition[][]>([]);
     const [arrayOfUserPLants, setArrayOfUserPLants] = useState<UserPlants[]>(
@@ -48,6 +55,15 @@ export default function page({}) {
     console.log(arrayOfUserPLants);
     return (
         <>
+            <div className="flex items-center justify-between">
+                <RecipeButton href="/user/garden/recipes" />
+                <button
+                    onClick={() => setAddPlantModal(true)}
+                    className="m-2 rounded-md border-b-4 border-secondarydark-700 bg-secondarydark-400 p-2 hover:border-secondarydark-500 hover:bg-secondarydark-300"
+                >
+                    <AiFillCamera size={20} />
+                </button>
+            </div>
             {showAddPlantModal ? (
                 <AddPlant setTreePositions={setTreePositions} />
             ) : (
@@ -56,7 +72,6 @@ export default function page({}) {
                     <ListPlants arrayOfUserPLants={arrayOfUserPLants} />
                 </>
             )}
-            <RecipeButton href="/user/garden/recipes" />
         </>
     );
 }
