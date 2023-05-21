@@ -241,4 +241,5 @@ type UserPlants = {
   plant_name: string,
   image_url: string
   plant_id: number,
+  supabase_id: number,
 }

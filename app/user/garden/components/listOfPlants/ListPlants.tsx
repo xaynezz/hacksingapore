@@ -8,9 +8,9 @@ type Props = {
 
 export default function ListPlants({ arrayOfUserPLants }: Props) {
     const router = useRouter();
-    const handleImageClick = (plantID: any) => {
+    const handleImageClick = (plantID: string | number , supaID : any) => {
         // Navigate to a new route using Next.js router
-        router.push('/user/garden/' + plantID)      };
+        router.push('/user/garden/' + plantID +'/'+ supaID )      };
     return (
         <div className="p-4">
 
@@ -21,7 +21,7 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
                    <img className="object-cover h-48 w-full mb-2 rounded-lg" src={plant.image_url} alt={plant.plant_name} />
                    <h2 className="text-center text-lg mt-2">{plant.plant_name}</h2>
                    <div className="flex justify-center"> 
-                     <button onClick={() => handleImageClick(plant.plant_id)} className="py-2 px-4 mt-2 bg-secondarydark-500 text-white font-semibold rounded-lg hover:bg-secondarydark-600 transition-colors duration-300">
+                     <button onClick={() => handleImageClick(plant.plant_id, plant.supabase_id)} className="py-2 px-4 mt-2 bg-secondarydark-500 text-white font-semibold rounded-lg hover:bg-secondarydark-600 transition-colors duration-300">
                        View More
                      </button>
                    </div>
