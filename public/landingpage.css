@@ -1,0 +1,43 @@
+/* landingpage.css */
+.app {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.screen1 {
+  background-color: #ff9800;
+}
+
+.screen2 {
+  background-color: #e91e63;
+}
+
+.screen3 {
+  background-color: #9c27b0;
+}
+
+.navigation-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #bdbdbd;
+  border-radius: 50%;
+  margin: 0 4px;
+}
+
+.dot.active {
+  background-color: #333;
+}
