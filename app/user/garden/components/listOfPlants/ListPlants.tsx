@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/config/dbConnect';
 type Props = {
-    arrayOfUserPLants: UserPlants[];
+    arrayOfUserPLants: UserPlants[],
+    isDeleteFlag: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function ListPlants({ arrayOfUserPLants }: Props) {
+export default function ListPlants({ arrayOfUserPLants, isDeleteFlag }: Props) {
     const [confirmDelete, isConfirmDelete] = useState<boolean>(false);
     const [deletePlantID, setDeletePlantID] = useState<number>();
     const router = useRouter();
@@ -24,6 +25,7 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
     }
 
     const handleConfirmDelete = async () => {
+        console.log("isDeleteFlag" + isDeleteFlag)
         console.log(deletePlantID)
         const { error } = await supabase
             .from('plants')
@@ -32,6 +34,7 @@ export default function ListPlants({ arrayOfUserPLants }: Props) {
         console.log(error)
         if (!error) {
             isConfirmDelete(false);
+            isDeleteFlag(true)
         }
     }
     return (
