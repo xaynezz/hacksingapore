@@ -42,36 +42,6 @@ const Discover = (props: Props) => {
         fetchAllPlantDetails();
       }, []);
 
-<<<<<<< Updated upstream
-      console.log(allObj)
-
-      const generatePlantDetail = (order:number, size = 150) => {
-        return(allObj[order] && 
-            <div className="relative flex flex-col items-center">
-                <div className="text-gray-800 font-bold mx-auto flex-1 text-center ">
-                    {allObj[order] ? allObj[order].common_name : "loading"}
-                </div>
-            <div className="w-36 h-36 squared-full flex items-center justify-center">
-                <a href={`/user/discover/${examplePlantId[order]}`}>
-                    <Image src={allObj[order].regular_url} width={size} height={size} alt={`Image ${order}`} />
-                </a>
-            </div>
-            <div>
-                fruit: {allObj[order].fruits ? 'yes' : 'no'}
-            </div>
-            <div>
-                edible leaf: {allObj[order].edibleLeaf ? 'yes' : 'no'}
-            </div>
-            </div>
-
-        )
-      }
-    return(
-    <div className="h-[1000px] bg-FFFBEF-300">
-
-        <div className = "pt-10 flex justify-center">
-            <h2>Hi Oak Soe Khant, </h2>
-=======
     return (
         <div className="bg-FFFBEF-300 h-[1000px]">
             {/* <div className="flex justify-center pt-10">
@@ -138,28 +108,9 @@ const Discover = (props: Props) => {
                     </div>
                 ))}
             </div>
->>>>>>> Stashed changes
-        </div>
-        <div className = "flex justify-center">
-            <h3>we recommend you those plants!</h3>
         </div>
         
         
-        <div className="py-4 px-7 flex justify-between ">
-        {[0, 1].map((index) => (
-            <React.Fragment key={index}>
-                {generatePlantDetail(index)}
-            </React.Fragment>
-        ))}
-        </div>
-        <div className="py-4 px-7 flex justify-between ">
-            {[2, 3].map((index) => (
-                <React.Fragment key={index}>
-                    {generatePlantDetail(index)}
-                </React.Fragment>
-            ))}
-        </div>
-    </div>
     )
 }
 
