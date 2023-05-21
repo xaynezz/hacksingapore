@@ -3,6 +3,10 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import BackButton from '@/components/BackButton';
+import { supabase } from '@/config/dbConnect';
+import { useGardenContext } from "@/app/context/gardenContext";
+
+
 // import RecipeButton from '@/components/RecipeButton';
 // import BsFillSunFill from 'react-icons/Bs'
 // import {GiTreeGrowth, GiWaterDrop, GiBananaPeeled, GiFruitBowl} from 'react-icons/gi'
@@ -10,17 +14,19 @@ import BackButton from '@/components/BackButton';
 // import FaLeaf from 'react-icons/fa'
 // import TbChefHat from 'react-icons/tb'
 
-const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
+
+const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) => {
     const plantID = params.id;
-    const [commonName, setCommonName] = useState<string | null>(null);
+    const dbID = params.dbid
     const [img, setImg] = useState('');
-    const [fruits, setFruits] = useState(false);
-    const [el, setEL] = useState(false);
+    
 
     const [plantDetails, setPlantDetails] = useState<PlantDetails>();
     const [recipeDetails, setRecipeDetails] = useState<RecipeDetails>();
     const [sectionData, setSectionData] = useState<{ id:number, type: string, description: string }[]>([]);
 
+    const { userUUID }: any = useGardenContext();
+    const [health, setHealth] = useState<PlantHealthAssessment>();
 
     useEffect(() => {
         const fetchPlantDetails = async () => {
@@ -96,6 +102,27 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
     
         fetchRecipe();
       }, [plantDetails?.common_name]);
+
+      const fetchNameFromUser = async () => {
+        const { data, error } = await supabase
+            .from("plants")
+            .select(
+                "health"
+            )
+            .eq("id", dbID);
+
+        console.log(dbID);
+        console.log(data[0]?.health);
+
+        const planthealth = data[0]?.health;
+        setHealth(planthealth)
+        console.log(health)
+    };
+
+    useEffect(() => {
+      fetchNameFromUser();
+    }, [])
+    
 
     return (
         <>
@@ -302,14 +329,45 @@ const GardenPlantPage =  ({ params }: { params: { id: string } }) => {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
-                      <Image className="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]" src={`/images/${item.type}.jpeg`} alt="Watering" width={1920} height={1080} />
-                    </div> */}
-                    <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-                    </div>
                   </div>
                   ))}
                 </div>
+
+                <div className="border rounded-xl mt-4">
+                  <div className="text-center py-4">
+                    <h2 className="text-4xl font-bold tracking-tight text-black sm:text-4xl">Plant Health Assessment</h2>
+                    <p className="mt-2 text-base leading-8 text-gray-800">Discover what diseases your plant may have.</p>
+                  </div>
+                </div>
+
+                <ul role="list" className="mt-2 space-y-5 text-gray-600">
+                  {health?.diseases.map((item) => (
+                    <li className="flex gap-x-3" key={item.entity_id}>
+                      <svg
+                        fill="none"
+                        stroke="#5C6AC4"
+                        strokeWidth="1.5"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        height={30}
+                        width={30}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                        ></path>
+                      </svg>
+
+                      <span className="inline">
+                        <strong className="font-semibold text-gray-900">{item.name}</strong>{" "}
+                        {plantDetails?.sunlight[0]}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
                 
             </div>
         </>

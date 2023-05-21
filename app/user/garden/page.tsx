@@ -8,23 +8,27 @@ import { supabase } from "@/config/dbConnect";
 import ListPlants from "./components/listOfPlants/ListPlants";
 import RecipeButton from "@/components/RecipeButton";
 
+import axios from "axios";
+
 export default function page({}) {
     const { showAddPlantModal, userUUID }: any = useGardenContext();
     const [userPlantCount, setUserPlantCount] = useState<Number>()
     const [name, setName] = useState('')
+
+    const [userPlantImage, setUserPlantImage] = useState('');
 
     useEffect(() => {
         const fetchPlantsFromUser = async () => {
             const { data, error } = await supabase
                 .from("plants")
                 .select(
-                    "plant_id, y_coor, x_coor, tree_number, image_url, plant_name, created_at"
+                    "id, plant_id, y_coor, x_coor, tree_number, image_url, plant_name, created_at"
                 )
                 .eq("uuid", userUUID);
 
             const treePositions = data.map(
-                ({ tree_number, y_coor, x_coor, plant_id }) => [
-                    tree_number + "/" + plant_id,
+                ({ tree_number, y_coor, x_coor, plant_id, id}) => [
+                    tree_number + "/" + plant_id + "/" + id,
                     x_coor,
                     y_coor,
                 ]
@@ -55,6 +59,21 @@ export default function page({}) {
             setName(firstname)
             console.log(firstname)
         };
+
+    //           // fetching user uploaded img, calling plant.id api to identify disease
+
+    //   const toBase64 = (url: string): Promise<string|void> => {
+    //     return axios
+    //       .get(url, { responseType: 'arraybuffer' })
+    //       .then((response) => {
+    //         const base64Data = Buffer.from(response.data, 'binary').toString('base64');
+    //         const base64Image = `data:${response.headers['content-type']};base64,${base64Data}`;
+    //         return base64Image;
+    //       })
+    //       .catch((error) => {
+    //         console.log(`Failed to convert image: ${error.message}`);
+    //       });
+    //   };
 
         if (userUUID) {
             fetchPlantsFromUser();
