@@ -11,16 +11,14 @@ const Discover = (props: Props) => {
     const {} = props;
 
     const examplePlantId = [3013, 5022, 2251, 1595]
+    const edibleList = [843, 926, 961, 278, 1482]
     const [allObj, setAllObj] = useState<any>([])
     const {userUUID }: any = useGardenContext();
 
-    // Work out example plant Id
-    // remove all entries in examplePlantId thats also in arrayOfUserPlantIds
 
 
     // retrieve plant data
     useEffect(() => {
-        
     // return an array of plant_id users already have
         const fetchPlantsFromUser = async () => {
             const { data, error } = await supabase
@@ -56,7 +54,7 @@ const Discover = (props: Props) => {
 
         // retrieve a similar plant id to that user already have
         const fetchSimilarPlant = async (plantId: number) => {
-            // FIRSTLY: Retrieve scientific name of plant
+            // FIRSTLY: Retrieve scientific name of plant (DONE)
             console.log("fetchSimilarPlant() is called ")
             try {
                 const response = await axios.post("/api/plant/details", {
@@ -65,18 +63,40 @@ const Discover = (props: Props) => {
                 const plantDetails = response.data;
                 const requiredData = plantDetails.scientific_name;
                 const firstPart = requiredData[0].split(" ")[0];
+                
+        
             // SECONDLY: Retrieve similar plants based on that scientific name
             try {
-                const response = await axios.post("/api/plant", {
+                const response = await axios.post("/api/plant/discover", {
                     nameOfPlant: firstPart,
                 });
-                const similarPlants = response.data;
+                //console.log("responseDATA:",response.data)
+                const similarPlantId = response.data[0].PlantID;
+                //console.log("similarPlantId:",response.data[0].PlantID)
+                if (similarPlantId == plantId){
+                    try{
+                        return response.data[response.data.length - 1].PlantID;
+                    } catch(error){
+                        console.log("===No second similar plant===")
+                        return edibleList[Math.floor(Math.random() * edibleList.length)];
+                    }
+                }
+                else{
+                    // ie. same common
+                    //console.log("response.data[0].common_name: ", response.data[0].PlantCommonName)
+                    //console.log("plantDetails.common_name", plantDetails.common_name)
+                    if(response.data[0].PlantCommonName == plantDetails.common_name){
+                        console.log("###################")
+                        // MAYBE return a random fruit?
+                        return edibleList[Math.floor(Math.random() * edibleList.length)];
+
+                    }
+                }
+                return response.data[0].PlantID;               
                 
-                return(similarPlants.PlantID)
             } catch (error) {
                 console.error("Error fetching similar plant:", error);
             }
-            console.log("Fello")
             } catch (error) {
                 console.error("Error fetching plant scientific name:", error);
             }
@@ -88,7 +108,7 @@ const Discover = (props: Props) => {
         const fetchAllPlantDetails = async () => {
             try {
               //const userPlantList = await fetchPlantsFromUser();
-              const userPlantList = [3013]
+              const userPlantList = [3013, 5022, 2251, 1595]
               console.log("userPlantList:",  userPlantList)
               
               const removedEntries = examplePlantId.filter((plantId) => {
@@ -98,6 +118,7 @@ const Discover = (props: Props) => {
                 return false; // Exclude the plantId from the removedEntries array
               });
 
+              // Remove plants from examplePlantId that's already in userPlantList
               const filteredPlantIds = examplePlantId.filter(
                 (id) => !userPlantList.includes(id)
               );
