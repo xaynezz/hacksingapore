@@ -151,10 +151,7 @@ export default function page({}) {
 
                                         <div className="mt-1 flex justify-center pt-32 text-xs tracking-tight text-gray-900 sm:text-4xl">
                                             <p className="font-bold text-black">
-                                                {Number.isNaN(daysDifference)
-                                                    ? 0
-                                                    : daysDifference}
-                                                &nbsp;
+                                                {isNaN(daysDifference) || daysDifference < 0 ? 0 : daysDifference}&nbsp;
                                             </p>
                                             <p>
                                                 day(s) since you started
