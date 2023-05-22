@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/config/dbConnect';
+import { HiOutlineEmojiSad } from 'react-icons/hi'
+
 type Props = {
     arrayOfUserPLants: UserPlants[],
     isDeleteFlag: React.Dispatch<React.SetStateAction<boolean>>
@@ -40,7 +42,18 @@ export default function ListPlants({ arrayOfUserPLants, isDeleteFlag }: Props) {
     return (
         <div className="p-4">
 
-            <h1 className="text-xl text-center text-green-500 font-semibold mb-4">A Peek into My Food Collection</h1>
+            <h1 className="text-xl items-center text-green-500 font-bold mb-4">A Peek into My Food Collection</h1>
+            <hr/>
+                <div className='mt-4 flex justify-center p-4'>
+                    {arrayOfUserPLants.length==0 && 
+                    <>
+                        <HiOutlineEmojiSad size={28} color='grey'/>
+                        <div className='text-xs ml-2 text-gray-500 font-semibold mt-1'>
+                            Empty garden? Start planting today!
+                        </div> 
+                    </>
+                    }
+                </div>
             <div className="grid grid-cols-2 gap-4">
                 {arrayOfUserPLants.map((plant, index) => {
                     return (
