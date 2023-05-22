@@ -17,6 +17,9 @@ export const NavigationDots = () => {
     { path: '/'},
     { path: '/screen2',},
     { path: '/screen3'},
+    { path: '/screen4'},
+    { path: '/screen5'},
+    { path: '/screen6'}
   ];
 
   const handleNavigate = (path) => {

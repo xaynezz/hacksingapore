@@ -5,7 +5,9 @@ import {NavigationDots} from '@/components/LandingPageScreens';
 import Screen1Component from './Screen1';
 import Screen2Component from './Screen2';
 import Screen3Component from './Screen3';
-
+import Screen4Component from './Screen4';
+import Screen5Component from './Screen5';
+import Screen6Component from './Screen6';
 
 const App = () => (
   <Router>
@@ -14,6 +16,9 @@ const App = () => (
           <Route path="/" element={<Screen1Component />} />
           <Route path="/screen2" element={<Screen2Component />} />
           <Route path="/screen3" element={<Screen3Component />} />
+          <Route path="/screen4" element={<Screen4Component />} />
+          <Route path="/screen5" element={<Screen5Component />} />
+          <Route path="/screen6" element={<Screen6Component />} />
         </Routes>
         <div className="button-container">
       </div>

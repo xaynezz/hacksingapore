@@ -2,12 +2,13 @@ import React from 'react';
 
 const Screen3Component = () => (
   
-  <div className="screen">
-    <div className="header-text">Screen 3</div>
-    <p>This is the content of Screen 3.</p>
-    <a href="/login" className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400 flex justify-center items-center">
-      Let's get started!
-    </a>
+  <div className="screen" style={{ paddingTop: '20px' }}>
+    <div className="header-text-two text-center px-2">Experience the future of plant care with our AI chatbot at your fingertips</div>
+
+      <img src="/images/ChatBotIntro.png" alt="ChatBotIntro" 
+      style={{ maxWidth: '95%', maxHeight: '95%', width: 'auto', height: 'auto' }}/>
+      
+    
   </div>
 );
 

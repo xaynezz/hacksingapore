@@ -1,12 +1,14 @@
 import React from 'react';
 import '@/public/landingpage.css';
 const Screen2Component = () => (
-  <div className="screen " >
-    <div className="header-text">Screen 2</div>
-    <p>This is the content of Screen 2.</p>
-    <a href="/login" className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400 flex justify-center items-center">
-      Let's get started!
-    </a>
+  <div className="screen" style={{ paddingTop: '20px' }}>
+    <div className="header-text-two text-center px-1">Create and cultivate your own virtual edible garden, right at your fingertips</div>
+
+      <img src="/images/GardenIntro.jpg" alt="GardenIntro" 
+      style={{ maxWidth: '95%', maxHeight: '95%', width: 'auto', height: 'auto' }}/>
+      
+
+    
   </div>
 );
 
