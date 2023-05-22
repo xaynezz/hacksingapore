@@ -6,7 +6,19 @@ import BackButton from '@/components/BackButton';
 import { supabase } from '@/config/dbConnect';
 import { useGardenContext } from "@/app/context/gardenContext";
 
+import {RiArrowDropDownLine} from 'react-icons/ri'
+
 const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) => {
+    const [expanded, setExpanded] = useState<string|null>(null);
+
+    const toggleExpand = (id:string) => {
+      if (expanded === id) {
+        setExpanded(null);
+      } else {
+        setExpanded(id);
+      }
+    }
+
     const plantID = params.id;
     const dbID = params.dbid
     const [img, setImg] = useState('');
@@ -112,7 +124,8 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
     useEffect(() => {
       fetchNameFromUser();
     }, [])
-    
+
+    // finish fetching all api data
 
     return (
         <>
@@ -212,7 +225,7 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                 </div>
 
                 <div className="">
-                  <h1 className="text-center text-xl font-bold py-5">{sectionData[0]? '':<p> Coming Soon!</p>}</h1>
+                  <h1 className="text-center text-xl font-semibold py-5">{sectionData[0]? '':<p> Coming Soon!</p>}</h1>
                 </div>
 
                 <div className="relative isolate overflow-hidden bg-white px-6 py-4 lg:overflow-visible lg:px-0">
@@ -243,27 +256,51 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                 </div>
 
                 <div className="lg:max-w-lg text-center py-4">
-                  <span className="mt-1 text-xl font-medium tracking-tight text-gray-900 sm:text-4xl">Your plant is: </span>
-                  <span className="mt-1 text-xl font-medium tracking-tight text-primary-400">{health?.is_healthy? <span>{(health?.is_healthy_probability*100).toFixed(2)}% Healthy</span> : <span>{(health?.is_healthy_probability*100).toFixed(2)}Not healthy</span>}</span>
+                  <span className="mt-1 text-xl font-normal tracking-tight text-gray-900 sm:text-4xl">Your plant is: </span>
+                  <span className="mt-1 text-xl font-semibold tracking-tight text-primary-400">{health?.is_healthy? <span>{(health?.is_healthy_probability*100).toFixed(2)}% Healthy</span> : <span>{(health?.is_healthy_probability*100).toFixed(2)}% Unhealthy</span>}</span>
                 </div>
 
-                <ul role="list" className="mt-2 space-y-5 text-gray-600 pl-6">
+                <ul role="list" className="space-y-3 text-gray-600 px-6">
                   {health?.diseases.map((item) => (
-                    <li className="flex gap-x-3" key={item.entity_id}>
-                      <svg height={20} width={20} fill="#5C6AC4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
-                      <span className="inline">
-                        <strong className="font-semibold text-gray-900">{item.name}</strong>
-                      </span>
-                      <span className="inline">
-                        <strong className="font-normal text-gray-900">{item.disease_details.description}</strong>
-                      </span>
+                    <li className="p-2 border rounded-xl" key={item.entity_id}>
+                      <div className='flex justify-between items-center'>
+                        <div className='flex'>
+                          <svg className="inline" height={18} width={18} fill="#ffaa00" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
+                          <span className="px-2" onClick={() => toggleExpand(item.entity_id)}>
+                            <strong className="font-bold tracking-tight text-gray-900">{item.name}</strong>
+                          </span>
+                        </div>
+                        <div className="cursor-pointer px-1 text-lg" onClick={() => toggleExpand(item.entity_id)}>
+                          {expanded === item.entity_id ? <RiArrowDropDownLine size={25} className='rotate-180'/>:<RiArrowDropDownLine size={25}/>}
+                          {/* <strong>{expanded === item.entity_id ? '-' : '+'}</strong> */}
+                        </div>
+                      </div>
+                      {expanded === item.entity_id && (
+                        <div className='transition duration-200'>
+                          <div className='p-2'>
+                            <span className="">
+                              <strong className="font-normal tracking-tight text-gray-900">{item.disease_details.description}</strong>
+                            </span>
+                          </div>
+                          <div className='p-2 border rounded-xl text-sm'>
+                            <span className="font-bold text-primary-500">Treatment: </span>
+                            <span className="">
+                              <strong className="font-normal tracking-tight text-gray-900">{item.disease_details.treatment.biological}</strong>
+                            </span>
+                          </div>
+                          <div className='p-2 border rounded-xl mt-2 text-sm'>
+                            <span className="font-bold text-primary-500">Prevention: </span>
+                            <span className="">
+                              <strong className="font-normal tracking-tight text-gray-900">{item.disease_details.treatment.prevention}</strong>
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </li>
                   ))}
                 </ul>
-
-                
             </div>
-        </>
+      </>
     )
 };
 
