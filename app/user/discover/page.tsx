@@ -3,15 +3,36 @@
 interface Props {}
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import axios from "axios";
+import axios, { all } from "axios";
+import { useGardenContext } from "@/app/context/gardenContext";
+import { supabase } from "@/config/dbConnect";
 
 const Discover = (props: Props) => {
     const {} = props;
 
-    const examplePlantId = [791, 5022, 2251, 1595]
+    const examplePlantId = [3013, 5022, 2251, 1595]
     const [allObj, setAllObj] = useState<any>([])
+    const {userUUID }: any = useGardenContext();
 
+    // Work out example plant Id
+    // remove all entries in examplePlantId thats also in arrayOfUserPlantIds
+
+
+    // retrieve plant data
     useEffect(() => {
+        
+    // return an array of plant_id users already have
+        const fetchPlantsFromUser = async () => {
+            const { data, error } = await supabase
+                .from("plants")
+                .select(
+                    "plant_id"
+                )
+                .eq("uuid", userUUID);
+            const plantsList = data.map( item => item.plant_id);
+        };
+
+        // retrieve the plant details 
         const fetchPlantDetails = async (plantId: number) => {
             try {
                 const response = await axios.post("/api/plant/details", {
@@ -23,22 +44,89 @@ const Discover = (props: Props) => {
                     regular_url: plantDetails.default_image.regular_url,
                     common_name: plantDetails.common_name,
                     fruits: plantDetails.fruits,
+                    family: plantDetails.family,
                     edibleLeaf: plantDetails.edible_leaf,
                 };
+                console.log("Final Fetching:", requiredData)
                 setAllObj((prevAllObj: any) => [...prevAllObj, requiredData]);
             } catch (error) {
                 console.error("Error fetching plant details:", error);
             }
         };
 
-        const fetchAllPlantDetails = async () => {
-            for (const plantId of examplePlantId) {
-                await fetchPlantDetails(plantId);
+        // retrieve a similar plant id to that user already have
+        const fetchSimilarPlant = async (plantId: number) => {
+            // FIRSTLY: Retrieve scientific name of plant
+            console.log("fetchSimilarPlant() is called ")
+            try {
+                const response = await axios.post("/api/plant/details", {
+                    idOfPlant: plantId,
+                });
+                const plantDetails = response.data;
+                const requiredData = plantDetails.scientific_name;
+                const firstPart = requiredData[0].split(" ")[0];
+            // SECONDLY: Retrieve similar plants based on that scientific name
+            try {
+                const response = await axios.post("/api/plant", {
+                    nameOfPlant: firstPart,
+                });
+                const similarPlants = response.data;
+                
+                return(similarPlants.PlantID)
+            } catch (error) {
+                console.error("Error fetching similar plant:", error);
+            }
+            console.log("Fello")
+            } catch (error) {
+                console.error("Error fetching plant scientific name:", error);
             }
         };
 
-        fetchAllPlantDetails();
-    }, []);
+
+
+        // Calls the above 2 functions
+        const fetchAllPlantDetails = async () => {
+            try {
+              //const userPlantList = await fetchPlantsFromUser();
+              const userPlantList = [3013]
+              console.log("userPlantList:",  userPlantList)
+              
+              const removedEntries = examplePlantId.filter((plantId) => {
+                if (userPlantList.includes(plantId)) {
+                  return true; // Include the plantId in the removedEntries array
+                }
+                return false; // Exclude the plantId from the removedEntries array
+              });
+
+              const filteredPlantIds = examplePlantId.filter(
+                (id) => !userPlantList.includes(id)
+              );
+
+              //Find similar plant to the removed plant and add on to filteredPlantIds
+                for (const plantId of removedEntries){
+                    // Get scientific name 
+                    const newPlant = await fetchSimilarPlant(plantId)
+                    filteredPlantIds.push(newPlant)
+                    console.log("newPlant", newPlant)
+                }
+
+                // TODO: Add if newPlant same as original ID, reject it. Retrieve anotheone (Can do it in fetchsimilarplant)
+
+              // Fetch plant details for each finalised plant ID
+              console.log(filteredPlantIds)
+              for (const plantId of filteredPlantIds) {
+                await fetchPlantDetails(plantId);
+              }
+              
+            } catch (error) {
+              console.error("Error fetching all plant details:", error);
+            }
+          };
+        
+          if (userUUID) {
+            fetchAllPlantDetails();
+          }
+    }, [userUUID]);
 
     return (
         <div className="bg-FFFBEF-300 h-[1000px]">
@@ -49,6 +137,8 @@ const Discover = (props: Props) => {
                 <h3>We recommend you these plants</h3>
                 
             </div>
+
+            
             <div className="flex justify-center  text-xs italic text-gray-500">
                 Click on the rescpective images to find out more!
             </div>
