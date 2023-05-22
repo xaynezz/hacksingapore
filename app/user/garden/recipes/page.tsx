@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { use, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import BackButton from "@/components/BackButton";
 import { supabase } from "@/config/dbConnect";
 import { useGardenContext } from "@/app/context/gardenContext";
-
 import Image from "next/image";
-
+import Loading from "@/components/Loadingscreen";
 
 interface Recipe {
     label: string;
@@ -24,14 +23,20 @@ const Recipe: React.FC = () => {
     const [norecipe, setnorecipe] = useState(true);
     //const [nofood, setnofood] = useState(false);
 
-  // making it user unique to get the recipes
-    const {userUUID }: any = useGardenContext();
+    // making it user unique to get the recipes
+    const { userUUID }: any = useGardenContext();
     const [recipelist, setRecipelist] = useState<
         { recipeDetails: RecipeDetails }[]
     >([]);
     const [recipeInstructions, setRecipeInstructions] = useState<{
         [label: string]: string;
     }>({});
+
+    // for loading screen:
+    const [isLoading, setIsLoading] = useState(true);
+    //for image:
+
+    const [isimgLoading, setImgIsLoading] = useState(true);
 
     const fetchGardenRecipes = async () => {
         setRecipelist([]); // Clear the recipelist state
@@ -41,18 +46,18 @@ const Recipe: React.FC = () => {
             .select("common_name")
             .eq("uuid", userUUID);
 
+        if (data != null) {
+            const uniqueCommonNames = data.map((item: any) => item.common_name);
+            if (uniqueCommonNames.length === 0) {
+                setnorecipe(false);
+            }
 
-            
-            if (data != null) {
+            const commonNamesSet = new Set(uniqueCommonNames);
+            const uniqueCommonNamesArray = Array.from(commonNamesSet);
+            const slicedNamesArray: any[] = [];
 
-              const uniqueCommonNames = data.map((item: any) => item.common_name);
-              if (uniqueCommonNames.length === 0) { setnorecipe(false);
-              }
-              const commonNamesSet = new Set(uniqueCommonNames);
-              const uniqueCommonNamesArray = Array.from(commonNamesSet);
-              const slicedNamesArray: any[] = [];
-            
-              uniqueCommonNamesArray.forEach((name: string) => {
+            // to check by substrings
+            /* uniqueCommonNamesArray.forEach((name: string) => {
                 if (name.includes(' ')) {
                   const spaceIndex = name.indexOf(' '); // Find the index of the first space
                   const slicedName = name.slice(spaceIndex + 1); // Extract the substring after the first space
@@ -60,44 +65,45 @@ const Recipe: React.FC = () => {
                 } else {
                   slicedNamesArray.push(name); // Add the name without modification to the new array
                 }
-              });
-              
-              for (let i = 0; i < slicedNamesArray.length; i++) {
-                const slicedName = slicedNamesArray[i];
-                fetchRecipe(slicedName);
-              }
+});*/
+
+            for (let i = 0; i < uniqueCommonNamesArray.length; i++) {
+                const slicedName = uniqueCommonNamesArray[i];
+                await fetchRecipe(slicedName);
             }
-            
+        }
     };
 
     const fetchRecipe = async (plantName: string) => {
-
         try {
             const response = await axios.post("/api/recipe", { plantName });
             const recipeDetails: RecipeDetails = response.data;
-            console.log(response.data)
+            console.log(response.data);
             // debug here if the fruits have no recipe fetched.
-            if (recipeDetails.hits.length === 0){
-              //setnorecipe(false);
-              //setnofood(true);
+            if (recipeDetails.hits.length === 0) {
+                //setnorecipe(false);
+                //setnofood(true);
+            } else {
+                setnorecipe(true);
 
+                const limitedHits = recipeDetails.hits.slice(0, 4); // Limit hits to 4 elements
+                setRecipelist((prevList) => [
+                    ...prevList,
+                    { recipeDetails: { hits: limitedHits } },
+                ]);
             }
-           else {
-              setnorecipe(true);
-
-              const limitedHits = recipeDetails.hits.slice(0, 4); // Limit hits to 4 elements
-              setRecipelist((prevList) => [
-            
-                ...prevList,
-                { recipeDetails: { hits: limitedHits } },
-            ])};
         } catch (error) {
             console.error("Error fetching recipe:", error);
         }
     };
+    // loads the page after all the react component is loaded
 
     useEffect(() => {
-        fetchGardenRecipes();
+        fetchGardenRecipes().then(() => {
+            requestAnimationFrame(() => {
+                setIsLoading(false);
+            });
+        });
     }, []);
 
     const askrecipe = async (label: string) => {
@@ -106,7 +112,7 @@ const Recipe: React.FC = () => {
             " without any other replies, I only want the steps in number.";
 
         try {
-            console.log(label)
+            console.log(label);
             const response = await supabase
                 .from("recipe")
                 .select("instructions")
@@ -172,84 +178,96 @@ const Recipe: React.FC = () => {
     }, [recipelist]);
 
     return (
-      <>
-          <BackButton route="/user/garden" />
-          <div className="flex flex-col bg-gray-50">
-              <div className="mx-4 mt-8 text-center text-2xl font-bold text-gray-800">
-                  Recipes
-              </div>
+        <>
+            <BackButton route="/user/garden" />
+            <div className="flex flex-col bg-gray-50">
+                {/* Render loading spinner when isLoading is true */}
+                {isLoading && <Loading></Loading>}
 
-              {!norecipe && (
-                <div>
-<div className="mx-4 mt-8 text-center text-l font-bold text-grey-500 mb-2">
-  There are no <span className="text-green-500">plants</span> in your <span className="text-green-500">garden</span>.
-</div>
-<div className="mx-4 mt-4 text-center text-l text-grey-500 mb-8">Try adding some plants before checking out recipes!</div>
-<img src="/images/plantlogo.jpg" alt="Plant Logo" height={200} width={300} className="rounded-md mx-auto" />
-                </div>
+                {!norecipe && !isLoading && (
+                    <div>
+                        <div className="text-l text-grey-500 mx-4 mb-2 mt-8 text-center font-bold">
+                            There are no{" "}
+                            <span className="text-green-500">plants</span> in
+                            your <span className="text-green-500">garden</span>.
+                        </div>
+                        <div className="text-l text-grey-500 mx-4 mb-8 mt-4 text-center">
+                            Try adding some plants before checking out recipes!
+                        </div>
+                        <img
+                            src="/images/plantlogo.png"
+                            alt="Plant Logo"
+                            height={200}
+                            width={300}
+                            className="mx-auto rounded-md"
+                        />
+                    </div>
                 )}
-
-              <div className="p-4 sm:p-8">
-                  <div className="mx-auto max-w-lg">
-                      {recipelist.map((item) => (
-                          <div
-                              className="mb-4 overflow-hidden rounded-lg bg-white shadow-md"
-                              key={item.recipeDetails.hits[0].recipe.label}
-                          >
-                              <div className="grid grid-cols-2 gap-4">
-                                  {item.recipeDetails.hits.map(
-                                      (hit, index) => (
-                                          <div
-                                              key={hit.recipe.label}
-                                              className="flex flex-col items-center border border-gray-300 p-4"
-                                          >
-                                              <div
-                                                  className="mb-2 truncate text-base text-sm font-semibold text-gray-800 p-4"
-                                                  style={{
-                                                      maxWidth: "12rem",
-                                                  }}
-                                              >
-                                                  {hit.recipe.label}
-                                              </div>
-                                              <Image
-                                                  src={hit.recipe.image}
-                                                  alt="alt"
-                                                  height={300}
-                                                  width={450}
-                                                  className="rounded-md"
-                                              />
-                                              <div className="mt-2 text-xs text-gray-600">
-                                                  <ol className="list-decimal pl-4">
-                                                      {recipeInstructions[
-                                                          hit.recipe.label
-                                                      ]
-                                                          ?.split("\n")
-                                                          .map(
-                                                              (
-                                                                  instruction
-                                                              ) => (
-                                                                  <>
-                                                                      {
-                                                                          instruction
-                                                                      }
-                                                                      <br />
-                                                                  </>
-                                                              )
-                                                          )}
-                                                  </ol>
-                                              </div>
-                                          </div>
-                                      )
-                                  )}
-                              </div>
-                          </div>
-                      ))}
-                  </div>
-              </div>
-          </div>
-      </>
-  );
-    
+                {!isLoading && (
+                    <div className="p-4 sm:p-8">
+                        <div className="mx-auto max-w-lg">
+                            {recipelist.map((item) => (
+                                <div
+                                    className="mb-4 overflow-hidden rounded-lg bg-white shadow-md"
+                                    key={
+                                        item.recipeDetails.hits[0].recipe.label
+                                    }
+                                >
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {item.recipeDetails.hits.map(
+                                            (hit, index) => (
+                                                <div
+                                                    key={hit.recipe.label}
+                                                    className="flex flex-col items-center border border-gray-300 p-4"
+                                                >
+                                                    <div
+                                                        className="mb-2 truncate p-4 text-base text-sm font-semibold text-gray-800"
+                                                        style={{
+                                                            maxWidth: "12rem",
+                                                        }}
+                                                    >
+                                                        {hit.recipe.label}
+                                                    </div>
+                                                    <Image
+                                                        priority={true}
+                                                        src={hit.recipe.image}
+                                                        alt="alt"
+                                                        height={300}
+                                                        width={450}
+                                                        className="rounded-md"
+                                                    />
+                                                    <div className="mt-2 text-xs text-gray-600">
+                                                        <ol className="list-decimal pl-4">
+                                                            {recipeInstructions[
+                                                                hit.recipe.label
+                                                            ]
+                                                                ?.split("\n")
+                                                                .map(
+                                                                    (
+                                                                        instruction
+                                                                    ) => (
+                                                                        <>
+                                                                            {
+                                                                                instruction
+                                                                            }
+                                                                            <br />
+                                                                        </>
+                                                                    )
+                                                                )}
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+        </>
+    );
 };
 
 export default Recipe;
