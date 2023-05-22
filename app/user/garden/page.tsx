@@ -127,7 +127,7 @@ export default function Page({}) {
                                         </div>
                                         <div className="mb-10 mt-2 flex items-center justify-center text-gray-600">
                                             <p className="pr-2 text-center text-sm font-bold tracking-tight text-gray-900">
-                                                Let's grow together.
+                                                Lets grow together
                                             </p>
                                             <svg
                                                 className="pr-1"
