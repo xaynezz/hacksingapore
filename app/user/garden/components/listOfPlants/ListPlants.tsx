@@ -40,7 +40,7 @@ export default function ListPlants({ arrayOfUserPLants, isDeleteFlag }: Props) {
     return (
         <div className="p-4">
 
-            <h1 className="text-xl text-center text-green-500 font-semibold mb-4">A Peek into My Plant Collection</h1>
+            <h1 className="text-xl text-center text-green-500 font-semibold mb-4">A Peek into My Food Collection</h1>
             <div className="grid grid-cols-2 gap-4">
                 {arrayOfUserPLants.map((plant, index) => {
                     return (
