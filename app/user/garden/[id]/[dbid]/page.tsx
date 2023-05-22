@@ -285,13 +285,13 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                           <div className='p-2 border rounded-xl text-sm'>
                             <span className="font-bold text-primary-500">Treatment: </span>
                             <span className="">
-                              <strong className="font-normal tracking-tight text-gray-900">{item.disease_details.treatment.biological}</strong>
+                              <strong className="font-normal tracking-tight text-gray-900">{item.disease_details.treatment? item.disease_details.treatment.biological:'No information found'}</strong>
                             </span>
                           </div>
                           <div className='p-2 border rounded-xl mt-2 text-sm'>
                             <span className="font-bold text-primary-500">Prevention: </span>
                             <span className="">
-                              <strong className="font-normal tracking-tight text-gray-900">{item.disease_details.treatment.prevention}</strong>
+                              <strong className="font-normal tracking-tight text-gray-900">{item.disease_details.treatment?item.disease_details.treatment.prevention:'No information found'}</strong>
                             </span>
                           </div>
                         </div>
