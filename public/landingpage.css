@@ -6,23 +6,18 @@
 
 .screen {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
   width: 100%;
+  font-weight: bold;
 }
 
-.screen1 {
-  background-color: #ff9800;
+.header-text {
+  font-size: 30px;
 }
 
-.screen2 {
-  background-color: #e91e63;
-}
-
-.screen3 {
-  background-color: #9c27b0;
-}
 
 .navigation-dots {
   display: flex;

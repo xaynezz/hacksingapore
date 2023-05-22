@@ -1,9 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Screen1Component = () => (
-  <div className="screen screen2">
-    <h1>Screen 1</h1>
-    <p>This is the content of Screen 1.</p>
+  <div className="screen" style={{ backgroundImage: 'url(/backgroundmain.jpg)' }}>
+
+      <div className="header-text">Welcome to EdiPlants!</div>
+      
+      <a href="/login" className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400 flex justify-center items-center">
+        Let's get started!
+      </a>
+
   </div>
 );
 

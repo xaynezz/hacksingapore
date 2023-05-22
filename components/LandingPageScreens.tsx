@@ -1,47 +1,51 @@
 import React from 'react';
 import { useNavigate, useLocation, NavLink } from 'react-router-dom';
-import SwipeableViews from 'react-swipeable-views';
 import '@/public/landingpage.css';
-
-export const SwipeableScreens = ({ children }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const childrenArray = React.Children.toArray(children);
-  const index = childrenArray.findIndex((child) => child.props.path === location.pathname);
-
-  const handleChangeIndex = (index) => {
-    navigate(childrenArray[index].props.path);
-  };
-
-  return (
-    <SwipeableViews index={index} onChangeIndex={handleChangeIndex} resistance enableMouseEvents>
-      {children}
-    </SwipeableViews>
-  );
-};
 
 export const NavigationDots = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (match, location) => {
     if (!match) {
       return false;
     }
-
     return match.url === location.pathname;
   };
 
+  const routes = [
+    { path: '/'},
+    { path: '/screen2',},
+    { path: '/screen3'},
+  ];
+
+  const handleNavigate = (path) => {
+    const currentIndex = routes.findIndex((route) => route.path === location.pathname);
+    let newIndex;
+    if (path === 'prev') {
+      newIndex = currentIndex - 1;
+      if (newIndex < 0) {
+        newIndex = routes.length - 1;
+      }
+    } else {
+      newIndex = (currentIndex + 1) % routes.length;
+    }
+    navigate(routes[newIndex].path);
+  };
+
   return (
-    <div className="navigation-dots">
-      <NavLink to="/" className="dot" isActive={isActive}>
-        {<div>ASS</div>}
-      </NavLink>
-      <NavLink to="/screen2" className="dot" isActive={isActive}>
-        {/* dot content */}
-      </NavLink>
-      <NavLink to="/screen3" className="dot" isActive={isActive}>
-        {/* dot content */}
-      </NavLink>
+    <div className="navigation-dots" style={{ display: "flex", justifyContent: "center", alignItems: "center", position: "fixed", bottom: 10, left: 0, right: 0 }}>
+      <div className="arrow left-arrow" onClick={() => handleNavigate('prev')}>
+        <span>&lt;</span>
+      </div>
+      {routes.map((route) => (
+        <NavLink key={route.path} to={route.path} className="dot" isActive={isActive}>
+          {route.label}
+        </NavLink>
+      ))}
+      <div className="arrow right-arrow" onClick={() => handleNavigate('next')}>
+        <span>&gt;</span>
+      </div>
     </div>
   );
 };
