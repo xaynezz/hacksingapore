@@ -10,6 +10,7 @@ export const GardenContextProvider = ({ children }: any) => {
     const [showAddPlantModal, setAddPlantModal] = useState(false);
     const [user, setUser] = useState<User>(null);
     const [userUUID, setUserUUID] = useState<string>();
+
     useEffect(() => {
         "server action";
         async function fetchUser() {
@@ -17,7 +18,7 @@ export const GardenContextProvider = ({ children }: any) => {
                 data: { user },
             } = await supabase.auth.getUser();
             setUser(user);
-            setUserUUID(user?.id)
+            setUserUUID(user?.id);
         }
         fetchUser();
     }, []);

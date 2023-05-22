@@ -19,14 +19,13 @@ export default function RegisterPage() {
             return;
         }
 
-        const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-        });
-
-        console.log(data);
-
-        if (!error) {
+        const {error, data} = await supabase.auth
+            .signUp({
+                email: email,
+                password: password,
+            })
+        // If there is no error // 
+        if(!error){
             const { error } = await supabase.from("user").insert([
                 {
                     uuid: data.user?.id,
@@ -34,11 +33,15 @@ export default function RegisterPage() {
                     last_name: lastName,
                 },
             ]);
+            // If we can add user to the database //
             if (!error) {
                 router.push("/firsttime");
+            } else {
+                alert(error.message);
             }
-        } else {
-            alert(error);
+
+        }else{
+            alert(error.message);
         }
     }
 

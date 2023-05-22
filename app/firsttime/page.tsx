@@ -24,19 +24,6 @@ function Page() {
     const router = useRouter();
     const { user }: any = useGardenContext();
 
-    useEffect(() => {
-        async function getBool() {
-            console.log(user.id);
-            const { data, error } = await supabase
-                .from("user")
-                .select("uuid, returning_user")
-                .eq("uuid", user.id);
-            console.log(data[0].returning_user);
-            if (data[0].returning_user) router.push("/user/garden");
-        }
-        if (user) getBool();
-    }, [user, router]);
-
     async function handleSubmit(e: any) {
         e.preventDefault();
         const climate = e.target.climate.value;
@@ -57,6 +44,10 @@ function Page() {
             ])
             .eq("uuid", user.id);
         console.log(data, error);
+        if(!error){
+            router.push("/user/garden");
+        }
+
     }
 
     return (

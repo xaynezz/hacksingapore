@@ -16,7 +16,7 @@ const RecipeButton: React.FC<RecipeButtonProps> = ({ href }) => {
 
   return (
     <button  onClick={handleRecipe} className='m-2 p-2 bg-secondarydark-400 hover:bg-secondarydark-300 border-b-4 border-secondarydark-700 hover:border-secondarydark-500 rounded-md'>
-        <TbChefHat size={30} />
+        <TbChefHat size={20} />
     </button>
   )
 }

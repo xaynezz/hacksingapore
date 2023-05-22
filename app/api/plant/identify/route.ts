@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
 
   const { base64String } = await request.json()
-  console.log(base64String)
+  console.log("Converting to base64...")
   try {
     const response = await axios.post(
       'https://api.plant.id/v2/identify',

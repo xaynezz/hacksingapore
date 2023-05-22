@@ -1,5 +1,3 @@
-
-
 import axios from "axios";
 import { NextResponse } from "next/server";
 
@@ -7,11 +5,13 @@ import { NextResponse } from "next/server";
 /*  */
 export async function POST(request: Request) {
     const { base64String } = await request.json()
+    console.log("Getting health response...");
     try {
       const response = await axios.post(
         'https://api.plant.id/v2/health_assessment',
         {
           images: [base64String],
+          disease_details: ["cause","common_names", "description", "treatment"]
         },
         {
           headers: {
@@ -22,11 +22,10 @@ export async function POST(request: Request) {
       );
     
       const plantHealth: PlantHealthAssessment = response.data.health_assessment;
-      console.log(plantHealth.diseases);
-        //   console.log("Finished identifying image. The plant identified in the image is " + plantIdentifyResponseData.suggestions[0].plant_name)
       return NextResponse.json(plantHealth)
     } catch (error: any) {
       console.error(`Error: ${error.message}`);
     }
   }
+  
   
