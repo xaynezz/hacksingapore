@@ -178,7 +178,6 @@ const Recipe: React.FC = () => {
     }, [recipelist]);
 
     return (
-
         <>
             <BackButton route="/user/garden" />
             <div className="flex flex-col bg-gray-50">
@@ -269,7 +268,6 @@ const Recipe: React.FC = () => {
             </div>
         </>
     );
-
 };
 
 export default Recipe;
