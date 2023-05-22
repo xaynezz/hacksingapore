@@ -265,7 +265,7 @@ const GardenPlantPage = ({ params }: { params: { id: string, dbid: string } }) =
                     <li className="p-2 border rounded-xl" key={item.entity_id}>
                       <div className='flex justify-between items-center'>
                         <div className='flex'>
-                          <svg className="inline" height={18} width={18} fill="#ffaa00" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
+                          <svg className="inline pt-1" height={20} width={20} fill="#ffaa00" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
                           <span className="px-2" onClick={() => toggleExpand(item.entity_id)}>
                             <strong className="font-bold tracking-tight text-gray-900">{item.name}</strong>
                           </span>
