@@ -15,8 +15,6 @@ const Discover = (props: Props) => {
     const [allObj, setAllObj] = useState<any>([])
     const {userUUID }: any = useGardenContext();
 
-
-
     // retrieve plant data
     useEffect(() => {
     // return an array of plant_id users already have
@@ -55,7 +53,7 @@ const Discover = (props: Props) => {
         // retrieve a similar plant id to that user already have
         const fetchSimilarPlant = async (plantId: number) => {
             // FIRSTLY: Retrieve scientific name of plant (DONE)
-            console.log("fetchSimilarPlant() is called ")
+            //console.log("fetchSimilarPlant() is called ")
             try {
                 const response = await axios.post("/api/plant/details", {
                     idOfPlant: plantId,
@@ -151,12 +149,9 @@ const Discover = (props: Props) => {
 
     return (
         <div className="bg-FFFBEF-300 h-[1000px]">
-            {/* <div className="flex justify-center pt-10">
-                <h2>Hi Oak Soe Khant, </h2>
-            </div> */}
+
             <div className="flex justify-center font-bold text-lg pt-5">
                 <h3>We recommend you these plants</h3>
-                
             </div>
 
             
@@ -178,8 +173,8 @@ const Discover = (props: Props) => {
                             <a href={`/user/discover/${e.id}`}>
                                 <Image
                                     src={e.regular_url}
-                                    width={150}
-                                    height={150}
+                                    width={170}
+                                    height={170}
                                     alt={`Image`}
                                     style={{
                                         borderRadius: '10px',

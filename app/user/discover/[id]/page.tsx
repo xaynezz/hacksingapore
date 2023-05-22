@@ -97,11 +97,6 @@ const PlantDetailPage =  ({ params }: { params: { id: string } }) => {
 
     return (
         <>
-            {/* <div className="flex flex-col items-center justify-center p-8">
-                <Image src={img} alt="alt" height={500} width={500} />
-                <RecipeButton href='/garden/recipes'/>
-            </div> */}
-
             <BackButton route="/user/discover"/>
 
             <div className="flex flex-col mt-1 p-2">
