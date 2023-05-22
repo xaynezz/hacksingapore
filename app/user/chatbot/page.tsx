@@ -84,9 +84,10 @@ const Chatbot: React.FC = () => {
                                     | React.ReactPortal
                                     | React.PromiseLikeOfReactNode
                                     | null
-                                    | undefined
+                                    | undefined,
+                                index: any
                             ) => (
-                                <React.Fragment>
+                                <React.Fragment key={index}>
                                     {line}
                                     <br />
                                     <br />

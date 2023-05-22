@@ -147,7 +147,6 @@ export default function AddPlant(prop: any) {
                                             onChange={handleFileChange}
                                             className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
                                             id="file_input"
-                                            type="file"
                                         ></input>
                                         <p
                                             className="mt-1 text-sm text-gray-500 dark:text-gray-300"
