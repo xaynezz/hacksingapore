@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { supabase } from "@/config/dbConnect";
 import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 
 function Footer() {
     const router = useRouter();
@@ -22,16 +23,18 @@ function Footer() {
     };
     return (
         <ul className="flex h-14 w-full items-center justify-evenly bg-primary-400 text-white">
+
             <Link
-                href="/user/garden"
+                href="/user/leaderboard"
                 className={
                     "flex h-full w-1/5 flex-col items-center justify-between p-1" +
-                    (pathname.includes("/user/garden") ? " bg-primary-300" : "")
+                    (pathname === "/user/leaderboard" ? " bg-primary-300" : "")
                 }
             >
-                <div className="h-10 w-10 bg-white"></div>
-                <h1 className="text-xs">Garden</h1>
+                <div className = "h-18 w-18 flex items-center justify-center" ><img src="/images/leaderboard.png" className="h-8 w-8 invert "></img></div>
+                <h1 className="text-xs">Leaderboard</h1>
             </Link>
+         
             <Link
                 href="/user/discover"
                 className={
@@ -41,19 +44,21 @@ function Footer() {
                         : "")
                 }
             >
-                <div className="h-10 w-10 bg-white"></div>
+                <div className = "h-10 w-10 flex items-center justify-center" ><img src="/images/magnifying-glass.png" className="h-8 w-8 invert "></img></div>
                 <h1 className="text-xs">Discover</h1>
             </Link>
+
             <Link
-                href="/user/leaderboard"
+                href="/user/garden"
                 className={
                     "flex h-full w-1/5 flex-col items-center justify-between p-1" +
-                    (pathname === "/user/leaderboard" ? " bg-primary-300" : "")
+                    (pathname.includes("/user/garden") ? " bg-primary-300" : "")
                 }
             >
-                <div className="h-10 w-10 bg-white"></div>
-                <h1 className="text-xs">Leaderboard</h1>
+                <div className = "h-12 w-12 flex items-center justify-center" ><img src="/images/plant.png" className="h-8 w-8 invert invert"></img></div>
+                <h1 className="text-xs">Garden</h1>
             </Link>
+            
             <Link
                 href="/user/chatbot"
                 className={
@@ -61,14 +66,14 @@ function Footer() {
                     (pathname === "/user/chatbot" ? " bg-primary-300" : "")
                 }
             >
-                <div className="h-10 w-10 bg-white"></div>
+                <div className = "h-18 w-18 flex items-center justify-center" ></div><img src="/images/robot.png" className="h-8 w-8 invert "></img>
                 <h1 className="text-xs">Chatbot</h1>
             </Link>
             <button
                 onClick={logoutHandle}
                 className="flex h-full w-1/5 flex-col items-center justify-between p-1"
             >
-                <div className="h-10 w-10 bg-white"></div>
+                <div className = "h-10 w-10 flex items-center justify-center" ><img src="/images/logout.png" className="h-8 w-8 invert "></img></div>
                 <h1 className="text-xs">Logout</h1>
             </button>
         </ul>
