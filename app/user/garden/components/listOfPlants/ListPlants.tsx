@@ -42,7 +42,7 @@ export default function ListPlants({ arrayOfUserPLants, isDeleteFlag }: Props) {
     return (
         <div className="p-4">
 
-            <h1 className="text-xl items-center text-green-500 font-bold mb-4">A Peek into My Food Collection</h1>
+            <h1 className="text-xl text-center items-center text-green-500 font-bold mb-4">A Peek into my EdiPlants Collection</h1>
             <hr/>
                 <div className='mt-4 flex justify-center p-4'>
                     {arrayOfUserPLants.length==0 && 
