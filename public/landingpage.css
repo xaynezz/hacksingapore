@@ -1,0 +1,38 @@
+/* landingpage.css */
+.app {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-weight: bold;
+}
+
+.header-text {
+  font-size: 30px;
+}
+
+
+.navigation-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.dot {
+  height: 8px;
+  width: 8px;
+  background-color: #bdbdbd;
+  border-radius: 50%;
+  margin: 0 4px;
+}
+
+.dot.active {
+  background-color: #333;
+}
