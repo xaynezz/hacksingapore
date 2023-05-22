@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { supabase } from "@/config/dbConnect";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function HomePage() {
     const router = useRouter();
@@ -24,7 +25,13 @@ export default function HomePage() {
     }
     return (
         <main className="flex h-full w-full flex-col items-center justify-center bg-green-500">
-            <h1 className="mb-10 text-3xl font-bold text-white">GardenApp</h1>
+            <Image
+                className="mb-10 w-72 text-3xl font-bold text-white"
+                src="/ediplants.png"
+                width={1000}
+                height={1000}
+                alt="logo"
+            ></Image>
             <form
                 id="login-form"
                 onSubmit={handleLogin}

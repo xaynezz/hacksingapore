@@ -1,16 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import Image from "next/image";
 
 const Screen1Component = () => (
-  <div className="screen" style={{ backgroundImage: 'url(/backgroundmainblur.jpg)' }}>
+    <div
+        className="screen"
+        style={{
+            backgroundImage: "url(/backgroundmainblur.jpg)",
+        }}
+    >
+        <Image
+            className="mb-10 w-72 text-3xl font-bold text-white"
+            src="/ediplants.png"
+            width={1000}
+            height={1000}
+            alt="logo"
+        ></Image>
 
-      <div className="header-text">Welcome to EdiPlants!</div>
-      
-      <a href="/login" className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400 flex justify-center items-center">
-        Let's get started!
-      </a>
-
-  </div>
+        <a
+            href="/login"
+            className="mt-5 flex h-12 w-64 items-center justify-center rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400"
+        >
+            Let's get started!
+        </a>
+    </div>
 );
 
 export default Screen1Component;
