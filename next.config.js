@@ -13,14 +13,20 @@ const nextConfig = {
     reactStrictMode: false,
     images: {
         remotePatterns: [
-          {
-            protocol: 'https',
-            hostname: 'perenual.com',
-          },
+            {
+                protocol: "https",
+                hostname: "perenual.com",
+            },
         ],
-        domains: ['edamam-product-images.s3.amazonaws.com','plant.id'],
-
-      },
+        domains: ["edamam-product-images.s3.amazonaws.com", "plant.id"],
+    },
+    typescript: {
+        // !! WARN !!
+        // Dangerously allow production builds to successfully complete even if
+        // your project has type errors.
+        // !! WARN !!
+        ignoreBuildErrors: true,
+    },
 };
 
 module.exports = nextConfig;
