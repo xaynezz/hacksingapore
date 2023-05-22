@@ -16,7 +16,7 @@ function Footer() {
         const { error } = await supabase.auth.signOut();
         if (!error) {
             console.log("Logout successfully!");
-            router.push("/");
+            router.push("/login");
         } else {
             console.log(error);
         }

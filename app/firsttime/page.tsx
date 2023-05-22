@@ -22,10 +22,21 @@ const typeOptions = ["Vegetables", "Fruits", "Herbs", "Flowers"];
 
 function Page() {
     const router = useRouter();
-    const { user }: any = useGardenContext();
     const [grid, setGrid] = useState<Array<Array<boolean>>>(
         Array.from({ length: 10 }, () => Array(10).fill(true))
     );
+
+    const [userUUID, setUserUUID] = useState<string>();
+
+    useEffect(() => {
+        async function fetchUser() {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+            setUserUUID(user?.id);
+        }
+        fetchUser();
+    }, []);
 
     async function handleSubmit(e: any) {
         e.preventDefault();
@@ -54,13 +65,13 @@ function Page() {
                     type: type,
                 },
             ])
-            .eq("uuid", user.id)
+            .eq("uuid", userUUID)
             .then();
 
         const { data: emptyData, error: emptyError } = await supabase
             .from("empty")
             .insert({
-                uuid: user.id,
+                uuid: userUUID,
                 empty_plots: emptyGridArray,
             });
 
