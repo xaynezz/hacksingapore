@@ -110,7 +110,7 @@ export default function page({}) {
                 </button>
             </div>
             {showAddPlantModal ? (
-                <AddPlant setTreePositions={setTreePositions} />
+                <AddPlant treePositions={treePositions} />
             ) : (
                 <>
                     <div className="overflow-hidden bg-white pt-3 sm:py-32">
@@ -125,7 +125,7 @@ export default function page({}) {
                                             </span>
                                             <span className="">{name}!</span>
                                         </div>
-                                        <div className="mt-2 flex items-center justify-center text-gray-600">
+                                        <div className="mb-10 mt-2 flex items-center justify-center text-gray-600">
                                             <p className="pr-2 text-center text-sm font-bold tracking-tight text-gray-900">
                                                 Let's grow together.
                                             </p>
