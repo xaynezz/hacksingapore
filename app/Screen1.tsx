@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Screen1Component = () => (
-  <div className="screen" style={{ backgroundImage: 'url(/backgroundmain.jpg)' }}>
+  <div className="screen" style={{ backgroundImage: 'url(/backgroundmainblur.jpg)' }}>
 
       <div className="header-text">Welcome to EdiPlants!</div>
       
