@@ -156,7 +156,7 @@ const Discover = (props: Props) => {
 
             
             <div className="flex justify-center  text-xs italic text-gray-500">
-                Click on the rescpective images to find out more!
+                Click on the respective images to find out more!
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-5 px-7 py-4">
