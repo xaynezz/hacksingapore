@@ -18,7 +18,7 @@ const nextConfig = {
             hostname: 'perenual.com',
           },
         ],
-        domains: ['edamam-product-images.s3.amazonaws.com'],
+        domains: ['edamam-product-images.s3.amazonaws.com','plant.id'],
 
       },
 };

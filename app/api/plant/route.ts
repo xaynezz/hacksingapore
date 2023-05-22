@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export async function POST(request: Request) {
   const { nameOfPlant } = await request.json()
-  console.log(nameOfPlant)
+  console.log("Name of Plant is "+ nameOfPlant)
   try {
     const response = await axios.get(
       "https://perenual.com/api/species-list?key=" + process.env.PERENUAL + "&q=" + nameOfPlant

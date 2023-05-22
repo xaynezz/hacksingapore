@@ -14,15 +14,24 @@ const toBase64 = (file: File | null) =>
     });
 
 
-
 export default function AddPlant() {
-    const { setAddPlantModal, userUUID }: any = useGardenContext();
+    const { setAddPlantModal }: any = useGardenContext();
+
+    const [userUUID, setUserUUID] = useState<string>();
+
+    useEffect(() => {
+        async function fetchUser() {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+            setUserUUID(user?.id);
+        }
+        fetchUser();
+    }, []);
+    console.log("AddPlant UUID " + userUUID)
     const [image, setImage] = useState<File | null>(null);
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [health, setHealth] = useState<PlantHealthAssessment>()
 
-
-    console.log("userID" + userUUID)
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -48,7 +57,7 @@ export default function AddPlant() {
                 nameOfPlant: PlantIdentifyData.suggestions[0].plant_name,
             });
 
-            const { PlantID, PlantImage, PlantCommonName } = response1.data;
+            const { PlantID, PlantCommonName } = response1.data;
 
             const response2 = await axios.post('/api/plant/health', {
                 base64String: base64File,
@@ -71,12 +80,11 @@ export default function AddPlant() {
                 y_coor: y,
                 plant_name: PlantIdentifyData.suggestions[0].plant_name,
                 plant_id: PlantID, tree_number: options[randomIndex],
-                image_url: PlantImage,
+                image_url: PlantIdentifyData.images[0].url,
                 common_name: PlantCommonName,
                 health: PlantHealthAssessment
             };
 
-            console.log(PlantImage);
             const { error } = await supabase
                 .from('plants')
                 .insert(plantObjectAddToDatabase)
@@ -111,7 +119,7 @@ export default function AddPlant() {
                                         <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">Add a Plant</h3>
                                         <div className="mt-2">
                                         </div>
-                                        <label className="p-4 block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload your plant here!</label>
+                                        <label className="p-4 block mb-2 text-sm font-medium text-black-900" for="file_input">Upload your plant here!</label>
                                         <input type="file"
                                             onChange={handleFileChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"></input>
                                         <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF.</p>

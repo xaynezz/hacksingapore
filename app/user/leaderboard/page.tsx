@@ -1,5 +1,6 @@
 "use client"
 import { BsTreeFill } from 'react-icons/bs';
+import {FaUserCircle} from 'react-icons/fa'
 import axios from 'axios';
 
 const LeaderboardPage = () => {
@@ -19,9 +20,7 @@ const LeaderboardPage = () => {
                 
             <div className="flex flex-row items-end justify-center">
                     <div className="relative flex flex-col items-center">
-                        <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
-                            image
-                        </div>
+                        <FaUserCircle size={60} color="grey"/>
                         <div className="text-gray-800 font-bold mx-10 text-center text-xs">Jeff</div>
                         <div className="text-gray-500 px-2 text-xs">19 plants</div>
                         <BsTreeFill size={50} style={{ color: 'green' }} />
@@ -30,7 +29,8 @@ const LeaderboardPage = () => {
                         </div>
                     </div>
                     <div className="relative flex flex-col items-center">
-                        <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">image</div>
+                        <FaUserCircle size={60} color="grey"/>
+                        {/* <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">image</div> */}
                         <div className="text-gray-800 font-bold mx-10 text-center text-xs">Han</div>
                         <div className="text-gray-500 px-2 text-xs">28 plants</div>
                         <BsTreeFill size={75} style={{ color: 'green' }} />
@@ -39,7 +39,7 @@ const LeaderboardPage = () => {
                         </div>
                     </div>
                     <div className="relative flex flex-col items-center justify-between">
-                        <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">image</div>
+                        <FaUserCircle size={60} color="grey"/>
                         <div className="text-gray-800 font-bold mx-10 text-center text-xs">Andrew</div>
                         <div className="text-gray-500 px-2 text-xs">32 plants</div>
                         <BsTreeFill size={100} style={{ color: 'green' }} />
@@ -69,7 +69,7 @@ const LeaderboardPage = () => {
                         <div className="mr-5 px-2">
                             <h1 className="text-3xl font-bold">6</h1>
                         </div>
-                        <div className="text-gray-800 font-bold mx-10 flex-1 text-center">John Doe</div>
+                        <div className="text-gray-800 font-bold mx-10 flex-1 text-center">John</div>
                         <div className="text-gray-500 px-2">4 plants</div>
                     </div>
                 </div>

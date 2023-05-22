@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useGardenContext } from "@/app/context/gardenContext";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/config/dbConnect";
@@ -23,19 +23,9 @@ const typeOptions = ["Vegetables", "Fruits", "Herbs", "Flowers"];
 function Page() {
     const router = useRouter();
     const { user }: any = useGardenContext();
-
-    useEffect(() => {
-        async function getBool() {
-            console.log(user.id);
-            const { data, error } = await supabase
-                .from("user")
-                .select("uuid, returning_user")
-                .eq("uuid", user.id);
-            console.log(data[0].returning_user);
-            if (data[0].returning_user) router.push("/user/garden");
-        }
-        if (user) getBool();
-    }, [user, router]);
+    const [grid, setGrid] = useState<Array<Array<boolean>>>(
+        Array.from({ length: 10 }, () => Array(10).fill(true))
+    );
 
     async function handleSubmit(e: any) {
         e.preventDefault();
@@ -43,8 +33,17 @@ function Page() {
         const space = e.target.space.value;
         const experience = e.target.experience.value;
         const type = e.target.type.value;
+        const emptyGridArray: any[] = [];
 
-        const { data, error } = await supabase
+        grid.map((row, rowIndex) => {
+            row.map((col, colIndex) => {
+                if (!grid[rowIndex][colIndex]) {
+                    emptyGridArray.push({ y_coor: rowIndex, x_coor: colIndex });
+                }
+            });
+        });
+
+        const { data: accData, error: accError } = await supabase
             .from("user")
             .update([
                 {
@@ -55,17 +54,68 @@ function Page() {
                     type: type,
                 },
             ])
-            .eq("uuid", user.id);
-        console.log(data, error);
+            .eq("uuid", user.id)
+            .then();
+
+        const { data: emptyData, error: emptyError } = await supabase
+            .from("empty")
+            .insert({
+                uuid: user.id,
+                empty_plots: emptyGridArray,
+            });
+
+        if (!accError && !emptyError) {
+            router.push("/user/garden");
+        }
     }
 
     return (
-        <main className="flex h-full w-full flex-col items-center justify-center bg-green-500">
-            <h1 className="mb-10 text-3xl font-bold text-white">GardenApp</h1>
+        <main className="flex h-full w-full flex-col items-center justify-center bg-green-500 py-2">
+            <h1 className=" text-xl font-semibold text-white">
+                Choose your plot
+            </h1>
+            <p className="mb-3 text-xs  text-white font-semibold">
+                {"(click to add/remove tile)"}
+            </p>
+
+            <div
+                className="flex h-[250px] w-[250px] items-center justify-center border-b-4 border-r-4 border-b-[#c59065] border-r-[#764d27] bg-[#764d27]"
+                style={{
+                    transform: "rotateX(45deg) rotateZ(45deg)",
+                }}
+            >
+                {grid.map((row, rowIndex) => (
+                    <div
+                        key={rowIndex}
+                        className="flex h-full w-[10%] flex-col"
+                    >
+                        {row.map((col, colIndex) => (
+                            <div
+                                key={colIndex}
+                                className={`h-[10%] w-full text-xs ${
+                                    grid[rowIndex][colIndex]
+                                        ? "bg-[#00ff66] "
+                                        : "bg-[#764d27] "
+                                }`}
+                                onClick={() => {
+                                    const newGrid = [...grid];
+                                    newGrid[rowIndex][colIndex] =
+                                        !newGrid[rowIndex][colIndex];
+                                    setGrid(newGrid);
+                                }}
+                            ></div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+
+            {/* <h1 className="mt-2 text-xs font-semibold text-white">
+                Click to set/unset land
+            </h1> */}
             <form
                 id="details-form"
                 onSubmit={handleSubmit}
-                className="flex flex-col items-center justify-center gap-5"
+                className="mt-3 flex flex-col items-center justify-center gap-3"
             >
                 <div className="flex flex-col">
                     <label
@@ -146,7 +196,7 @@ function Page() {
                 </div>
 
                 <button
-                    className="mt-5 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400"
+                    className="mt-3 h-8 w-64 rounded-xl bg-secondarydark-500 font-semibold text-white active:bg-secondarydark-400"
                     type="submit"
                     form="details-form"
                 >
