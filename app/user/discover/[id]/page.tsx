@@ -102,7 +102,7 @@ const PlantDetailPage =  ({ params }: { params: { id: string } }) => {
                 <RecipeButton href='/garden/recipes'/>
             </div> */}
 
-            <BackButton route="/user/garden"/>
+            <BackButton route="/user/discover"/>
 
             <div className="flex flex-col mt-1 p-2">
                 <div className="border rounded-xl">
