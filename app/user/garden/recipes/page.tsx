@@ -4,7 +4,6 @@ import React, { use, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import BackButton from "@/components/BackButton";
 import { supabase } from "@/config/dbConnect";
-import { useGardenContext } from "@/app/context/gardenContext";
 import Image from "next/image";
 import Loading from "@/components/Loadingscreen";
 
@@ -23,8 +22,8 @@ const Recipe: React.FC = () => {
     const [norecipe, setnorecipe] = useState(true);
     //const [nofood, setnofood] = useState(false);
 
-    // making it user unique to get the recipes
-    const { userUUID }: any = useGardenContext();
+    // making it user unique to get the recipes (get the userid manually)
+
     const [recipelist, setRecipelist] = useState<
         { recipeDetails: RecipeDetails }[]
     >([]);
@@ -39,6 +38,13 @@ const Recipe: React.FC = () => {
     const [isimgLoading, setImgIsLoading] = useState(true);
 
     const fetchGardenRecipes = async () => {
+        //FETCH userid
+
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+        const userUUID = user?.id;
+
         setRecipelist([]); // Clear the recipelist state
         setRecipeInstructions({});
         const { data, error } = await supabase
