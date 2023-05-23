@@ -37,7 +37,7 @@ const Hero = ({
                 <div className="lg:w-90 relative z-50 flex h-48 flex-col items-center justify-between pt-7 lg:flex-row lg:justify-between lg:space-x-8 lg:pt-0">
                     <a
                         href="/login"
-                        className="rounded-full bg-secondarydark-500 pb-3 pl-12 pr-12 pt-3 text-center text-2xl font-semibold text-white shadow-2xl ring-4 ring-secondarydark-600 transition-all hover:bg-secondarydark-600 focus:outline-none active:bg-secondarydark-600 lg:ml-5 lg:font-medium lg:ring-2 "
+                        className="rounded-xl bg-secondarydark-500 pb-3 pl-12 pr-12 pt-3 text-center text-2xl font-semibold text-white shadow-2xl ring-4 ring-secondarydark-600 transition-all hover:bg-secondarydark-600 focus:outline-none active:bg-secondarydark-600 lg:ml-5 lg:font-medium lg:ring-2 "
                     >
                         {mainActionText}
                     </a>
