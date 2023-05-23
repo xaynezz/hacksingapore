@@ -11,7 +11,7 @@ const Hero = ({
         <div id="product">
             <div
                 style={{ textShadow: "0px 1px 1px gray" }}
-                className="min-h-50 lg:bg-hero flex h-screen flex-col items-center justify-center bg-green-600 font-sans lg:bg-cover lg:pb-20 lg:pt-10"
+                className="min-h-50 lg:bg-hero flex h-screen flex-col items-center justify-center bg-green-600 font-sans lg:bg-cover lg:pb-20 lg:pt-10 snap-center"
             >
                 <div>
                     <p className="p-3 pt-12 text-lg font-bold text-gray-500 lg:text-gray-300">

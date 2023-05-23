@@ -41,63 +41,35 @@ function HomePage() {
     };
     return (
         <div className="box-border">
-            <div className="flex flex-col">
+            <div className="flex flex-col h-[100svh] overflow-y-scroll snap-y snap-mandatory">
                 <Hero
                     appType={data.hero.appType}
                     tagLine={data.hero.tagLine}
                     description={data.hero.description}
                     mainActionText={data.hero.mainActionText}
                 />
-                <div
-                    id="divider"
-                    className="rounded-full ring-2 ring-gray-200 lg:mx-auto lg:w-1/2 "
-                ></div>
-                <div
-                    id="faq"
-                    className="text-black-800 pt-20 text-center text-2xl font-semibold lg:font-bold"
-                ></div>
+
                 <Step
                     title={data.step1.title}
                     description={data.step1.description}
                     img={data.step1.img}
                     alternate={data.step1.alternate}
                 />
-                <div
-                    id="faq"
-                    className="text-black-800 pt-20 text-center text-2xl font-semibold lg:font-bold"
-                ></div>{" "}
-                <div
-                    id="faq"
-                    className="text-black-800 pt-20 text-center text-2xl font-semibold lg:font-bold"
-                ></div>
+
                 <Step
                     title={data.step2.title}
                     description={data.step2.description}
                     img={data.step2.img}
                     alternate={data.step2.alternate}
                 />
-                <div
-                    id="faq"
-                    className="text-black-800 pt-20 text-center text-2xl font-semibold lg:font-bold"
-                ></div>{" "}
-                <div
-                    id="faq"
-                    className="text-black-800 pt-20 text-center text-2xl font-semibold lg:font-bold"
-                ></div>
+
                 <Step
                     title={data.step3.title}
                     description={data.step3.description}
                     img={data.step3.img}
                     alternate={data.step3.alternate}
                 />
-                <div
-                    id="faq"
-                    className="text-black-800 pt-20 text-center text-2xl font-semibold lg:font-bold"
-                ></div>{" "}
-                <div
-                    id="faq"
-                    className="text-black-800 pt-20 text-center text-2xl font-semibold lg:font-bold"
-                ></div>
+
                 <BottomLead
                     actionText={data.bottomLead.actionText}
                     description={data.bottomLead.description}

@@ -7,7 +7,7 @@ const BottomLead = ({
     extraActionText,
 }: any) => {
     return (
-        <div className="lg:bg-action flex h-screen flex-col justify-center bg-green-600 lg:h-full lg:bg-cover lg:pb-14 lg:pt-24">
+        <div className="lg:bg-action flex min-h-[100svh] flex-col justify-center bg-green-600 lg:bg-cover lg:pb-14 lg:pt-24 snap-center">
             <p className="p-5 text-center text-5xl font-bold leading-normal text-white lg:pt-10 lg:text-4xl">
                 {actionText}
             </p>
