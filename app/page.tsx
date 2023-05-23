@@ -37,9 +37,6 @@ function HomePage() {
         },
     }
     return (
-        // __________________________TODO: ____________________
-        // Add Montserrat font to everything (body)
-
         <div className="box-border">
             <div className="flex flex-col">
 

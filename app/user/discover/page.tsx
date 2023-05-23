@@ -143,11 +143,8 @@ const Discover = (props: Props) => {
                 console.error("Error fetching all plant details:", error);
             }
         };
-
-        if (userUUID) {
             fetchAllPlantDetails();
-        }
-    }, [userUUID]);
+    }, []);
 
     return (
         <div className="bg-FFFBEF-300 h-[1000px]">
