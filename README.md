@@ -12,7 +12,7 @@
 
 To explore EdiPlants, simply visit our website:
 
-[**🌿 Access EdiPlants here**](https://edi-plantsv2-48eitpzh3-rivenbryan.vercel.app/)
+[**🌿 Access EdiPlants here**](https://edi-plantsv2-oqd0ud3em-rivenbryan.vercel.app/)
 
 > 📱 *Please note that EdiPlants is designed for a mobile-first experience, and may not render properly on desktop browsers.*
 
