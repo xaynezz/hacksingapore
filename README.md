@@ -90,7 +90,7 @@ We built EdiPlants with a powerful set of technologies:
 
 We are team of 5 NTU Year 2 Undergradudate students.
 
-This project is done as part of [**HackSingapore 2023**](https://hacksingapore.com/), under the Sustainability track.
+This project is done as part of [**HackSingapore 2023**](https://hacksingapore.com/), under the Sustainability track sponsored by [**Alibaba Cloud**](https://alibabacloud.com)
 
 
 - **Bryan Tay Peng Keat**
