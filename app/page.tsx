@@ -21,7 +21,7 @@ function HomePage() {
         step2: {
             title: 'EdiPlants AI',
             description: 'Experience the future of plant care with our AI chatbot',
-            img: "/landingPageImages/ChatBot.png",
+            img: "/landingPageImages/ChatBotIntro.png",
             alternate: true,
         },
         step3: {
